@@ -6,14 +6,15 @@ require_once 'bibli_bookshop.php';
  *********************************************************/
 
  // Paramètres pour accéder à la base de données
-define('BS_SERVER', 'localhost');
-define('BS_DB', 'bookshop_poncot');
-define('BS_USER', 'u_poncot');
-define('BS_PASS', 'p_poncot');
 
-// define('BS_DB', 'bookshop_db');
-// define('BS_USER', 'root');
-// define('BS_PASS', '');
+define('BS_SERVER', 'localhost');
+// define('BS_DB', 'bookshop_poncot');
+// define('BS_USER', 'u_poncot');
+// define('BS_PASS', 'p_poncot');
+
+define('BS_DB', 'bookshop_db');
+define('BS_USER', 'root');
+define('BS_PASS', '');
 
 //---------------------------------------------------------------
 // Définition des types de zones de saisies
@@ -366,7 +367,9 @@ function url_get_nom_fichier($url){
 
 /**
 * Retourne sur la page précédente
+* TODO : get_pages_goodle()
 */
+/*
 function page_precedente(){
     if(isset($_SERVER['HTTP_REFERER'])){
         $source=$_SERVER['HTTP_REFERER'];
@@ -380,6 +383,6 @@ function page_precedente(){
         $source='../index.php';
     }
     redirige($source);
-}
+}*/
 ?>
 
