@@ -4,7 +4,7 @@
 
 
 ## Description :
-Le  site  web Goodle permet  à  des  internautes  de  créer  des  événements  et  de pouvoir voter, parmi différentes propositions,pourfixer ladate deces événements (à la manière de Doodle).
+Le  site  web Goodle permet  à  des  internautes  de  créer  des  événements  et  de pouvoir voter, parmi différentes propositions, pour fixer la date de ces événements (à la manière de Doodle).
 
 L'application web à été réalisé dans le cadre du module de test fonctionnel à l'Université des Sciences et des Techniques de Besançon en deuxième année de master informatique.
 
