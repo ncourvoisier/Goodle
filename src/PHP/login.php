@@ -11,17 +11,17 @@ error_reporting(E_ALL); // toutes les erreurs sont capturées (utile lors de la 
 
 // si utilisateur déjà authentifié, on le redirige sur la page appelante, ou à défaut sur l'index
 if (isset($_SESSION['cliID'])){
-    $page = '../index.php';
+    $page = '../../index.php';
     if (isset($_SERVER['HTTP_REFERER'])){
         $page = $_SERVER['HTTP_REFERER'];
         $nom_page = url_get_nom_fichier($page);
         // suppression des éventuelles boucles de redirection
         if (($nom_page == 'login.php') || ($nom_page == 'inscription.php')){
-            $page = '../index.php'; 
+            $page = '../../index.php'; 
         } // si la page appelante n'appartient pas à notre site
-        else if (! in_array($nom_page, get_pages_bookshop())){
-            $page = '../index.php';
-        }  
+        else if (! in_array($nom_page, get_pages_goodle())){
+            $page = '../../index.php';
+        }
     }
     redirige($page);
 }
@@ -29,11 +29,9 @@ if (isset($_SESSION['cliID'])){
 // si $_POST non vide
 $err = ($_POST) ? l_traitement_connexion() : 0;
 
-html_debut('BookShop | Connexion', '../styles/bookshop.css');
+html_debut('Goodle | Connexion', '../src/CSS/styles.css');
 
 l_contenu($err);
-
-bookshop_pied();
 
 html_fin();
 
@@ -55,12 +53,12 @@ function l_contenu($err) {
         $source = $_SERVER['HTTP_REFERER'];
         $nom_source = url_get_nom_fichier($source);
         // si la page appelante n'appartient pas à notre site
-        if (! in_array($nom_source, get_pages_bookshop())){
-            $source = '../index.php';
+        if (! in_array($nom_source, get_pages_goodle())){
+            $source = '../../index.php';
         }
     }
     else{
-        $source = '../index.php';
+        $source = '../../index.php';
     }
     
 	echo
@@ -80,7 +78,7 @@ function l_contenu($err) {
             '<form action="inscription.php" method="post" class="bcFormulaireBoite">',			
                 '<p class="enteteBloc">Pas encore inscrit ?</p>',
                 '<input type="hidden" name="source" value="', $source,'">', 
-                '<p>L\'inscription est gratuite et ne prend que quelques secondes.</p>', // <br>N\'hésitez pas.</p>',
+                '<p>L\'inscription est gratuite et ne prend que quelques secondes.</p>',
                 form_input(Z_SUBMIT,'btnInscription', 'S\'inscrire'),
             '</form>', 
         '</div>'; 
@@ -126,7 +124,7 @@ function l_traitement_connexion() {
 	$password = bd_protect($bd, md5($_POST['password']));
 
 	// requête SQL
-	$sql = "SELECT cliID FROM clients WHERE cliEmail = '$email' AND cliPassword = '$password'";
+	$sql = "SELECT ID FROM personne WHERE Email = '$email' AND motDePasse = '$password'";
 	
 	// execution de la requête
 	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
@@ -140,11 +138,11 @@ function l_traitement_connexion() {
 	
 	// récupération du numero client 
 	$t = mysqli_fetch_assoc($res);
-	$id = $t['cliID'];
+	$id = $t['ID'];
 	
 	// mémorisation de l'ID du client dans une variable de session
     // cette variable de session permet de savoir si le client est authentifié
-	$_SESSION['cliID'] = $id;
+	$_SESSION['ID'] = $id;
 
 	// fermeture des ressources et de la connexion à la base
 	mysqli_free_result($res);

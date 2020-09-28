@@ -8,9 +8,9 @@
  // Paramètres pour accéder à la base de données
 
 define('BS_SERVER', 'localhost');
-// define('BS_DB', 'bookshop_poncot');
-// define('BS_USER', 'u_poncot');
-// define('BS_PASS', 'p_poncot');
+//define('BS_DB', 'm2test3');
+//define('BS_USER', 'root');
+//define('BS_PASS', '');
 
 define('BS_DB', 'm2test3');
 define('BS_USER', 'm2test3');
@@ -366,24 +366,31 @@ function url_get_nom_fichier($url){
     return $nom;
 }
 
+/** 
+ *	Renvoie un tableau contenant les pages du site Goodle
+ *
+ * 	@return array pages du site
+ */
+function get_pages_goodle() {
+	return array('index.php', 'login.php', 'inscription.php', 'deconnexion.php');
+}
+
 /**
 * Retourne sur la page précédente
-* TODO : get_pages_goodle()
 */
-/*
 function page_precedente(){
     if(isset($_SERVER['HTTP_REFERER'])){
         $source=$_SERVER['HTTP_REFERER'];
         $nom_source = url_get_nom_fichier($source);
         // si la page appelante n'appartient pas à notre site
-        if (! in_array($nom_source, get_pages_bookshop())){
-            $source = '../index.php';
+        if (! in_array($nom_source, get_pages_goodle())){
+            $source = '../../index.php';
         }
     }
     else{
-        $source='../index.php';
+        $source='../../index.php';
     }
     redirige($source);
-}*/
+}
 ?>
 
