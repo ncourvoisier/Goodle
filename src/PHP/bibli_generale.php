@@ -1,5 +1,5 @@
 <?php
-require_once 'bibli_bookshop.php';
+//require_once 'bibli_bookshop.php';
 
 /*********************************************************
  *        Bibliothèque de fonctions génériques           *
@@ -12,9 +12,9 @@ define('BS_SERVER', 'localhost');
 // define('BS_USER', 'u_poncot');
 // define('BS_PASS', 'p_poncot');
 
-define('BS_DB', 'bookshop_db');
-define('BS_USER', 'root');
-define('BS_PASS', '');
+define('BS_DB', 'm2test3');
+define('BS_USER', 'm2test3');
+define('BS_PASS', 'm2test3');
 
 //---------------------------------------------------------------
 // Définition des types de zones de saisies
@@ -24,6 +24,7 @@ define('Z_PASSWORD', 'password');
 define('Z_SUBMIT', 'submit');
 define('Z_HIDDEN', 'hidden');
 
+define('NB_ANNEES_DATE_NAISSANCE', 120);
 
 /**
  *	Fonction affichant le début du code HTML d'une page.

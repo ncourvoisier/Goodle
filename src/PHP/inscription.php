@@ -10,7 +10,7 @@ error_reporting(E_ALL); // toutes les erreurs sont capturées (utile lors de la 
 ($_POST) && l_control_piratage();
 
 // si utilisateur déjà authentifié, on le redirige sur la page appelante, ou à défaut sur l'index
-if (isset($_SESSION['cliID'])){
+/*if (isset($_SESSION['cliID'])){
     $page = '../index.php';
     if (isset($_SERVER['HTTP_REFERER'])){
         $page = $_SERVER['HTTP_REFERER'];
@@ -25,16 +25,16 @@ if (isset($_SESSION['cliID'])){
         //}  
     }
     redirige($page);
-}
+}*/
 
 $err = isset($_POST['btnSInscrire']) ? l_inscription() : array(); 
 
 html_debut('BookShop | Inscription', '../styles/bookshop.css');
-bookshop_enseigne_entete(false,'../');
+//bookshop_enseigne_entete(false,'../');
 
 l_contenu($err);
 
-bookshop_pied();
+//bookshop_pied();
 html_fin();
 
 ob_end_flush();
@@ -49,14 +49,15 @@ ob_end_flush();
 function l_contenu($err) {
 
 	$email = isset($_POST['email']) ? $_POST['email'] : '';
-	$nomprenom = isset($_POST['nomprenom']) ? $_POST['nomprenom'] : '';
+	$nom = isset($_POST['nom']) ? $_POST['nom'] : '';
+	$prenom = isset($_POST['prenom']) ? $_POST['prenom'] : '';
+	$username = isset($_POST['username']) ? $_POST['username'] : '';
 	$naiss_j = isset($_POST['naiss_j']) ? $_POST['naiss_j'] : 1;
 	$naiss_m = isset($_POST['naiss_m']) ? $_POST['naiss_m'] : 1;
 	$naiss_a = isset($_POST['naiss_a']) ? $_POST['naiss_a'] : 2000;
 
 	echo 
-		'<H1>Inscription à BookShop</H1>';
-		
+		'<H1>Inscription</H1>';
 	if (count($err) > 0) {
 		echo '<p class="erreur">Votre inscription n\'a pas pu être réalisée à cause des erreurs suivantes : ';
 		foreach ($err as $v) {
@@ -65,7 +66,7 @@ function l_contenu($err) {
 		echo '</p>';	
 	}
 	
-    if (isset($_POST['source'])){
+    /*if (isset($_POST['source'])){
         $source = $_POST['source'];
     }
     else if (isset($_SERVER['HTTP_REFERER'])){
@@ -79,18 +80,20 @@ function l_contenu($err) {
     }
     else{
         $source = '../index.php';
-    }
+    }*/
 	
 	echo 	
 		'<form method="post" action="inscription.php">',
-			form_input(Z_HIDDEN, 'source', $source),
+			//form_input(Z_HIDDEN, 'source', $source),
 			'<p>Pour vous inscrire, merci de fournir les informations suivantes. </p>',
 			'<table>',
 				form_ligne('Votre adresse email :', form_input(Z_TEXT, 'email', $email, 30)),
 				form_ligne('Choisissez un mot de passe :', form_input(Z_PASSWORD, 'pass1', '', 30)),
 				form_ligne('Répétez le mot de passe :', form_input(Z_PASSWORD, 'pass2', '', 30)),
-				form_ligne('Nom et prénom :', form_input(Z_TEXT, 'nomprenom', $nomprenom, 30)),
+				form_ligne('Nom :', form_input(Z_TEXT, 'nom', $nom, 30)),
+				form_ligne('Prénom :', form_input(Z_TEXT, 'prenom', $prenom, 30)),
 				form_ligne('Date de naissance :', form_date('naiss', NB_ANNEES_DATE_NAISSANCE, $naiss_j, $naiss_m, $naiss_a)),
+				form_ligne('Nom d\'utilisateur :', form_input(Z_TEXT, 'username', $username, 30)),
 				'<tr><td colspan="2" style="padding-top: 10px;" class="centered">', form_input(Z_SUBMIT,'btnSInscrire','Je m\'inscris !'), '</td></tr>',
 			'</table>',
 		'</form>';
@@ -106,10 +109,10 @@ function l_contenu($err) {
  *
  */
 function l_control_piratage(){
-    $nb = count($_POST);
+    /*$nb = count($_POST);
     if ($nb == 2){
         (! isset($_POST['btnInscription']) || $_POST['btnInscription'] != 'S\'inscrire') && exit_session();
-        (! isset($_POST['source'])) && exit_session();
+        //(! isset($_POST['source'])) && exit_session();
         (strip_tags($_POST['source']) != $_POST['source']) && exit_session();
         return;     // => ok, pas de problème détecté
     }
@@ -120,7 +123,9 @@ function l_control_piratage(){
         (! isset($_POST['email'])) && exit_session();
         (! isset($_POST['pass1'])) && exit_session();
         (! isset($_POST['pass2'])) && exit_session();
-        (! isset($_POST['nomprenom'])) && exit_session();
+        (! isset($_POST['nom'])) && exit_session();
+        (! isset($_POST['username'])) && exit_session();
+        (! isset($_POST['prenom'])) && exit_session();
         (! isset($_POST['naiss_j'])) && exit_session();
         (! isset($_POST['naiss_m'])) && exit_session();
         (! isset($_POST['naiss_a'])) && exit_session();
@@ -131,32 +136,21 @@ function l_control_piratage(){
         
         return;     // => ok, pas de problème détecté
     }
-    exit_session();
+    exit_session();*/
 }
 
-/**
- *	Traitement de l'inscription 
- *
- *		Etape 1. vérification de la validité des données
- *					-> return des erreurs si on en trouve
- *		Etape 2. enregistrement du nouvel inscrit dans la base
- *		Etape 3. ouverture de la session et redirection vers la page appelante. 
- *
- * @global  array     $_POST
- *
- * @return array 	tableau assosiatif contenant les erreurs
- */
-function l_inscription() {
+function l_verify_data($email, $pass1, $pass2, $nom, $prenom, $username, $naiss_j, $naiss_m, $naiss_a) {
+    $err = array();
     
-	$err = array();
-	
-	$email = trim($_POST['email']);
+    /*$email = trim($_POST['email']);
 	$pass1 = trim($_POST['pass1']);
 	$pass2 = trim($_POST['pass2']);
-	$nomprenom = trim($_POST['nomprenom']);
+	$nom = trim($_POST['nom']);
+	$prenom = trim($_POST['prenom']);
+	$username = trim($_POST['username']);
 	$naiss_j = (int)$_POST['naiss_j'];
 	$naiss_m = (int)$_POST['naiss_m'];
-	$naiss_a = (int)$_POST['naiss_a'];
+	$naiss_a = (int)$_POST['naiss_a'];*/
 	
 	// vérification email
     $noTags = strip_tags($email);
@@ -164,13 +158,13 @@ function l_inscription() {
         $err['email'] = 'L\'email ne peut pas contenir de code HTML.';
     }
     else {
-        $i = mb_strpos($email, '@', 0, 'UTF-8');
+        /*$i = mb_strpos($email, '@', 0, 'UTF-8');
         $j = mb_strpos($email, '.', 0, 'UTF-8');
-        if ($i === FALSE || $j === FALSE){
+        if ($i === FALSE || $j === FALSE || $i >= j){
             $err['email'] = 'L\'adresse email ne respecte pas le bon format.';	
         }
         // le test suivant rend inutile celui qui précède
-        else if (! filter_var($email, FILTER_VALIDATE_EMAIL)){
+        else */if (! filter_var($email, FILTER_VALIDATE_EMAIL)){
             $err['email'] = 'L\'adresse email ne respecte pas le bon format.';
         }
     }
@@ -192,20 +186,47 @@ function l_inscription() {
 	}
 	
 	// vérification des noms et prenoms
-	$noTags = strip_tags($nomprenom);
-    if ($noTags != $nomprenom){
-        $err['nomprenom'] = 'Le nom et le prénom ne peuvent pas contenir de code HTML.';
+	$noTags = strip_tags($prenom);
+    if ($noTags != $prenom){
+        $err['prenom'] = 'Le prénom ne peut pas contenir de code HTML.';
     }
-    else if (empty($nomprenom)) {
-		$err['nomprenom'] = 'Le nom et le prénom doivent être renseignés.';	
+    else if (empty($prenom)) {
+		$err['prenom'] = 'Le prénom doit être renseigné.';	
     }
     /*elseif (! preg_match("/^[[:alpha:]][[:alpha:]\- ']{1,99}$/", $nomprenom)) { // ne fct pas avec les accents
         $err['nomprenom'] = 'Le nom et le prénom ne sont pas valides.';
     }*/
-    elseif (mb_regex_encoding ('UTF-8') && ! mb_ereg_match("^[[:alpha:]][[:alpha:]\- ']{1,99}$", $nomprenom)) {
+    elseif (mb_regex_encoding ('UTF-8') && ! mb_ereg_match("^[[:alpha:]][[:alpha:]\- ']{1,99}$", $prenom)) {
+        $err['prenom'] = 'Le prénom n\'est pas valide.';
+    }
+    
+    $noTags = strip_tags($nom);
+    if ($noTags != $nom){
+        $err['nom'] = 'Le nom ne peut pas contenir de code HTML.';
+    }
+    else if (empty($nom)) {
+		$err['nom'] = 'Le nom doit être renseigné.';	
+    }
+    /*elseif (! preg_match("/^[[:alpha:]][[:alpha:]\- ']{1,99}$/", $nomprenom)) { // ne fct pas avec les accents
         $err['nomprenom'] = 'Le nom et le prénom ne sont pas valides.';
+    }*/
+    elseif (mb_regex_encoding ('UTF-8') && ! mb_ereg_match("^[[:alpha:]][[:alpha:]\- ']{1,99}$", $nom)) {
+        $err['nom'] = 'Le nom n\'est pas valide.';
     }
 	
+	$noTags = strip_tags($username);
+    if ($noTags != $username){
+        $err['username'] = 'Le nom d\'utilisateur ne peut pas contenir de code HTML.';
+    }
+    else if (empty($username)) {
+		$err['username'] = 'Le nom d\'utilisateur doit être renseigné.';	
+    }
+    /*elseif (! preg_match("/^[[:alpha:]][[:alpha:]\- ']{1,99}$/", $nomprenom)) { // ne fct pas avec les accents
+        $err['nomprenom'] = 'Le nom et le prénom ne sont pas valides.';
+    }*/
+    elseif (mb_regex_encoding ('UTF-8') && ! mb_ereg_match("^[[:alpha:]][[:alpha:]\-']{1,99}$", $username)) {
+        $err['username'] = 'Le nom d\'utilisateur n\'est pas valide.';
+    }
     
 	// vérification de la date de naissance
 	if (! checkdate($naiss_m, $naiss_j, $naiss_a)) {
@@ -213,15 +234,15 @@ function l_inscription() {
 	}	
 	else {
 		$dateDuJour = getDate();
-		if (($naiss_a < $dateDuJour['year'] - 100) ||
-            ($naiss_a == $dateDuJour['year'] - 100 && $naiss_m < $dateDuJour['mon']) ||
-            ($naiss_a == $dateDuJour['year'] - 100 && $naiss_m == $dateDuJour['mon'] && $naiss_j <= $dateDuJour['mday'])) {
-			$err['date'] = 'Vous êtes trop vieux pour trainer sur BookShop.';	
+		if (($naiss_a < $dateDuJour['year'] - 120) ||
+            ($naiss_a == $dateDuJour['year'] - 120 && $naiss_m < $dateDuJour['mon']) ||
+            ($naiss_a == $dateDuJour['year'] - 120 && $naiss_m == $dateDuJour['mon'] && $naiss_j <= $dateDuJour['mday'])) {
+			$err['date'] = 'Votre date de naissance indique que vous avez plus de 120 ans.';	
 		}
-		else if (($naiss_a > $dateDuJour['year'] - 18) || 
-				 ($naiss_a == $dateDuJour['year'] - 18 && $naiss_m > $dateDuJour['mon']) || 
-				 ($naiss_a == $dateDuJour['year'] - 18 && $naiss_m == $dateDuJour['mon'] && $naiss_j > $dateDuJour['mday'])) {   	
-			$err['date'] = 'Votre date de naissance indique vous n\'êtes pas majeur.';
+		else if (($naiss_a > $dateDuJour['year'] - 12) || 
+				 ($naiss_a == $dateDuJour['year'] - 12 && $naiss_m > $dateDuJour['mon']) || 
+				 ($naiss_a == $dateDuJour['year'] - 12 && $naiss_m == $dateDuJour['mon'] && $naiss_j > $dateDuJour['mday'])) {   	
+			$err['date'] = 'Votre date de naissance indique que vous avez moins de 12 ans.';
 		}
 	}
 
@@ -233,7 +254,7 @@ function l_inscription() {
 		// pas utile, car l'adresse a déjà été vérifiée, mais tellement plus sécurisant...
 		$email = bd_protect($bd, $email);
 		//TODO requete sql
-		$sql = "SELECT cliID FROM clients WHERE cliEmail = '$email'"; 
+		$sql = "SELECT ID FROM Personne WHERE Email = '$email'"; 
 	
 		$res = mysqli_query($bd,$sql) or bd_erreur($bd,$sql);
 		
@@ -241,14 +262,48 @@ function l_inscription() {
 			$err['email'] = 'L\'adresse email spécifiée existe déjà.';
             // libération des ressources 
             mysqli_free_result($res);
-            mysqli_close($bd);
 		}
         else{
             // libération des ressources 
             mysqli_free_result($res);
         }
 		
+            mysqli_close($bd);
 	}
+	return $err;
+}
+
+/**
+ *	Traitement de l'inscription 
+ *
+ *		Etape 1. vérification de la validité des données
+ *					-> return des erreurs si on en trouve
+ *		Etape 2. enregistrement du nouvel inscrit dans la base
+ *		Etape 3. ouverture de la session et redirection vers la page appelante. 
+ *
+ * @global  array     $_POST
+ *
+ * @return array 	tableau assosiatif contenant les erreurs
+ */
+function l_inscription() {
+    
+	//$err = array();
+	
+	
+    $bd = bd_connect();
+	
+	
+	$email = trim($_POST['email']);
+	$pass1 = trim($_POST['pass1']);
+	$pass2 = trim($_POST['pass2']);
+	$nom = trim($_POST['nom']);
+	$prenom = trim($_POST['prenom']);
+	$username = trim($_POST['username']);
+	$naiss_j = (int)$_POST['naiss_j'];
+	$naiss_m = (int)$_POST['naiss_m'];
+	$naiss_a = (int)$_POST['naiss_a'];
+	
+	$err = l_verify_data($email, $pass1, $pass2, $nom, $prenom, $username, $naiss_j, $naiss_m, $naiss_a);
 	
 	// s'il y a des erreurs ==> on retourne le tableau d'erreurs	
 	if (count($err) > 0) { 	
@@ -256,18 +311,21 @@ function l_inscription() {
 	}
 	
 	// pas d'erreurs ==> enregistrement de l'utilisateur
-	$nomprenom = bd_protect($bd, $nomprenom);
+	$email = bd_protect($bd, $email);
+	$nom = bd_protect($bd, $nom);
+	$prenom = bd_protect($bd, $prenom);
+	$username = bd_protect($bd, $username);
 	$pass = bd_protect($bd, md5($pass1));
 	$aaaammjj = $naiss_a*10000  + $naiss_m*100 + $naiss_j;
 
     // les champs adresse, code postal, ville et pays doivent être spécifiés
     // (Contrainte NON NULL dans la table 'client' sans indiquer de valeur par défaut)
-    $invalid = INVALID_STRING;
-    $code_postal = INVALID_CODE_POSTAL;
+    //$invalid = INVALID_STRING;
+    //$code_postal = INVALID_CODE_POSTAL;
     
-	
-	$sql = "INSERT INTO clients(cliNomPrenom, cliEmail, cliDateNaissance, cliPassword, cliAdresse, cliCP, cliVille, cliPays) 
-			VALUES ('$nomprenom', '$email', $aaaammjj, '$pass', '$invalid', $code_postal, '$invalid', '$invalid')";
+	$sql = "INSERT INTO Personne(Nom, Prenom, Admin, Username, Email, EmailVerifie, motDePasse, DateNaissance) 
+			VALUES ('$nom', '$prenom', false, '$username', '$email', false, '$pass', '$aaaammjj')";
+		
             
 	mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
@@ -281,7 +339,9 @@ function l_inscription() {
 	$_SESSION['cliID'] = $id;
     
     // redirection vers la page d'origine
-	redirige($_POST['source']);
+	//redirige($_POST['source']);
+	
+	return $err;
 }
 	
 
