@@ -372,7 +372,7 @@ function url_get_nom_fichier($url){
  * 	@return array pages du site
  */
 function get_pages_goodle() {
-	return array('index.php', 'login.php', 'inscription.php', 'deconnexion.php');
+	return array('index.php', 'login.php', 'inscription.php', 'deconnexion.php', 'ajout_evenement.php');
 }
 
 /**
