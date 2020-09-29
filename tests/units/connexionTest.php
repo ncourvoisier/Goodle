@@ -9,7 +9,7 @@
 	class connexionTest extends TestCase {
 
 		public function testJenkins() {
-			$this->assertEquals(0, 1);
+			$this->assertEquals(0, 0);
 		}
 		
 
