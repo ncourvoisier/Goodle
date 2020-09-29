@@ -219,7 +219,7 @@ function exit_session() {
          	$cookieParams['httponly']
     	);
 	
-	header('Location: ../index.php');
+	header('Location: ../../index.php');
 	exit();
 }
 
@@ -391,6 +391,12 @@ function page_precedente(){
         $source='../../index.php';
     }
     redirige($source);
+}
+
+function goodle_header($pathToRoot = '../../') {
+    if (isset($_SESSION['ID'])) {
+        echo '<a href="', $pathToRoot,'/src/PHP/deconnexion.php"><button>Déconnexion</button></a>';
+    }
 }
 ?>
 
