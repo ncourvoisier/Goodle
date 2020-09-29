@@ -10,27 +10,29 @@ error_reporting(E_ALL); // toutes les erreurs sont capturées (utile lors de la 
 ($_POST) && l_control_piratage();
 
 // si utilisateur déjà authentifié, on le redirige sur la page appelante, ou à défaut sur l'index
-/*if (isset($_SESSION['cliID'])){
-    $page = '../index.php';
+if (isset($_SESSION['ID'])){
+    $page = '../../index.php';
     if (isset($_SERVER['HTTP_REFERER'])){
         $page = $_SERVER['HTTP_REFERER'];
         $nom_page = url_get_nom_fichier($page);
         // suppression des éventuelles boucles de redirection
         if (($nom_page == 'login.php') || ($nom_page == 'inscription.php')){
-            $page = '../index.php'; 
+            $page = '../../index.php'; 
         } // si la page appelante n'appartient pas à notre site
         //TODO get_pages_goodle();
-	//else if (! in_array($nom_page, get_pages_bookshop())){
-        //    $page = '../index.php';
-        //}  
+	else if (! in_array($nom_page, get_pages_goodle())){
+            $page = '../../index.php';
+        }  
     }
     redirige($page);
-}*/
+}
 
 $err = isset($_POST['btnSInscrire']) ? l_inscription() : array(); 
 
-html_debut('BookShop | Inscription', '../styles/bookshop.css');
+html_debut('Goodle | Inscription', '../styles/bookshop.css');
 //bookshop_enseigne_entete(false,'../');
+
+goodle_header();
 
 l_contenu($err);
 
@@ -66,7 +68,7 @@ function l_contenu($err) {
 		echo '</p>';	
 	}
 	
-    /*if (isset($_POST['source'])){
+    if (isset($_POST['source'])){
         $source = $_POST['source'];
     }
     else if (isset($_SERVER['HTTP_REFERER'])){
@@ -74,17 +76,17 @@ function l_contenu($err) {
         $nom_source = url_get_nom_fichier($source);
         // si la page appelante n'appartient pas à notre site
 	// TODO get_pages_goodle
-        //if (! in_array($nom_source, get_pages_bookshop())){
-        //    $source = '../index.php';
-        //}
+        if (! in_array($nom_source, get_pages_goodle())){
+            $source = '../index.php';
+        }
     }
     else{
         $source = '../index.php';
-    }*/
+    }
 	
 	echo 	
 		'<form method="post" action="inscription.php">',
-			//form_input(Z_HIDDEN, 'source', $source),
+			form_input(Z_HIDDEN, 'source', $source),
 			'<p>Pour vous inscrire, merci de fournir les informations suivantes. </p>',
 			'<table>',
 				form_ligne('Votre adresse email :', form_input(Z_TEXT, 'email', $email, 30)),
@@ -109,14 +111,14 @@ function l_contenu($err) {
  *
  */
 function l_control_piratage(){
-    /*$nb = count($_POST);
+    $nb = count($_POST);
     if ($nb == 2){
         (! isset($_POST['btnInscription']) || $_POST['btnInscription'] != 'S\'inscrire') && exit_session();
         //(! isset($_POST['source'])) && exit_session();
         (strip_tags($_POST['source']) != $_POST['source']) && exit_session();
         return;     // => ok, pas de problème détecté
     }
-    if ($nb == 9){
+    if ($nb == 11){
         (! isset($_POST['btnSInscrire']) || $_POST['btnSInscrire'] != 'Je m\'inscris !') && exit_session();
         (! isset($_POST['source'])) && exit_session();
         (strip_tags($_POST['source']) != $_POST['source']) && exit_session();
@@ -136,7 +138,7 @@ function l_control_piratage(){
         
         return;     // => ok, pas de problème détecté
     }
-    exit_session();*/
+    exit_session();
 }
 
 function l_verify_data($email, $pass1, $pass2, $nom, $prenom, $username, $naiss_j, $naiss_m, $naiss_a) {
@@ -336,10 +338,10 @@ function l_inscription() {
 	
 	// mémorisation de l'ID dans une variable de session 
     // cette variable de session permet de savoir si le client est authentifié
-	$_SESSION['cliID'] = $id;
+	$_SESSION['ID'] = $id;
     
     // redirection vers la page d'origine
-	//redirige($_POST['source']);
+    redirige($_POST['source']);
 	
 	return $err;
 }

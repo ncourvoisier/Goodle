@@ -8,6 +8,8 @@ error_reporting(E_ALL); // toutes les erreurs sont capturées (utile lors de la 
 
 html_debut('Goodle', './src/CSS/styles.css');
 
+goodle_header('.');
+
 l_contenu();
 
 html_fin();

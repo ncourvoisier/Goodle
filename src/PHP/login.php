@@ -124,7 +124,7 @@ function l_traitement_connexion() {
 	$password = bd_protect($bd, md5($_POST['password']));
 
 	// requête SQL
-	$sql = "SELECT ID FROM personne WHERE Email = '$email' AND motDePasse = '$password'";
+	$sql = "SELECT ID FROM Personne WHERE Email = '$email' AND motDePasse = '$password'";
 	
 	// execution de la requête
 	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
