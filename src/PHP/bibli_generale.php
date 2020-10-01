@@ -12,6 +12,7 @@ define('BS_SERVER', 'localhost');
 //define('BS_USER', 'root');
 //define('BS_PASS', '');
 
+
 define('BS_DB', 'm2test3');
 define('BS_USER', 'm2test3');
 define('BS_PASS', 'm2test3');
@@ -421,7 +422,7 @@ function url_get_nom_fichier($url){
  * 	@return array pages du site
  */
 function get_pages_goodle() {
-	return array('index.php', 'login.php', 'inscription.php', 'deconnexion.php', 'ajout_evenement.php');
+	return array('index.php', 'login.php', 'inscription.php', 'deconnexion.php', 'ajout_evenement.php', 'voir_event.php');
 }
 
 /**

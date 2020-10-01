@@ -8,6 +8,10 @@ error_reporting(E_ALL); // toutes les erreurs sont capturées (utile lors de la 
 
 html_debut('Goodle', './src/CSS/styles.css');
 
+if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1 ){
+	echo '<p>Voir les événements : <a href="./src/PHP/voir_event.php">event</a>. </p>';
+}
+
 goodle_header('.');
 
 l_contenu();

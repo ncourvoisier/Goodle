@@ -143,6 +143,24 @@ function l_traitement_connexion() {
 	// mémorisation de l'ID du client dans une variable de session
     // cette variable de session permet de savoir si le client est authentifié
 	$_SESSION['ID'] = $id;
+	
+	
+	$sql = "SELECT admin FROM Personne WHERE ID ='$id'";
+	// execution de la requête
+	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+	// test de l'existence d'un client ayant cette combinaison email/password
+	if (mysqli_num_rows($res) != 1) {
+		mysqli_free_result($res);
+		mysqli_close($bd);
+		return -1;	            // => ECHEC DE L'AUTHENTIFICATION
+	}
+	
+	// récupération du numero client 
+	$t = mysqli_fetch_assoc($res);
+	$admin = $t['admin'];
+	// mémorisation de l'ID du client dans une variable de session
+    // cette variable de session permet de savoir si le client est authentifié
+	$_SESSION['admin'] = $admin;
 
 	// fermeture des ressources et de la connexion à la base
 	mysqli_free_result($res);
