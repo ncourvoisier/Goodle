@@ -21,6 +21,7 @@ define('BS_PASS', 'm2test3');
 //---------------------------------------------------------------
 define('Z_TEXT', 'text');
 define('Z_PASSWORD', 'password');
+define('Z_DATE', 'date');
 define('Z_SUBMIT', 'submit');
 define('Z_HIDDEN', 'hidden');
 
@@ -34,11 +35,11 @@ define('NB_ANNEES_DATE_NAISSANCE', 120);
  */
 function html_debut($titre, $css) {
 	$css = ($css == '') ? '' : "<link rel=\"stylesheet\" type=\"text/css\" href=\"$css\">";
-	echo 
+	echo
 		'<!doctype html>',
 		'<html lang="fr">',
 			'<head>',
-				'<title>', $titre, '</title>', 
+				'<title>', $titre, '</title>',
 				'<meta charset="UTF-8">',
 			   	$css,
 			'</head>',
@@ -56,7 +57,7 @@ function html_fin() {
 
 
 //____________________________________________________________________________
-/** 
+/**
  *	Ouverture de la connexion à la base de données
  *
  *	@return objet 	connecteur à la base de données
@@ -66,7 +67,7 @@ function bd_connect() {
     if ($conn !== FALSE) {
         //mysqli_set_charset() définit le jeu de caractères par défaut à utiliser lors de l'envoi
         //de données depuis et vers le serveur de base de données.
-        mysqli_set_charset($conn, 'utf8') 
+        mysqli_set_charset($conn, 'utf8')
         or bd_erreurExit('<h4>Erreur lors du chargement du jeu de caractères utf8</h4>');
         return $conn;     // ===> Sortie connexion OK
     }
@@ -79,7 +80,7 @@ function bd_connect() {
             .'<br>BS_PASS : '. BS_PASS
             .'<br>BS_DB : '. BS_DB
             .'<p>Erreur MySQL numéro : '.mysqli_connect_errno()
-            .'<br>'.htmlentities(mysqli_connect_error(), ENT_QUOTES, 'ISO-8859-1')  
+            .'<br>'.htmlentities(mysqli_connect_error(), ENT_QUOTES, 'ISO-8859-1')
             //appel de htmlentities() pour que les éventuels accents s'affiche correctement
             .'</div>';
     bd_erreurExit($msg);
@@ -87,7 +88,7 @@ function bd_connect() {
 
 //____________________________________________________________________________
 /**
- * Arrêt du script si erreur base de données 
+ * Arrêt du script si erreur base de données
  *
  * Affichage d'un message d'erreur, puis arrêt du script
  * Fonction appelée quand une erreur 'base de données' se produit :
@@ -113,7 +114,7 @@ function bd_erreurExit($msg) {
 /**
  * Gestion d'une erreur de requête à la base de données.
  *
- * A appeler impérativement quand un appel de mysqli_query() échoue 
+ * A appeler impérativement quand un appel de mysqli_query() échoue
  * Appelle la fonction bd_erreurExit() qui affiche un message d'erreur puis termine le script
  *
  * @param objet		$bd		Connecteur sur la bd ouverte
@@ -149,7 +150,7 @@ function bd_erreur($bd, $sql) {
 }
 
 
-/** 
+/**
  *	Protection des sorties (code HTML généré à destination du client).
  *
  *  Fonction à appeler pour toutes les chaines provenant de :
@@ -160,7 +161,7 @@ function bd_erreur($bd, $sql) {
  *		- les caractères ayant une signification spéciales en HTML (<, >, ...)
  *		- les caractères accentués
  *
- *	@param	string 	$text	la chaine à protéger	
+ *	@param	string 	$text	la chaine à protéger
  * 	@return string 	la chaîne protégée
  */
 function protect_sortie($str) {
@@ -171,9 +172,9 @@ function protect_sortie($str) {
 /*
  * Protection des chaînes avant insertion dans une requête SQL
  *
- * Avant insertion dans une requête SQL, toutes les chaines contenant certains caractères spéciaux (", ', ...) 
- * doivent être protégées. En particulier, toutes les chaînes provenant de saisies de l'utilisateur doivent l'être. 
- * Echappe les caractères spéciaux d'une chaîne (en particulier les guillemets) 
+ * Avant insertion dans une requête SQL, toutes les chaines contenant certains caractères spéciaux (", ', ...)
+ * doivent être protégées. En particulier, toutes les chaînes provenant de saisies de l'utilisateur doivent l'être.
+ * Echappe les caractères spéciaux d'une chaîne (en particulier les guillemets)
  * Permet de se protéger contre les attaques de type injections SQL
  *
  * @param 	objet 		$bd 	La connexion à la base de données
@@ -204,21 +205,21 @@ function redirige($page) {
  *   -   la fonction session_destroy() qui détruit la session existante
  *   -   la fonction session_unset() qui efface toutes les variables de session
  * Puis, le cookie de session est supprimé
- * 
+ *
  */
 function exit_session() {
 	session_destroy();
 	session_unset();
 	$cookieParams = session_get_cookie_params();
-	setcookie(session_name(), 
-			'', 
+	setcookie(session_name(),
+			'',
 			time() - 86400,
-         	$cookieParams['path'], 
+         	$cookieParams['path'],
          	$cookieParams['domain'],
          	$cookieParams['secure'],
          	$cookieParams['httponly']
     	);
-	
+
 	header('Location: ../../index.php');
 	exit();
 }
@@ -249,6 +250,19 @@ function est_entier($x) {
 function form_ligne($gauche, $droite) {
     $gauche =  protect_sortie($gauche);
     return "<tr><td>{$gauche}</td><td>{$droite}</td></tr>";
+}
+
+/**
+* Génére le code d'une ligne de formulaire pour une date :
+*
+* @param string		$label		Contenu de la colonne de gauche qui est le label
+* @param string 	$date		  Contenu de la premiere partie de la colonne de droite : le input date
+* @param string   $heure    Contenu de la deuxième partie de la colonne de droite : le input time
+*
+* @return string 	Code HTML représentant une ligne de tableau
+*/
+function form_ligne_date($label, $date, $heure){
+	return "<tr><td>{$label}</td><td>{$date} {$heure}</td></tr>";
 }
 
 //_______________________________________________________________
@@ -303,7 +317,7 @@ function form_opt($name, $nbQuantite=0) {
 		$res .= "<option value='$i' $selected>$i</option>";
 	}
 	$res .= '</select>';
-	return $res;	
+	return $res;
 }
 
 /**
@@ -326,13 +340,13 @@ function form_date($name, $nb_annees, $jsel=0, $msel=0, $asel=0){
 	($jsel==0) && $jsel = $jj;
 	($msel==0) && $msel = $mm;
 	($asel==0) && $asel = $aa;
-	
+
 	$res = "<select name='{$name}_j'>";
 	for ($i=1; $i <= 31 ; $i++){
         $selected = ($i == $jsel) ? 'selected' : '';
 		$res .= "<option value='$i' $selected>$i</option>";
 	}
-	$res .= "</select> <select name='{$name}_m'>"; 
+	$res .= "</select> <select name='{$name}_m'>";
 	for ($i=1; $i <= 12 ; $i++){
 		$selected = ($i == $msel)? 'selected' : '';
 		$res .= "<option value='$i' $selected>".get_mois($i).'</option>';
@@ -343,7 +357,42 @@ function form_date($name, $nb_annees, $jsel=0, $msel=0, $asel=0){
 		$res .= "<option value='$i' $selected>$i</option>";
 	}
 	$res .= '</select>';
-	return $res;		
+	return $res;
+}
+
+function form_date_and_hour($name, $jour, $mois, $annee, $heure, $minutes){
+	$res = "<select name='{$name}_j'>";
+	for ($i = 1; $i <= 31; $i++){
+		$selected = ($i == $jour)? 'selected':'';
+		$res.="<option value='$i' $selected>$i</option>";
+	}
+	$res.="</select><select name='{$name}_m'>";
+	for ($i = 1; $i <= 12; $i++){
+		$selected = ($i == $mois)? 'selected':'';
+		$res.="<option value='$i' $selected>".get_mois($i)."</option>";
+	}
+	$res.="</select><select name='{$name}_a'>";
+	for ($i = 2020; $i <= 2050; $i++){
+		$selected = ($i == $annee)? 'selected':'';
+		$res.="<option value='$i' $selected>$i</option>";
+	}
+
+	if ($heure==-1 && $minutes==-1){
+		$res.="</select>";
+	} else {
+		$res.="</select><span>Heure:</span><select name='{$name}_hr'>";
+		for ($i = 0; $i < 24; $i++){
+			$selected = ($i == $heure)? 'selected':'';
+			$res.="<option value='$i' $selected>$i</option>";
+		}
+		$res.="</select><select name='{$name}_min'>";
+		for ($i = 0; $i < 60; $i++){
+			$selected = ($i == $minutes)? 'selected':'';
+			$res.="<option value='$i' $selected>$i</option>";
+		}
+		$res.="</select>";
+	}
+	return $res;
 }
 
 /**
@@ -352,7 +401,7 @@ function form_date($name, $nb_annees, $jsel=0, $msel=0, $asel=0){
 * Exemple : si la fonction reçoit l'URL
 *    http://localhost/bookshop/php/page1.php?nom=valeur&name=value
 * elle renvoie 'page1.php'
-*  
+*
 * @param string		$url        URL à traiter
 *
 * @return string 	Le nom du fichier cible
@@ -366,7 +415,7 @@ function url_get_nom_fichier($url){
     return $nom;
 }
 
-/** 
+/**
  *	Renvoie un tableau contenant les pages du site Goodle
  *
  * 	@return array pages du site
@@ -393,10 +442,61 @@ function page_precedente(){
     redirige($source);
 }
 
+/**
+ * Compare la date passée dans les paramètres à la date actuelle
+ * @return {0,1,2} -> 0 : la date en paramètre est dans le futur (OK) / (KO) 1 : la date en paramètre est dans le passé / 2 : la date en paramètre est la même que aujourdhui mais l'heure est dans le passé
+ */
+function compare_date($jour, $mois, $annee, $heure, $minute){
+	if (date("Y") == $annee){
+		if (date("m") == $mois){
+			if (date("d") > $jour){
+				return 1;
+			} else if (date("d") == $jour){
+				if (date("h") == $heure){
+					if (date("i") > $minute){
+						return 1;
+					} else if (date("h")>$heure){
+						return 1;
+					}
+				}
+			}
+		} else if (date("m")>$mois){
+			return 1;
+		}
+	}
+	return 0;
+}
+
+/**
+ * Compare les deux dates passées en paramètre
+ * @return {0,1,2} -> 0 : la première est antérieure à la seconde / 1 : la seconde est antérieure à la première / 2 : les deux sont égales
+ */
+function compare_deux_dates($jour1, $mois1, $annee1, $jour2, $mois2, $annee2){
+	if ($jour1 == $jour2 && $mois1==$mois2 && $annee1 == $annee2){
+		return 2;
+	}
+	if ($annee1 == $annee2){
+		if ($mois1 == $mois2){
+			if ($jour1 > $jour2){
+				return 1;
+			} else {
+				return 0;
+			}
+		} else if ($mois1 > $mois2){
+			return 1;
+		} else {
+			return 0;
+		}
+	} else if ($annee1 > $annee2){
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
 function goodle_header($pathToRoot = '../../') {
     if (isset($_SESSION['ID'])) {
         echo '<a href="', $pathToRoot,'/src/PHP/deconnexion.php"><button>Déconnexion</button></a>';
     }
 }
 ?>
-
