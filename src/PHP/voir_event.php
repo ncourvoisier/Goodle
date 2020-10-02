@@ -29,38 +29,13 @@ if (isset($_SESSION['ID'])){
 // si $_POST non vide
 $err = ($_POST) ? l_traitement_connexion() : 0;
 
-html_debut('Goodle | Connexion', '../src/CSS/styles.css');
+html_debut('Goodle | Voir event', '../src/CSS/styles.css');
 
-
-if(isset($_GET['IDEvent']) {
-	echo 'Salut1';
-	l_contenu_event($_GET['IDEvent']);
-} else {
-	echo 'Salut2';
-	l_contenu_ve($err);
-}
+l_contenu_ve($err);
 
 html_fin();
 
 ob_end_flush();
-
-
-function l_contenu_event($IDEvent) {
-	$bd = bd_connect();
-	
-	$sql = "SELECT $IDEvent FROM `Evenement`";
-	
-	$res = mysqli_query($bd,$sql) or bd_erreur($bd,$sql);
-	
-	echo 'Evenement : <br/>';
-	
-	$t = mysqli_fetch_assoc($res);
-	echo 'Nom : ', $t['Nom'], ' Lieu : ', $t['Lieu'], ' Date de cloture des votes : ', $t['DateCloture'];
-	echo '<br/>';
-	
-	mysqli_free_result($res);
-    mysqli_close($bd);
-}
 
 
 function l_contenu_ve($err){
@@ -75,6 +50,7 @@ function l_contenu_ve($err){
 	
 	while ($t = mysqli_fetch_assoc($res)) {
 		echo 'Nom : ', $t['Nom'], ' Lieu : ', $t['Lieu'], ' Date de cloture des votes : ', $t['DateCloture'];
+	echo '<br><a href="evenement.php?event=', $t['ID'], '</a><br>';
 		echo '<br/>';
 	}
 	
