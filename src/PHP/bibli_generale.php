@@ -28,6 +28,8 @@ define('Z_HIDDEN', 'hidden');
 
 define('NB_ANNEES_DATE_NAISSANCE', 120);
 
+date_default_timezone_set('Europe/Paris');
+
 /**
  *	Fonction affichant le début du code HTML d'une page.
  *
@@ -448,24 +450,17 @@ function page_precedente(){
  * @return {0,1,2} -> 0 : la date en paramètre est dans le futur (OK) / (KO) 1 : la date en paramètre est dans le passé / 2 : la date en paramètre est la même que aujourdhui mais l'heure est dans le passé
  */
 function compare_date($jour, $mois, $annee, $heure, $minute){
-	if (date("Y") == $annee){
-		if (date("m") == $mois){
-			if (date("d") > $jour){
-				return 1;
-			} else if (date("d") == $jour){
-				if (date("h") == $heure){
-					if (date("i") > $minute){
-						return 1;
-					} else if (date("h")>$heure){
-						return 1;
-					}
-				}
-			}
-		} else if (date("m")>$mois){
-			return 1;
+	$res = compare_deux_dates(date("d"), date("m"), date("Y"), $jour, $mois, $annee);
+
+	if ($res == 2){
+		$res_hr = compare_deux_heures($heure, $minute, date('H'), date('i'));
+		if ($res_hr == 1 || $res_hr == 2){
+			return 2;
+		} else {
+			return 0;
 		}
 	}
-	return 0;
+	return $res;
 }
 
 /**
@@ -493,6 +488,28 @@ function compare_deux_dates($jour1, $mois1, $annee1, $jour2, $mois2, $annee2){
 	} else {
 		return 0;
 	}
+}
+
+/**
+ * Compare les heures passées en paramètre
+ * @return {0, 1} -> 0: l'heure 1 est dans le futur / 1: l'heure 2 est dans le futur / 2: les heures sont les mêmes
+ */
+function compare_deux_heures($heure1, $minute1, $heure2, $minute2){
+
+	if ($heure1 == $heure2){
+		if ($minute1 > $minute2){
+			return 0;
+		} else if ($minute1 == $minute2){
+			return 2;
+		} else {
+			return 1;
+		}
+	} else if ($heure1 > $heure2) {
+		return 0;
+	} else {
+		return 1;
+	}
+	return 1;
 }
 
 function goodle_header($pathToRoot = '../../') {
