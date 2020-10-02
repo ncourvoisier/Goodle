@@ -19,7 +19,6 @@ if (isset($_SESSION['ID'])){
         if (($nom_page == 'login.php') || ($nom_page == 'inscription.php')){
             $page = '../../index.php'; 
         } // si la page appelante n'appartient pas à notre site
-        //TODO get_pages_goodle();
 	else if (! in_array($nom_page, get_pages_goodle())){
             $page = '../../index.php';
         }  
@@ -75,13 +74,12 @@ function l_contenu($err) {
         $source = $_SERVER['HTTP_REFERER'];
         $nom_source = url_get_nom_fichier($source);
         // si la page appelante n'appartient pas à notre site
-	// TODO get_pages_goodle
         if (! in_array($nom_source, get_pages_goodle())){
-            $source = '../index.php';
+            $source = '../../index.php';
         }
     }
     else{
-        $source = '../index.php';
+        $source = '../../index.php';
     }
 	
 	echo 	
@@ -90,7 +88,7 @@ function l_contenu($err) {
 			'<p>Pour vous inscrire, merci de fournir les informations suivantes. </p>',
 			'<table>',
 				form_ligne('Votre adresse email :', form_input(Z_TEXT, 'email', $email, 30)),
-				form_ligne('Choisissez un mot de passe :', form_input(Z_PASSWORD, 'pass1', '', 30)),
+				form_ligne('JiraLockedErrorChoisissez un mot de passe :', form_input(Z_PASSWORD, 'pass1', '', 30)),
 				form_ligne('Répétez le mot de passe :', form_input(Z_PASSWORD, 'pass2', '', 30)),
 				form_ligne('Nom :', form_input(Z_TEXT, 'nom', $nom, 30)),
 				form_ligne('Prénom :', form_input(Z_TEXT, 'prenom', $prenom, 30)),
