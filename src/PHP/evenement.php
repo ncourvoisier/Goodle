@@ -6,8 +6,8 @@ require_once 'bibli_generale.php';
 
 error_reporting(E_ALL); // toutes les erreurs sont capturées (utile lors de la phase de développement)
 
-// si $_POST non vide
-($_POST) && l_control_piratage();
+// si $_GET et $_POST non vide
+($_GET && $_POST) && l_control_piratage();
 
 // si utilisateur déjà authentifié, on le redirige sur la page appelante, ou à défaut sur l'index
 if (isset($_SESSION['ID'])){
@@ -29,33 +29,40 @@ if (isset($_SESSION['ID'])){
 // si $_POST non vide
 $err = ($_POST) ? l_traitement_connexion() : 0;
 
+$event = l_control_get ();
 html_debut('Goodle | Voir event', '../src/CSS/styles.css');
-
-l_contenu_ve($err);
-
-html_fin();
+l_contenu_event($event);
 
 ob_end_flush();
 
-
-function l_contenu_ve($err){
-
+function l_contenu_event($event) {
+	
 	$bd = bd_connect();
-	
-	$sql = "SELECT * FROM `Evenement` ORDER BY ID DESC";
-	
-	$res = mysqli_query($bd,$sql) or bd_erreur($bd,$sql);
-	
-	echo 'Liste des événements triés par ordre du plus récent : <br/>';
+	$event = bd_protect($bd, $event);
+	$sql = "SELECT * FROM `Evenement` WHERE ID = $event";
+
+	$res = mysqli_query($bd, $sql) or fd_bd_erreur($bd,$sql);
 	
 	while ($t = mysqli_fetch_assoc($res)) {
-		echo 'Nom : ', $t['Nom'], ' Lieu : ', $t['Lieu'], ' Date de cloture des votes : ', $t['DateCloture'];
-	echo '<br><a href="evenement.php?event=', $t['ID'], '</a><br>';
-		echo '<br/>';
+		echo 'Nom : ', $t['Nom'], ' Lieu : ', $t['Lieu'], ' Date de cloture des votes : ', $t['DateCloture'], '<br/>';
 	}
-	
+
 	mysqli_free_result($res);
-    mysqli_close($bd);
+	mysqli_close($bd);
 }
+
+function l_control_get (){
+
+	(count($_GET) != 1) && fd_exit_session();
+	!isset($_GET['event']) && fd_exit_session();
+
+    $valueQ = trim($_GET['event']);
+    $notags = strip_tags($valueQ);
+
+    (mb_strlen($notags, 'UTF-8') != mb_strlen($valueQ, 'UTF-8')) && fd_exit_session();
+    
+	return $valueQ;
+}
+
 
 ?>

@@ -19,7 +19,6 @@ if (isset($_SESSION['ID'])){
         if (($nom_page == 'login.php') || ($nom_page == 'inscription.php')){
             $page = '../../index.php'; 
         } // si la page appelante n'appartient pas à notre site
-        //TODO get_pages_goodle();
 	else if (! in_array($nom_page, get_pages_goodle())){
             $page = '../../index.php';
         }  
@@ -75,13 +74,12 @@ function l_contenu($err) {
         $source = $_SERVER['HTTP_REFERER'];
         $nom_source = url_get_nom_fichier($source);
         // si la page appelante n'appartient pas à notre site
-	// TODO get_pages_goodle
         if (! in_array($nom_source, get_pages_goodle())){
-            $source = '../index.php';
+            $source = '../../index.php';
         }
     }
     else{
-        $source = '../index.php';
+        $source = '../../index.php';
     }
 	
 	echo 	
