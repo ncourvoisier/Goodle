@@ -45,7 +45,7 @@ html_fin();
 ob_end_flush();
 
 
-function($IDEvent) {
+function l_contenu_event($IDEvent) {
 	$bd = bd_connect();
 	
 	$sql = "SELECT $IDEvent FROM `Evenement`";
