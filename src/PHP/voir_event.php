@@ -33,8 +33,10 @@ html_debut('Goodle | Connexion', '../src/CSS/styles.css');
 
 
 if(isset($_GET['IDEvent']) {
+	echo 'Salut1';
 	l_contenu_event($_GET['IDEvent']);
 } else {
+	echo 'Salut2';
 	l_contenu_ve($err);
 }
 
