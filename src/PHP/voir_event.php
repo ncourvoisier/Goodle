@@ -6,11 +6,11 @@ require_once 'bibli_generale.php';
 
 error_reporting(E_ALL); // toutes les erreurs sont capturées (utile lors de la phase de développement)
 
-// si $_POST non vide
-($_POST) && l_control_piratage();
+// si $_GET et $_POST non vide
+($_GET && $_POST) && l_control_piratage();
 
 // si utilisateur déjà authentifié, on le redirige sur la page appelante, ou à défaut sur l'index
-if (isset($_SESSION['cliID'])){
+if (isset($_SESSION['ID'])){
     $page = '../../index.php';
     if (isset($_SERVER['HTTP_REFERER'])){
         $page = $_SERVER['HTTP_REFERER'];
@@ -31,23 +31,45 @@ $err = ($_POST) ? l_traitement_connexion() : 0;
 
 html_debut('Goodle | Connexion', '../src/CSS/styles.css');
 
-l_contenu($err);
+
+if(isset($_GET['IDEvent']) {
+	l_contenu_event($_GET['IDEvent']);
+} else {
+	l_contenu_ve($err);
+}
 
 html_fin();
 
 ob_end_flush();
 
 
-
-function l_contenu($err){
-
+function($IDEvent) {
 	$bd = bd_connect();
 	
-	$sql = "SELECT * FROM `evenement` ORDER BY ID DESC";
+	$sql = "SELECT $IDEvent FROM `Evenement`";
 	
 	$res = mysqli_query($bd,$sql) or bd_erreur($bd,$sql);
 	
-	echo 'Liste des événements triés par ordre de plus récent : <br/>';
+	echo 'Evenement : <br/>';
+	
+	$t = mysqli_fetch_assoc($res);
+	echo 'Nom : ', $t['Nom'], ' Lieu : ', $t['Lieu'], ' Date de cloture des votes : ', $t['DateCloture'];
+	echo '<br/>';
+	
+	mysqli_free_result($res);
+    mysqli_close($bd);
+}
+
+
+function l_contenu_ve($err){
+
+	$bd = bd_connect();
+	
+	$sql = "SELECT * FROM `Evenement` ORDER BY ID DESC";
+	
+	$res = mysqli_query($bd,$sql) or bd_erreur($bd,$sql);
+	
+	echo 'Liste des événements triés par ordre du plus récent : <br/>';
 	
 	while ($t = mysqli_fetch_assoc($res)) {
 		echo 'Nom : ', $t['Nom'], ' Lieu : ', $t['Lieu'], ' Date de cloture des votes : ', $t['DateCloture'];
