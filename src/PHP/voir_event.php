@@ -6,8 +6,8 @@ require_once 'bibli_generale.php';
 
 error_reporting(E_ALL); // toutes les erreurs sont capturées (utile lors de la phase de développement)
 
-// si $_GET et $_POST non vide
-($_GET && $_POST) && l_control_piratage();
+// si $_POST non vide
+($_POST) && l_control_piratage();
 
 // si utilisateur déjà authentifié, on le redirige sur la page appelante, ou à défaut sur l'index
 if (isset($_SESSION['ID'])){
