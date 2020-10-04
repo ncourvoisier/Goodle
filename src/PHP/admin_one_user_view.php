@@ -52,7 +52,9 @@ function l_contenu_aouv($errors) {
       foreach ($t as $field => $value) {
         echo '<p>' . $field . ' : ' . $value . '</p>';
       }
-      echo '<a href="admin_user_view.php?remove_user=' . $_GET['user'] . '"><button>Supprimer</button></a>';
+      if (!$t['Admin']) {
+        echo '<a href="admin_user_view.php?remove_user=' . $_GET['user'] . '"><button>Supprimer</button></a>';
+      }
     }
   }
 

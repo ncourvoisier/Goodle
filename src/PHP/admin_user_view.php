@@ -32,23 +32,27 @@ if (isset($_GET['remove_user'])) {
   if ($deleting_error == 0) {
     $bd = bd_connect();
 
-    $sql = 'SELECT FROM Personne WHERE ID = ' . $_GET['remove_user'] . ';';
+    $sql = 'SELECT * FROM Personne WHERE ID = \'' . $_GET['remove_user'] . '\';';
 
     $res = mysqli_query($bd, $sql);
 
-    if (!$res) {
+    if (mysqli_num_rows($res) == 0) {
       $no_user = 1;
+    } else if (mysqli_fetch_assoc($res)['Admin']) {
+      $deleting_error = 1;
     } else {
       $sql = 'DELETE FROM Personne WHERE ID = ' . $_GET['remove_user'] . ';';
 
-      $res = mysqli_query($bd, $sql);
-      if ($res) {
+      $result = mysqli_query($bd, $sql);
+      if ($result) {
         $user_deleted = 1;
       } else {
         $deleting_error = 1;
       }
     }
-
+    if ($res) {
+      mysqli_free_result($res);
+    }
 
     mysqli_close($bd);
   }
@@ -79,11 +83,11 @@ function l_contenu_auv() {
   echo '<h2>Gestion des utilisateurs</h2>' .
   '<ul>';
 
-  $sql = 'SELECT ID FROM Personne;';
+  $sql = 'SELECT ID, Username FROM Personne;';
   $res = mysqli_query($bd, $sql);
 
   while ($t = mysqli_fetch_assoc($res)) {
-    echo '<li><a href="admin_one_user_view.php?user=' . $t['ID'] . '"">' . $t['ID'] . '</a></li>';
+    echo '<li><a href="admin_one_user_view.php?user=' . $t['ID'] . '"">' . $t['Username'] . '</a></li>';
   }
 }
 
