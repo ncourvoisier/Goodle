@@ -70,7 +70,7 @@ ob_end_flush();
 
 function l_contenu_ve($err){
 	$bd = bd_connect();
-	$sql = "SELECT * FROM `evenement` ORDER BY ID DESC";
+	$sql = "SELECT * FROM Evenement ORDER BY ID DESC";
 	$res = mysqli_query($bd,$sql) or bd_erreur($bd,$sql);
 	echo '<h2>Liste des événements triés par ordre des plus récent : </h2><ul>';
 

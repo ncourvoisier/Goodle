@@ -35,11 +35,28 @@ function l_contenu_ve($errors){
 		  echo '<p class="erreur">L\'evenement ' . $_GET['event'] . ' n\'existe pas.';
 		} else {
 			foreach ($t as $field => $value) {
-				echo '<p>' . $field . ' : ' . $value . '</p>';
+				if ($field == "Referent") {
+					$sql2 = 'SELECT * FROM Personne WHERE ID = ' . $value . ';';
+					$res2 = mysqli_query($bd, $sql2);
+					$t2 = mysqli_fetch_assoc($res2);
+					echo $field . ' : ' . $t2['Prenom'] . ' ' . $t2['Nom'] . '. Username : ' . $t2['Username'] . ', Email : ' . $t2['Email'];
+				} else {
+					echo $field . ' : ' . $value;
+				}
+				echo '</br>';
 			}
-			// TODO : Requete pour afficher toutes les dates et le référent
+			
+			$sql3 = 'SELECT * FROM Dateevenement NATURAL JOIN Date WHERE IDEvent = 4';
+			$res3 = mysqli_query($bd, $sql3);
+			
+			echo '<ul>';
+			while ($t3 = mysqli_fetch_assoc($res3)) {
+				echo '<li>Date : Le ' . $t3['Jour'] . ' ' . get_mois($t3['Mois']) . ' ' . $t3['Annee'] . ' à ' . $t3['Heure'] . 'h' . $t3['Minute'] . '</li>'; 
+			}
+			echo '</ul>';
+			
 			if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
-				echo '<a href="evenement.php?remove_event=' . $_GET['event'] . '"><button>Supprimer</button></a>';
+				echo '</br><a href="evenement.php?remove_event=' . $_GET['event'] . '"><button>Supprimer</button></a>';
 			}
 		}
 	}
