@@ -6,63 +6,88 @@ require_once 'bibli_generale.php';
 
 error_reporting(E_ALL); // toutes les erreurs sont capturées (utile lors de la phase de développement)
 
-// si $_GET et $_POST non vide
-($_GET && $_POST) && l_control_piratage();
+goodle_header();
 
-// si utilisateur déjà authentifié, on le redirige sur la page appelante, ou à défaut sur l'index
-if (isset($_SESSION['ID'])){
-    $page = '../../index.php';
-    if (isset($_SERVER['HTTP_REFERER'])){
-        $page = $_SERVER['HTTP_REFERER'];
-        $nom_page = url_get_nom_fichier($page);
-        // suppression des éventuelles boucles de redirection
-        if (($nom_page == 'login.php') || ($nom_page == 'inscription.php')){
-            $page = '../../index.php'; 
-        } // si la page appelante n'appartient pas à notre site
-        else if (! in_array($nom_page, get_pages_goodle())){
-            $page = '../../index.php';
-        }
-    }
-    redirige($page);
+if (isset($_SESSION['admin']) && $_SESSION['admin'] == 0) {
+  redirige('../../index.php');
 }
 
 // si $_POST non vide
 $err = ($_POST) ? l_traitement_connexion() : 0;
 
-$event = l_control_get ();
-html_debut('Goodle | Voir event', '../src/CSS/styles.css');
-l_contenu_event($event);
+$user_deleted = 0;
+$deleting_error = 0;
+$no_user = 0;
+
+if (isset($_GET['remove_event'])) {
+	if (!preg_match('/^[0-9]*$/', $_GET['remove_event'])) {
+		$deleting_error = 1;
+	}
+	if ($deleting_error == 0) {
+			$bd = bd_connect();
+
+		$sql = 'SELECT * FROM Evenement WHERE ID = \'' . $_GET['remove_event'] . '\';';
+
+		$res = mysqli_query($bd, $sql);
+
+		if (mysqli_num_rows($res) == 0) {
+		$no_user = 1;
+		} else {
+			$sql = 'DELETE FROM Dateevenement WHERE IDEvent = ' . $_GET['remove_event'] . ';';
+			$result = mysqli_query($bd, $sql);
+			if ($result) {
+				$user_deleted = 1;
+			} else {
+				$deleting_error = 1;
+			}
+			
+			$sql = 'DELETE FROM Evenement WHERE ID = ' . $_GET['remove_event'] . ';';
+			$result = mysqli_query($bd, $sql);
+			if ($result) {
+				$user_deleted = 1;
+			} else {
+				$deleting_error = 1;
+			}
+		}
+		if ($res) {
+			mysqli_free_result($res);
+		}
+
+		mysqli_close($bd);
+	}
+}
+
+html_debut('Goodle | Evenement', '../src/CSS/styles.css');
+
+l_contenu_ve($err);
+l_notifications_ve($user_deleted, $deleting_error, $no_user);
+
+html_fin();
 
 ob_end_flush();
 
-function l_contenu_event($event) {
-	
+
+
+function l_contenu_ve($err){
 	$bd = bd_connect();
-	$event = bd_protect($bd, $event);
-	$sql = "SELECT * FROM `Evenement` WHERE ID = $event";
+	$sql = "SELECT * FROM `evenement` ORDER BY ID DESC";
+	$res = mysqli_query($bd,$sql) or bd_erreur($bd,$sql);
+	echo '<h2>Liste des événements triés par ordre des plus récent : </h2><ul>';
 
-	$res = mysqli_query($bd, $sql) or fd_bd_erreur($bd,$sql);
-	
 	while ($t = mysqli_fetch_assoc($res)) {
-		echo 'Nom : ', $t['Nom'], ' Lieu : ', $t['Lieu'], ' Date de cloture des votes : ', $t['DateCloture'], '<br/>';
+		echo '<li>Nom : ', $t['Nom'], ' Lieu : ', $t['Lieu'], ' Date de cloture des votes : ', $t['DateCloture'], 
+		' <a href="voir_event.php?event=' . $t['ID'] . '"">voir event </a></li>';
 	}
-
-	mysqli_free_result($res);
-	mysqli_close($bd);
 }
 
-function l_control_get (){
-
-	(count($_GET) != 1) && fd_exit_session();
-	!isset($_GET['event']) && fd_exit_session();
-
-    $valueQ = trim($_GET['event']);
-    $notags = strip_tags($valueQ);
-
-    (mb_strlen($notags, 'UTF-8') != mb_strlen($valueQ, 'UTF-8')) && fd_exit_session();
-    
-	return $valueQ;
+function l_notifications_ve($user_deleted, $deleting_error, $no_user) {
+	if ($user_deleted) {
+		echo '<p class="success">L\'evenement ' . $_GET['remove_event'] . ' a bien été supprimé.</p>';
+	} else if ($deleting_error) {
+		echo '<p class="erreur">La suppression de l\'evenement ' . $_GET['remove_event'] . ' a rencontré un problème.</p>';
+	} else if ($no_user) {
+		echo '<p class="erreur">L\'evenement ' . $_GET['remove_event'] . ' n\'existe pas.</p>';
+	}
 }
-
 
 ?>

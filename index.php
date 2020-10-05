@@ -8,10 +8,6 @@ error_reporting(E_ALL); // toutes les erreurs sont capturées (utile lors de la 
 
 html_debut('Goodle', './src/CSS/styles.css');
 
-if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1 ){
-	echo '<p>Voir les événements : <a href="./src/PHP/voir_event.php">event</a>. </p>';
-}
-
 goodle_header('.');
 
 l_contenu();
@@ -22,14 +18,20 @@ ob_end_flush();
 
 
 function l_contenu() {
-
-	echo
+	if (isset($_SESSION['ID'])){
+		echo
+		'<h1>Bienvenue sur Goodle !</h1>',
+		'<p><a href="./src/PHP/ajout_evenement.php">Ajouter un évènement</a></p>';
+		if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1 ){
+			echo '<p>Voir les événements : <a href="./src/PHP/evenement.php">event</a>. </p>';
+		}
+	} else {
+		echo
 		'<h1>Bienvenue sur Goodle !</h1>',
 		'<p>Connectez-vous ou inscrivez-vous et gérez pleinement les dates de vos événements ! </p>',
 		'<p>Pas encore connecté ? C\'est par <a href="./src/PHP/login.php">ici</a>. </p>',
-		'<p>Nouveau venu sur Goodle ? Consultez notre <a href="./src/PHP/inscription.php">page d\'inscription</a> !',
-		'<p><a href="./src/PHP/ajout_evenement.php">Ajouter un évènement</a></p>';
-
+		'<p>Nouveau venu sur Goodle ? Consultez notre <a href="./src/PHP/inscription.php">page d\'inscription</a> !';
+	}
 }
 
 ?>
