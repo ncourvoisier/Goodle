@@ -9,26 +9,26 @@
 	class inscriptionTest extends TestCase {
 		
 		public function testNominalCase() {
-			$err = l_verify_data('thing@other.com', 'One234!', 'One234!', 'Last', 'First', 'Username', 27, 9, 2000);
+			$err = l_verify_data('thing@other.com', 'One234!8', 'One234!8', 'Last', 'First', 'Username', 27, 9, 2000);
 			$this->assertEquals(0, count($err));
 		}
 		
 		public function testEmailWithHTMLTag() {
-		    $err = l_verify_data('<p>@</p>.<br>', 'One234!', 'One234!', 'Last', 'First', 'Username', 27, 9, 2000);
+		    $err = l_verify_data('<p>@</p>.<br>', 'One234!8', 'One234!8', 'Last', 'First', 'Username', 27, 9, 2000);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('email', $err);
 			$this->assertEquals('L\'email ne peut pas contenir de code HTML.', $err['email']);
 		}
 		
 		public function testEmailWrongFormat() {
-		    $err = l_verify_data('ab.c', 'One234!', 'One234!', 'Last', 'First', 'Username', 27, 9, 2000);
+		    $err = l_verify_data('ab.c', 'One234!8', 'One234!8', 'Last', 'First', 'Username', 27, 9, 2000);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('email', $err);
 			$this->assertEquals('L\'adresse email ne respecte pas le bon format.', $err['email']);
 		}
 		
 		public function testPasswordDifferentConfirmation() {
-		    $err = l_verify_data('a@b.c', 'One234!', 'One235!', 'Last', 'First', 'Username', 27, 9, 2000);
+		    $err = l_verify_data('a@b.c', 'One234!7', 'One234!8', 'Last', 'First', 'Username', 27, 9, 2000);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('pass1', $err);
 			$this->assertEquals('Les mots de passe doivent être identiques.', $err['pass1']);
@@ -77,91 +77,91 @@
 		}
 		
 		public function testFirstNameWithHTMLTag() {
-		    $err = l_verify_data('a@b.c', 'One234!', 'One234!', 'Last', 'First<br>', 'Username', 27, 9, 2000);
+		    $err = l_verify_data('a@b.c', 'One234!8', 'One234!8', 'Last', 'First<br>', 'Username', 27, 9, 2000);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('prenom', $err);
 			$this->assertEquals('Le prénom ne peut pas contenir de code HTML.', $err['prenom']);
 		}
 		
 		public function testFirstNameEmpty() {
-		    $err = l_verify_data('a@b.c', 'One234!', 'One234!', 'Last', '', 'Username', 27, 9, 2000);
+		    $err = l_verify_data('a@b.c', 'One234!8', 'One234!8', 'Last', '', 'Username', 27, 9, 2000);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('prenom', $err);
 			$this->assertEquals('Le prénom doit être renseigné.', $err['prenom']);
 		}
 		
 		public function testFirstNameInvalidFormat() {
-		    $err = l_verify_data('a@b.c', 'One234!', 'One234!', 'Last', 'F1rst', 'Username', 27, 9, 2000);
+		    $err = l_verify_data('a@b.c', 'One234!8', 'One234!8', 'Last', 'F1rst', 'Username', 27, 9, 2000);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('prenom', $err);
 			$this->assertEquals('Le prénom n\'est pas valide.', $err['prenom']);
 		}
 		
 		public function testLastNameWithHTMLTag() {
-		    $err = l_verify_data('a@b.c', 'One234!', 'One234!', 'Last<br>', 'First', 'Username', 27, 9, 2000);
+		    $err = l_verify_data('a@b.c', 'One234!8', 'One234!8', 'Last<br>', 'First', 'Username', 27, 9, 2000);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('nom', $err);
 			$this->assertEquals('Le nom ne peut pas contenir de code HTML.', $err['nom']);
 		}
 		
 		public function testLastNameEmpty() {
-		    $err = l_verify_data('a@b.c', 'One234!', 'One234!', '', 'First', 'Username', 27, 9, 2000);
+		    $err = l_verify_data('a@b.c', 'One234!8', 'One234!8', '', 'First', 'Username', 27, 9, 2000);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('nom', $err);
 			$this->assertEquals('Le nom doit être renseigné.', $err['nom']);
 		}
 		
 		public function testLastNameInvalidFormat() {
-		    $err = l_verify_data('a@b.c', 'One234!', 'One234!', 'L@st', 'First', 'Username', 27, 9, 2000);
+		    $err = l_verify_data('a@b.c', 'One234!8', 'One234!8', 'L@st', 'First', 'Username', 27, 9, 2000);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('nom', $err);
 			$this->assertEquals('Le nom n\'est pas valide.', $err['nom']);
 		}
 		
 		public function testUsernameWithHTMLTag() {
-		    $err = l_verify_data('a@b.c', 'One234!', 'One234!', 'Last', 'First', 'Username<br>', 27, 9, 2000);
+		    $err = l_verify_data('a@b.c', 'One234!8', 'One234!8', 'Last', 'First', 'Username<br>', 27, 9, 2000);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('username', $err);
 			$this->assertEquals('Le nom d\'utilisateur ne peut pas contenir de code HTML.', $err['username']);
 		}
 		
 		public function testUsernameEmpty() {
-		    $err = l_verify_data('a@b.c', 'One234!', 'One234!', 'Last', 'First', '', 27, 9, 2000);
+		    $err = l_verify_data('a@b.c', 'One234!8', 'One234!8', 'Last', 'First', '', 27, 9, 2000);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('username', $err);
 			$this->assertEquals('Le nom d\'utilisateur doit être renseigné.', $err['username']);
 		}
 		
 		public function testUsernameInvalidFormat() {
-		    $err = l_verify_data('a@b.c', 'One234!', 'One234!', 'Last', 'First', 'User name', 27, 9, 2000);
+		    $err = l_verify_data('a@b.c', 'One234!8', 'One234!8', 'Last', 'First', 'User name', 27, 9, 2000);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('username', $err);
 			$this->assertEquals('Le nom d\'utilisateur n\'est pas valide.', $err['username']);
 		}
 		
 		public function testDateIncorrectDate() {
-		    $err = l_verify_data('a@b.c', 'One234!', 'One234!', 'Last', 'First', 'Username', 27, 13, 2000);
+		    $err = l_verify_data('a@b.c', 'One234!8', 'One234!8', 'Last', 'First', 'Username', 27, 13, 2000);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('date', $err);
 			$this->assertEquals('La date de naissance est incorrecte.', $err['date']);
 		}
 		
 		public function testDateTooYoung() {
-		    $err = l_verify_data('a@b.c', 'One234!', 'One234!', 'Last', 'First', 'Username', 27, 9, 2015);
+		    $err = l_verify_data('a@b.c', 'One234!8!', 'One234!8', 'Last', 'First', 'Username', 27, 9, 2015);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('date', $err);
 			$this->assertEquals('Votre date de naissance indique que vous avez moins de 12 ans.', $err['date']);
 		}
 		
 		public function testDateTooOld() {
-		    $err = l_verify_data('a@b.c', 'One234!', 'One234!', 'Last', 'First', 'Username', 27, 9, 1808);
+		    $err = l_verify_data('a@b.c', 'One234!8', 'One234!8', 'Last', 'First', 'Username', 27, 9, 1808);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('date', $err);
 			$this->assertEquals('Votre date de naissance indique que vous avez plus de 120 ans.', $err['date']);
 		}
 		
 		public function testSeveralErrorsOfDifferentTypes() {
-		    $err = l_verify_data('ab.c', 'One234!', 'One234!', 'L@st', 'First', 'Username', 27, 9, 1808);
+		    $err = l_verify_data('ab.c', 'One234!8', 'One234!8', 'L@st', 'First', 'Username', 27, 9, 1808);
 			$this->assertEquals(3, count($err));
 			$this->assertArrayHasKey('date', $err);
 			$this->assertArrayHasKey('email', $err);
