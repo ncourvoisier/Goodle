@@ -42,17 +42,38 @@
 		}
 		
 		public function testPasswordTooShort() {
-		    $err = l_verify_data('a@b.c', 'O3!', 'O3!', 'Last', 'First', 'Username', 27, 9, 2000);
+		    $err = l_verify_data('a@b.c', 'AbcdO3!', 'AbcdO3!', 'Last', 'First', 'Username', 27, 9, 2000);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('pass1', $err);
-			$this->assertEquals('Le mot de passe doit être constitué de 4 à 20 caractères.', $err['pass1']);
+			$this->assertEquals('Le mot de passe doit être constitué de 8 à 20 caractères.', $err['pass1']);
 		}
 		
 		public function testPasswordTooLong() {
 		    $err = l_verify_data('a@b.c', 'On3!!!!!!!!!!!!!!!!!!', 'On3!!!!!!!!!!!!!!!!!!', 'Last', 'First', 'Username', 27, 9, 2000);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('pass1', $err);
-			$this->assertEquals('Le mot de passe doit être constitué de 4 à 20 caractères.', $err['pass1']);
+			$this->assertEquals('Le mot de passe doit être constitué de 8 à 20 caractères.', $err['pass1']);
+		}
+
+		public function testPassWordMaj() {
+			$err = l_verify_data('a@b.c', '1234567!', '1234567!', 'Last', 'First', 'Username', 27, 9, 2000);
+			$this->assertEquals(1, count($err));
+			$this->assertArrayHasKey('pass1', $err);
+			$this->assertEquals('Le mot de passe doit contenir au moin une majuscule, un chiffre et un caractère spécial.', $err['pass1']);
+		}
+
+		public function testPassWordDigit() {
+			$err = l_verify_data('a@b.c', 'abcdefg!', 'abcdefg!', 'Last', 'First', 'Username', 27, 9, 2000);
+			$this->assertEquals(1, count($err));
+			$this->assertArrayHasKey('pass1', $err);
+			$this->assertEquals('Le mot de passe doit contenir au moin une majuscule, un chiffre et un caractère spécial.', $err['pass1']);
+		}
+
+		public function testPassWordSpecial() {
+			$err = l_verify_data('a@b.c', 'abcdefg1', 'abcdefg1', 'Last', 'First', 'Username', 27, 9, 2000);
+			$this->assertEquals(1, count($err));
+			$this->assertArrayHasKey('pass1', $err);
+			$this->assertEquals('Le mot de passe doit contenir au moin une majuscule, un chiffre et un caractère spécial.', $err['pass1']);
 		}
 		
 		public function testFirstNameWithHTMLTag() {

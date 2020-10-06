@@ -179,8 +179,15 @@ function l_verify_data($email, $pass1, $pass2, $nom, $prenom, $username, $naiss_
         if (mb_strlen($noTags, 'UTF-8') != $nb) {
             $err['pass1'] = 'La zone Mot de passe ne peut pas contenir de code HTML.';
 		}
-        else if ($nb < 4 || $nb > 20){
-            $err['pass1'] = 'Le mot de passe doit être constitué de 4 à 20 caractères.';
+        else if ($nb < 8 || $nb > 20){
+            $err['pass1'] = 'Le mot de passe doit être constitué de 8 à 20 caractères.';
+        }
+
+        //vérification que le mot de passe est composé d'au moin une majuscule, un chiffre et un caractére spécial
+        $pattern = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[]:;<>,.?/~_+-=|\]).{8,32}$";
+        if(preg_match($pattern,$pass1) == 0)
+        {
+            $err['pass1'] = 'Le mot de passe doit contenir au moin une majuscule, un chiffre et un caractère spécial.';
         }
 			
 	}
