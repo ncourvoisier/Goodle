@@ -15,7 +15,7 @@ error_reporting(E_ALL);
     mysqli_close($bd)
     redirige('../../index.php');
   }*/
-if (!isset($_SESSION['admin'])) {
+if (isset($_SESSION['admin']) && $_SESSION['admin'] == 0) {
   redirige('../../index.php');
 } else if (!isset($_SESSION['ID'])){
   redirige('login.php');
