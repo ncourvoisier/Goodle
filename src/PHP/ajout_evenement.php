@@ -60,6 +60,7 @@ function l_contenu_ae($err){
     '<a id="lien_connect" href="./login.php" title="Se Connecter">Connection</a>';
 
   } else {
+    echo $_SESSION['ID'];
 
     echo '<div id="ajout_evenement">';
 
@@ -244,7 +245,7 @@ function l_verify_event(){
       $referent = $_SESSION['ID'];
       $aaaammjj = $dateCloture_a*10000  + $dateCloture_m*100 + $dateCloture_j;
 
-      $sql = "INSERT INTO Evenement (Nom, Lieu, Referent, DateCloture) VALUES ('$nom', '$lieu', $referent, $aaaammjj)";
+      $sql = "INSERT INTO Evenement (Nom, Lieu, Referent, DateCloture) VALUES ('$nom', '$lieu', $referent, '$aaaammjj')";
 
       mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
