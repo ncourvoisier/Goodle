@@ -57,7 +57,7 @@ function l_contenu_ae($err){
   if (! isset($_SESSION['ID'])){ //Si non connecté, on demande à l'utilisateur de se connecter
 
     echo '<p>Vous n\'êtes pas connecté<p>',
-    '<a id="lien_connect" href="./login.php" title="Se Connecter">Connection</a>';
+    '<a id="lien_connect" href="./login.php" title="Se Connecter">Connexion</a>';
 
   } else {
 
