@@ -12,6 +12,9 @@ if (isset($_SESSION['admin']) && $_SESSION['admin'] == 0) {
 }
 
 goodle_header();
+if (isset($_SESSION['ID'])) {
+	echo '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
+}
 $errors = l_controle_piratage_ve();
 html_debut('Goodle | Voir event', '../src/CSS/styles.css');
 l_contenu_ve($errors);

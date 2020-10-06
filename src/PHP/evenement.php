@@ -7,6 +7,9 @@ require_once 'bibli_generale.php';
 error_reporting(E_ALL); // toutes les erreurs sont capturées (utile lors de la phase de développement)
 
 goodle_header();
+if (isset($_SESSION['ID'])) {
+	echo '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
+}
 
 if (isset($_SESSION['admin']) && $_SESSION['admin'] == 0) {
   redirige('../../index.php');
@@ -24,23 +27,21 @@ if (isset($_GET['remove_event'])) {
 		$deleting_error = 1;
 	}
 	if ($deleting_error == 0) {
-			$bd = bd_connect();
-
+		$bd = bd_connect();
 		$sql = 'SELECT * FROM Evenement WHERE ID = \'' . $_GET['remove_event'] . '\';';
-
 		$res = mysqli_query($bd, $sql);
 
 		if (mysqli_num_rows($res) == 0) {
 		$no_user = 1;
 		} else {
-			$sql = 'DELETE FROM Dateevenement WHERE IDEvent = ' . $_GET['remove_event'] . ';';
+			//$sql = 'DELETE FROM Dateevenement WHERE IDEvent = ' . $_GET['remove_event'] . ';';
+			$sql = 'DELETE date, dateevenement FROM date INNER JOIN dateevenement ON date.ID = dateevenement.IDDate WHERE dateevenement.IDEvent = ' . $_GET['remove_event'] . ';';
 			$result = mysqli_query($bd, $sql);
 			if ($result) {
 				$user_deleted = 1;
 			} else {
 				$deleting_error = 1;
 			}
-			
 			$sql = 'DELETE FROM Evenement WHERE ID = ' . $_GET['remove_event'] . ';';
 			$result = mysqli_query($bd, $sql);
 			if ($result) {
