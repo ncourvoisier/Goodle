@@ -147,7 +147,7 @@
 		}
 		
 		public function testDateTooYoung() {
-		    $err = l_verify_data('a@b.c', 'One234!8!', 'One234!8', 'Last', 'First', 'Username', 27, 9, 2015);
+		    $err = l_verify_data('a@b.c', 'One234!8', 'One234!8', 'Last', 'First', 'Username', 27, 9, 2015);
 			$this->assertEquals(1, count($err));
 			$this->assertArrayHasKey('date', $err);
 			$this->assertEquals('Votre date de naissance indique que vous avez moins de 12 ans.', $err['date']);
