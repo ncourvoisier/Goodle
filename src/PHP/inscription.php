@@ -183,12 +183,44 @@ function l_verify_data($email, $pass1, $pass2, $nom, $prenom, $username, $naiss_
             $err['pass1'] = 'Le mot de passe doit être constitué de 8 à 20 caractères.';
         }
 
+
+        
         //vérification que le mot de passe est composé d'au moin une majuscule, un chiffre et un caractére spécial
+        $maj = false;
+        $min = false;
+        $spec = false;
+        for ($i=0 ; $i<$nb ; $i++)
+        {
+            $letter = $pass1[$i];
+
+            if($letter >= 'a' && $letter <='z')
+            {
+                $min = true;
+            }
+
+            if($letter >= 'A' && $letter <='Z')
+            {
+                $maj = true;
+            }
+
+            if(strpos($letter,"*.!@$%^&(){}[]:;<>,.?/~_+-=|\\") == strlen("*.!@$%^&(){}[]:;<>,.?/~_+-=|\\)"))
+            {
+                $spec =true;
+            }
+        }
+
+        if($maj == false || $min == false || $spec == false)
+        {
+            $err['pass1'] = 'Le mot de passe doit contenir au moin une majuscule, un chiffre et un caractère spécial.';
+        }
+
+        /*
         $pattern = "^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$";
         if(preg_match($pattern,$pass1) == 0)
         {
             $err['pass1'] = 'Le mot de passe doit contenir au moin une majuscule, un chiffre et un caractère spécial.';
         }
+        */
 			
 	}
 	
