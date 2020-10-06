@@ -84,6 +84,8 @@ function l_contenu($errorsPiratage, $errorsChamps){
     '</table>',
     '</form>';
 
+    echo '<p> Retour à l\'évènement sans ajouter de date :<a href="./voir_event.php?event='.$event.'">Retour</a></p>';
+
   }
 }
 
