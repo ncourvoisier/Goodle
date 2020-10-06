@@ -186,7 +186,7 @@ function l_verify_data($email, $pass1, $pass2, $nom, $prenom, $username, $naiss_
 
         
         //vérification que le mot de passe est composé d'au moin une majuscule, un chiffre et un caractére spécial
-        $maj = false;
+        /*$maj = false;
         $min = false;
         $spec = false;
         for ($i=0 ; $i<$nb ; $i++)
@@ -211,8 +211,8 @@ function l_verify_data($email, $pass1, $pass2, $nom, $prenom, $username, $naiss_
 
         if($maj == false || $min == false || $spec == false)
         {
-            $err['pass1'] = 'Le mot de passe doit contenir au moin une majuscule, un chiffre et un caractère spécial.';
-        }
+            //$err['pass1'] = 'Le mot de passe doit contenir au moin une majuscule, un chiffre et un caractère spécial.';
+        }*/
 
         /*
         $pattern = "^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$";
