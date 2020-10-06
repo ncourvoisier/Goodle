@@ -244,7 +244,7 @@ function l_verify_event(){
       $referent = $_SESSION['ID'];
       $aaaammjj = $dateCloture_a*10000  + $dateCloture_m*100 + $dateCloture_j;
 
-      $sql = "INSERT INTO EVENEMENT (Nom, Lieu, Referent, DateCloture) VALUES ('$nom', '$lieu', $referent, $aaaammjj)";
+      $sql = "INSERT INTO Evenement (Nom, Lieu, Referent, DateCloture) VALUES ('$nom', '$lieu', $referent, $aaaammjj)";
 
       mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
@@ -287,7 +287,7 @@ function l_verify_event(){
 
 function insert_db_into_date($bd, $jour, $mois, $annee, $heure, $minute){
 
-  $sql = "INSERT INTO DATE (Jour, Mois, Annee, Heure, Minute) VALUES ($jour, $mois, $annee, $heure, $minute)";
+  $sql = "INSERT INTO Date (Jour, Mois, Annee, Heure, Minute) VALUES ($jour, $mois, $annee, $heure, $minute)";
 
   mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
@@ -295,7 +295,7 @@ function insert_db_into_date($bd, $jour, $mois, $annee, $heure, $minute){
 }
 
 function insert_db_into_dateEvenement($bd, $id_event, $id_date){
-  $sql = "INSERT INTO DATEEVENEMENT (IDEvent, IDDate) VALUES ($id_event, $id_date)";
+  $sql = "INSERT INTO DateEvenement (IDEvent, IDDate) VALUES ($id_event, $id_date)";
 
   mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 }
