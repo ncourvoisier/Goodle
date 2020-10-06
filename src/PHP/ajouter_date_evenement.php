@@ -8,7 +8,7 @@ error_reporting(E_ALL); // toutes les erreurs sont capturées (utile lors de la 
 
 $errorsPiratage = l_controle_piratage_event();
 $errorsChamps = isset($_POST['btnValiderAjoutDate']) ? l_verify_ajout_date() : array();
-html_debut('Goodle | Voir event', '../src/CSS/styles.css');
+html_debut('Goodle | Date Event', '../CSS/style.css');
 
 goodle_header();
 
