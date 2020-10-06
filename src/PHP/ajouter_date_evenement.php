@@ -139,7 +139,7 @@ function l_verify_ajout_date(){
 
      if (count($err)==0){
 
-       $sql = "INSERT INTO Date (Jour, Mois, Annee, Heure, Minute) VALUES ($dateCloture_day, $dateCloture_month, $dateCloture_year, $dateCloture_heure, $dateCloture_minute)";
+       $sql = "INSERT INTO Date (Jour, Mois, Annee, Heure, Minute) VALUES ($date_j, $date_m, $date_a, $heure_h, $heure_m)";
 
        mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
@@ -149,7 +149,7 @@ function l_verify_ajout_date(){
 
        mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-       redirige("voir_event.php?event=3");
+       redirige("voir_event.php?event=" . $event);
      }
      return $err;
     }
