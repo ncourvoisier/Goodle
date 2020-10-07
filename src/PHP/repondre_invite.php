@@ -118,12 +118,10 @@ function l_controle_piratage_ai() {
 
 function l_ajout_reponses($bd, $length,$idInvite, $listeDateEvent){
 	
-		print_r($length);
+		
 	for($i = 0;$i<$length;$i++){
 		$reponse='reponse'.($i+1);
-		print_r($reponse);
 		$reponses=$_POST[$reponse];
-		print_r($reponses);
 		insert_db_into_reponse($bd, $reponses, $idInvite, $listeDateEvent[$i]);	
 	}
 }
