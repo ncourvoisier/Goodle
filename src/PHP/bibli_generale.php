@@ -25,6 +25,7 @@ define('Z_PASSWORD', 'password');
 define('Z_DATE', 'date');
 define('Z_SUBMIT', 'submit');
 define('Z_HIDDEN', 'hidden');
+define('Z_RADIO', 'radio');
 
 define('NB_ANNEES_DATE_NAISSANCE', 120);
 
@@ -279,10 +280,12 @@ function form_ligne_date($label, $date, $heure){
 *
 * @return string Code HTML de la zone de formulaire
 */
-function form_input($type, $name, $value, $size=0) {
+function form_input($type, $name, $value, $size=0, $checked=0) {
    $value =  protect_sortie($value);
    $size = ($size == 0) ? '' : "size='{$size}'";
-   return "<input type='{$type}' name='{$name}' {$size} value='{$value}'>";
+   $checked = ($checked==0) ? '' : "checked";
+   
+   return "<input type='{$type}' name='{$name}' {$size} value='{$value}' {$checked}>";
 }
 
 /**
@@ -397,6 +400,8 @@ function form_date_and_hour($name, $jour, $mois, $annee, $heure, $minutes){
 	}
 	return $res;
 }
+
+
 
 /**
 * Extrait et renvoie le nom du fichier cible contenu dans une URL
