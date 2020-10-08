@@ -40,26 +40,19 @@ goodle_header();
 		
 	} else {
 		
-		
-			$IDevent = $_GET["IDEvent"];
-			$sql = "SELECT * FROM Invite Where IDEvent=".$IDevent." AND IDPersonne=".$_SESSION["ID"].";";
-			$res = mysqli_query($bd, $sql);
-			$t = mysqli_fetch_assoc($res);
 			
+			$IDevent = $_GET["IDEvent"];
+			$idInvite=insert_db_into_invite($bd, $IDevent, $_SESSION["ID"]);
 
-
-
-
-			$idInvite=$t['ID'];
-			if (mysqli_num_rows($res) != 1) {
+			/*if (mysqli_num_rows($res) != 1) {
 			  mysqli_free_result($res);
 			  mysqli_close($bd);
 			  echo '<p>Cette invitation n\'existe pas</p>',
 			  '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
 			  return;
-			}
+			}*/
 			
-			$sql2='SELECT date.*, evenement.*, dateevenement.id FROM dateevenement, evenement, date WHERE dateevenement.IDEvent = evenement.ID AND date.ID = dateevenement.IDDate AND evenement.ID =  ' . $IDevent . ';';$sql2='SELECT date.*, evenement.* FROM dateevenement INNER JOIN evenement INNER JOIN date WHERE dateevenement.IDEvent = evenement.ID AND date.ID = dateevenement.IDDate AND evenement.ID =  ' . $IDevent . ';';$sql2='SELECT date.*, evenement.* FROM dateevenement, evenement, date WHERE dateevenement.IDEvent = evenement.ID AND date.ID = dateevenement.IDDate AND evenement.ID =  ' . $IDevent . ';';
+			$sql2='SELECT date.*, evenement.*, dateevenement.id FROM dateevenement, evenement, date WHERE dateevenement.IDEvent = evenement.ID AND date.ID = dateevenement.IDDate AND evenement.ID =  ' . $IDevent . ';';
 			$res2 = mysqli_query($bd, $sql2);
 			
 			$length=mysqli_num_rows($res2);
@@ -76,7 +69,7 @@ goodle_header();
 			}else{
 		
 				 echo '<form method="POST" action="repondre_invite.php">',
-				'<table>';
+				'<h2>',$t['Nom'],' - ',$t['Lieu'],'</h2><table>';
 				$i=1;
 				$listeR="";
 				do{
@@ -85,16 +78,16 @@ goodle_header();
 					$minu=$t['Minute']<=9?'0'.$t['Minute']:$t['Minute'];
 					$date = 'Le '.$t['Jour'] . ' ' . get_mois($t['Mois']) . ' ' . $t['Annee'];
 					$heure = 'à ' . $t['Heure'] . 'h' . $minu ;
-					echo '<tr><td>',$t['Nom'],' - ',$t['Lieu'],'</td><td>',$date,' ',$heure,'</td><td>',form_input(Z_RADIO, $ListeR,'Oui'),'Oui</td><td>',form_input(Z_RADIO, $ListeR,'Non'),'Non</td><td>',form_input(Z_RADIO, $ListeR, 'Peutetre', 0, 1),'Peut-être</td></tr>';
+					echo '<tr><td>',$date,' ',$heure,'</td><td>',form_input(Z_RADIO, $ListeR,'Oui'),'Oui</td><td>',form_input(Z_RADIO, $ListeR,'Non'),'Non</td><td>',form_input(Z_RADIO, $ListeR, 'Peutetre', 0, 1),'Peut-être</td></tr>';
 					$i++;
 				}while($t = mysqli_fetch_assoc($res2));
 					
-					echo '<tr><td colspan="5" style="padding-top: 10px;" class="centered">', form_input(Z_SUBMIT,'btnValiderEvent','Valider'), '</td></tr>';
-					echo '<tr><td colspan="5" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'idInvite', $idInvite), '</td></tr>';
-					echo '<tr><td colspan="5" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'length', $length), '</td></tr>';
+					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_SUBMIT,'btnValiderEvent','Valider'), '</td></tr>';
+					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'idInvite', $idInvite), '</td></tr>';
+					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'length', $length), '</td></tr>';
 
 					$listeAEnvoyer = serialize($listeDateEvent);
-					echo '<tr><td colspan="5" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'listeDateEvent', $listeAEnvoyer), '</td></tr></table>';
+					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'listeDateEvent', $listeAEnvoyer), '</td></tr></table>';
 				
 			}
 			
@@ -131,6 +124,16 @@ function insert_db_into_reponse($bd, $reponses, $idInvite,  $idDateEvent){
    $sql = "INSERT INTO reponse (IDDateEvent, IDInvite, response) VALUES ($idDateEvent,$idInvite, '$reponses')";
 
 	mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+		
+}
+
+function insert_db_into_invite($bd, $iDEvent, $idPersonne){
+	
+   $sql = "INSERT INTO reponse (IDEvent, IDPersonne) VALUES ($iDEvent,$idPersonne)";
+
+	mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+
+	return mysqli_insert_id($bd);
 		
 }
 	
