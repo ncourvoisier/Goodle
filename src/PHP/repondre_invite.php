@@ -42,15 +42,15 @@ goodle_header();
 		
 			
 			$IDevent = $_GET["IDEvent"];
-			$idInvite=insert_db_into_invite($bd, $IDevent, $_SESSION["ID"]);
+			
+			$sql = "SELECT * FROM Invite Where IDEvent=".$IDevent." AND IDPersonne=".$_SESSION["ID"].";";
 
-			/*if (mysqli_num_rows($res) != 1) {
-			  mysqli_free_result($res);
-			  mysqli_close($bd);
-			  echo '<p>Cette invitation n\'existe pas</p>',
-			  '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
-			  return;
-			}*/
+			$res = mysqli_query($bd, $sql);
+			$t = mysqli_fetch_assoc($res);
+
+			if (mysqli_num_rows($res) < 0) {
+			  $idInvite=insert_db_into_invite($bd, $IDevent, $_SESSION["ID"]);
+			}
 			
 			$sql2='SELECT Date.*, Evenement.*, DateEvenement.id FROM DateEvenement, Evenement, Date WHERE DateEvenement.IDEvent = Evenement.ID AND Date.ID = DateEvenement.IDDate AND Evenement.ID =  ' . $IDevent . ';';
 			$res2 = mysqli_query($bd, $sql2);
