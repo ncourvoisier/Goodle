@@ -52,8 +52,8 @@ goodle_header();
 			  $idInvite=insert_db_into_invite($bd, $IDevent, $_SESSION["ID"]);
 			}else{
 			  $idInvite=$t["ID"];
+			}
 
-			
 			$sql2='SELECT Date.*, Evenement.*, DateEvenement.id FROM DateEvenement, Evenement, Date WHERE DateEvenement.IDEvent = Evenement.ID AND Date.ID = DateEvenement.IDDate AND Evenement.ID =  ' . $IDevent . ';';
 			$res2 = mysqli_query($bd, $sql2);
 			
