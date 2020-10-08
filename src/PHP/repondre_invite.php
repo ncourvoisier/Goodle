@@ -9,6 +9,7 @@ html_debut('Goodle | Reponse invitation', '../CSS/style.css');
 goodle_header();
 
 
+//verifie si l'utilisateur est connecté
 	
  if (!isset($_SESSION['ID'])){ 
 	
@@ -19,7 +20,8 @@ goodle_header();
 	
 	$bd = bd_connect();
 	 
-	if(isset($_POST["btnValiderEvent"])){
+
+	if(isset($_POST["btnValiderRep"])){
 			
 			$IDevent = $_POST["IDevent"];
 			$idInvite = insert_db_into_invite($bd, $IDevent, $_SESSION["ID"]);		
@@ -48,7 +50,7 @@ goodle_header();
 			$res = mysqli_query($bd, $sql);
 			$t = mysqli_fetch_assoc($res);
 
-			
+			// verifie s 'il y deja eu une première à l'invitation.
 			if (mysqli_num_rows($res) > 0) {
 			  mysqli_free_result($res);
 			  mysqli_close($bd);
@@ -65,12 +67,15 @@ goodle_header();
 			$listeDateEvent=array();
 			$t = mysqli_fetch_assoc($res2);
 			
-			
+			//verification que si la date du jour a dépassé la date de cloture.
 			$dateCloture=date_format(new DateTime($t['DateCloture']),'Y-m-d');
 			$timestamp1=strtotime($dateCloture);
 			$timestamp2= strtotime(date('Y-n-j'));
 			if( $timestamp1 < $timestamp2) {
 				echo '<p class="erreur">Vous avez depassé la date de cloture. (date de cloture :' . $dateCloture . ').</p>';
+				mysqli_close($bd);
+				echo '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
+				  return;
 			}else{
 		
 				 echo '<form method="POST" action="repondre_invite.php">',
@@ -87,12 +92,12 @@ goodle_header();
 					$i++;
 				}while($t = mysqli_fetch_assoc($res2));
 					
-					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_SUBMIT,'btnValiderEvent','Valider'), '</td></tr>';
-					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'length', $length), '</td></tr>';
-					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'IDevent', $IDevent), '</td></tr>';
+					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_SUBMIT,'btnValiderRep','Valider'), '</td></tr>';
+					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'length', $length), '</td></tr>';   //taille des reponse au date
+					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'IDevent', $IDevent), '</td></tr>'; //id de l'événement de l'invitation
 
 					$listeAEnvoyer = serialize($listeDateEvent);
-					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'listeDateEvent', $listeAEnvoyer), '</td></tr></table>';
+					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'listeDateEvent', $listeAEnvoyer), '</td></tr></table>'; // le tableau de dateevenement
 				
 			}
 			
