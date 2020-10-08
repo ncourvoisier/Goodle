@@ -24,8 +24,7 @@ goodle_header();
 			$idInvite = $_POST["idInvite"];			
 			$listeDateEvent = unserialize($_POST["listeDateEvent"]);
 			$length = $_POST["length"];
-			
-			l_ajout_reponses($bd, $length, $idInvite,$listeDateEvent);
+			l_ajout_reponses($bd, $length, $idInvite,$listeDateEvent, $update);			
 			mysqli_close($bd);
 			redirige("reponse_ok.php");
 	}	
@@ -48,10 +47,15 @@ goodle_header();
 			$res = mysqli_query($bd, $sql);
 			$t = mysqli_fetch_assoc($res);
 
-			if (mysqli_num_rows($res) < 0) {
+			
+			if (mysqli_num_rows($res) <= 0) {
 			  $idInvite=insert_db_into_invite($bd, $IDevent, $_SESSION["ID"]);
 			}else{
-			  $idInvite=$t["ID"];
+			  mysqli_free_result($res);
+			  mysqli_close($bd);
+			  echo '<p>Vous avez deja fait une première reponse à cette invitation </p>',
+			  '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
+			  return;
 			}
 
 			$sql2='SELECT Date.*, Evenement.*, DateEvenement.id FROM DateEvenement, Evenement, Date WHERE DateEvenement.IDEvent = Evenement.ID AND Date.ID = DateEvenement.IDDate AND Evenement.ID =  ' . $IDevent . ';';
@@ -87,6 +91,7 @@ goodle_header();
 					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_SUBMIT,'btnValiderEvent','Valider'), '</td></tr>';
 					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'idInvite', $idInvite), '</td></tr>';
 					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'length', $length), '</td></tr>';
+					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'update', $update), '</td></tr>';
 
 					$listeAEnvoyer = serialize($listeDateEvent);
 					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'listeDateEvent', $listeAEnvoyer), '</td></tr></table>';
@@ -138,5 +143,7 @@ function insert_db_into_invite($bd, $iDEvent, $idPersonne){
 	return mysqli_insert_id($bd);
 		
 }
+
+
 	
 	
