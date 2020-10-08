@@ -18,6 +18,14 @@ ob_end_flush();
 
 
 function l_contenu() {
+	if (isset($_SESSION['ID'])){
+			echo
+			'<h1>Bienvenue sur Goodle !</h1>',
+			'<p><a href="./src/PHP/ajout_evenement.php">Ajouter un évènement</a></p>';
+			if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1 ){
+				echo '<p>Voir les événements : <a href="./src/PHP/evenement.php">event</a>. </p>';
+			}
+		} else {
 
 	echo
 		'<h1>Bienvenue sur Goodle !</h1>',
@@ -26,6 +34,7 @@ function l_contenu() {
 		'<p>Nouveau venu sur Goodle ? Consultez notre <a href="./src/PHP/inscription.php">page d\'inscription</a> !',
 		'<p><a href="./src/PHP/ajout_evenement.php">Ajouter un évènement</a></p>';
 
+}
 }
 
 ?>
