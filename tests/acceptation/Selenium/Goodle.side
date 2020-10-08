@@ -1,0 +1,818 @@
+{
+  "id": "29d92396-f92b-4500-beb6-94a19b186667",
+  "version": "2.0",
+  "name": "Goodle",
+  "url": "http://m2gl.deptinfo-st.univ-fcomte.fr/~m2test3/preprod/index.php",
+  "tests": [{
+    "id": "3fac3599-840d-4fb8-8ab1-40d224b76d79",
+    "name": "AddDateEvent",
+    "commands": [{
+      "id": "f1954741-ca64-4d4b-ad47-e3c4dac148ec",
+      "comment": "",
+      "command": "open",
+      "target": "http://m2gl.deptinfo-st.univ-fcomte.fr/~m2test3/preprod/index.php",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "158a962b-348e-4f0d-9b05-4167968e5d0e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1382x784",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "343f414a-7f7f-4b80-8930-fea310d62ac3",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=ici",
+      "targets": [
+        ["linkText=ici", "linkText"],
+        ["css=p:nth-child(3) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'ici')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './src/PHP/login.php')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'ici')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5dda7b76-30b9-4b42-a678-3165cd300022",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=tr:nth-child(1) input", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div[@id='bcInscription']/form/table/tbody/tr/td[2]/input", "xpath:idRelative"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5fd500d0-d725-422d-a300-b75123fe0c94",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=tr:nth-child(1) input", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div[@id='bcInscription']/form/table/tbody/tr/td[2]/input", "xpath:idRelative"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": "testadmin@test.com"
+    }, {
+      "id": "42e32e83-d2a9-4904-b8f6-871bd110105b",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=tr:nth-child(2) input", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[@id='bcInscription']/form/table/tbody/tr[2]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[2]/td[2]/input", "xpath:position"]
+      ],
+      "value": "12345678"
+    }, {
+      "id": "f5f75165-2d80-49c7-9572-257c81fd5ea2",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=tr:nth-child(2) input", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[@id='bcInscription']/form/table/tbody/tr[2]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[2]/td[2]/input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "528aae58-4ac5-4e4b-91a0-c6d629315cfd",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=event",
+      "targets": [
+        ["linkText=event", "linkText"],
+        ["css=p:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'event')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './src/PHP/evenement.php')]", "xpath:href"],
+        ["xpath=//p[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'event')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "32761e85-984a-4c47-9fb1-e977531ddf4c",
+      "comment": "",
+      "command": "click",
+      "target": "css=li:nth-child(2) > a",
+      "targets": [
+        ["css=li:nth-child(2) > a", "css:finder"],
+        ["xpath=(//a[contains(text(),'voir event')])[2]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'voir_event.php?event=3')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7209560a-0150-4bc0-bb1e-6475778d34a4",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Ajouter Date",
+      "targets": [
+        ["linkText=Ajouter Date", "linkText"],
+        ["css=p > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Ajouter Date')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './ajouter_date_evenement.php?event=3')]", "xpath:href"],
+        ["xpath=//p/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Ajouter Date')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "88ef97c9-ccb7-4572-abb5-9089f4fb60e4",
+      "comment": "",
+      "command": "click",
+      "target": "name=DateEvent_j",
+      "targets": [
+        ["name=DateEvent_j", "name"],
+        ["css=select:nth-child(1)", "css:finder"],
+        ["xpath=//select[@name='DateEvent_j']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a26fc3f8-f5db-480f-a4df-4421592bfcd4",
+      "comment": "",
+      "command": "select",
+      "target": "name=DateEvent_j",
+      "targets": [],
+      "value": "label=11"
+    }, {
+      "id": "e3ff98a3-52f8-45e0-bc58-48f074265198",
+      "comment": "",
+      "command": "click",
+      "target": "css=select:nth-child(1) > option:nth-child(11)",
+      "targets": [
+        ["css=select:nth-child(1) > option:nth-child(11)", "css:finder"],
+        ["xpath=//option[@value='11']", "xpath:attributes"],
+        ["xpath=//option[11]", "xpath:position"],
+        ["xpath=//option[contains(.,'11')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4a513db8-7b17-4c1f-a1e9-f6537d531300",
+      "comment": "",
+      "command": "click",
+      "target": "name=DateEvent_m",
+      "targets": [
+        ["name=DateEvent_m", "name"],
+        ["css=select:nth-child(2)", "css:finder"],
+        ["xpath=//select[@name='DateEvent_m']", "xpath:attributes"],
+        ["xpath=//select[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "54d2895a-5d8c-4c86-abf5-01c6d823ae17",
+      "comment": "",
+      "command": "select",
+      "target": "name=DateEvent_m",
+      "targets": [],
+      "value": "label=Octobre"
+    }, {
+      "id": "48edffcf-909e-4462-9a4b-897484fc4f7f",
+      "comment": "",
+      "command": "click",
+      "target": "css=select:nth-child(2) > option:nth-child(10)",
+      "targets": [
+        ["css=select:nth-child(2) > option:nth-child(10)", "css:finder"],
+        ["xpath=(//option[@value='10'])[2]", "xpath:attributes"],
+        ["xpath=//select[2]/option[10]", "xpath:position"],
+        ["xpath=//option[contains(.,'Octobre')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9e3bd79d-034a-4aa1-85de-e3cef21de09b",
+      "comment": "",
+      "command": "click",
+      "target": "name=DateEvent_hr",
+      "targets": [
+        ["name=DateEvent_hr", "name"],
+        ["css=select:nth-child(5)", "css:finder"],
+        ["xpath=//select[@name='DateEvent_hr']", "xpath:attributes"],
+        ["xpath=//select[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "34e57340-d0ef-4607-bd25-b652cb5ce5ee",
+      "comment": "",
+      "command": "select",
+      "target": "name=DateEvent_hr",
+      "targets": [],
+      "value": "label=16"
+    }, {
+      "id": "7af8987b-da2e-43e0-9f22-7e8f15ac84f4",
+      "comment": "",
+      "command": "click",
+      "target": "css=select:nth-child(5) > option:nth-child(17)",
+      "targets": [
+        ["css=select:nth-child(5) > option:nth-child(17)", "css:finder"],
+        ["xpath=(//option[@value='16'])[2]", "xpath:attributes"],
+        ["xpath=//select[4]/option[17]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "543cf407-100e-4643-8b7b-bc01cf76ce10",
+      "comment": "",
+      "command": "click",
+      "target": "name=btnValiderAjoutDate",
+      "targets": [
+        ["name=btnValiderAjoutDate", "name"],
+        ["css=input", "css:finder"],
+        ["xpath=//input[@name='btnValiderAjoutDate']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "7842e33c-55dc-424a-b83f-5b9489ff40b3",
+    "name": "Connexion",
+    "commands": [{
+      "id": "0ce22202-513d-45b7-8c11-dcd5997febef",
+      "comment": "",
+      "command": "open",
+      "target": "http://m2gl.deptinfo-st.univ-fcomte.fr/~m2test3/preprod/index.php",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a230e29f-0e31-4660-88d9-89e40a312afe",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "550x692",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ca9ba9dd-fcc9-49dd-9fe8-56c2d31f4a31",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=ici",
+      "targets": [
+        ["linkText=ici", "linkText"],
+        ["css=p:nth-child(3) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'ici')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './src/PHP/login.php')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'ici')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "28b34049-c286-40f1-838b-1cda251eced5",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=tr:nth-child(1) input", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div[@id='bcInscription']/form/table/tbody/tr/td[2]/input", "xpath:idRelative"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "35972d61-af17-40c4-b359-8e963cae0f2d",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=tr:nth-child(1) input", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div[@id='bcInscription']/form/table/tbody/tr/td[2]/input", "xpath:idRelative"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": "testadmin@test.com"
+    }, {
+      "id": "34054810-ffe8-483e-a241-155d44997704",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=tr:nth-child(2) input", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[@id='bcInscription']/form/table/tbody/tr[2]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[2]/td[2]/input", "xpath:position"]
+      ],
+      "value": "12345678"
+    }, {
+      "id": "9b2914fd-ed2a-417c-aa66-b14884a17d9d",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=tr:nth-child(2) input", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[@id='bcInscription']/form/table/tbody/tr[2]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[2]/td[2]/input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "fcc2ca60-0a28-44af-80f3-016cbca45cd8",
+      "comment": "",
+      "command": "click",
+      "target": "css=button",
+      "targets": [
+        ["css=button", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Déconnexion')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "f4780289-de8e-41a3-bae8-b525a23cea5a",
+    "name": "AddEvent",
+    "commands": [{
+      "id": "84c302df-1b1e-42e1-9799-540f4e90448f",
+      "comment": "",
+      "command": "open",
+      "target": "http://m2gl.deptinfo-st.univ-fcomte.fr/~m2test3/preprod/index.php",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "56d2b8fe-7db7-450b-8d2e-a69edb6a577e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "550x692",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8aad9162-0cd8-49d3-b9e8-495666b91a5d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Ajouter un évènement",
+      "targets": [
+        ["linkText=Ajouter un évènement", "linkText"],
+        ["css=p:nth-child(5) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Ajouter un évènement')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './src/PHP/ajout_evenement.php')]", "xpath:href"],
+        ["xpath=//p[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Ajouter un évènement')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fcd99204-6b3a-4d3e-b48a-8ce7226cfdbe",
+      "comment": "",
+      "command": "click",
+      "target": "id=lien_connect",
+      "targets": [
+        ["id=lien_connect", "id"],
+        ["linkText=Connexion", "linkText"],
+        ["css=#lien_connect", "css:finder"],
+        ["xpath=//a[contains(text(),'Connexion')]", "xpath:link"],
+        ["xpath=//a[@id='lien_connect']", "xpath:attributes"],
+        ["xpath=//a[contains(@href, './login.php')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Connexion')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8deabded-df51-4a6e-a285-ee1da2595388",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=tr:nth-child(1) input", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div[@id='bcInscription']/form/table/tbody/tr/td[2]/input", "xpath:idRelative"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "806cfc94-b70b-40ce-a1ee-811950d0bd58",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=tr:nth-child(1) input", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div[@id='bcInscription']/form/table/tbody/tr/td[2]/input", "xpath:idRelative"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": "cborde414@gmail.com"
+    }, {
+      "id": "142221f5-610e-4f81-a757-f9312e3f0ad9",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=tr:nth-child(2) input", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[@id='bcInscription']/form/table/tbody/tr[2]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[2]/td[2]/input", "xpath:position"]
+      ],
+      "value": "Azerty1234!"
+    }, {
+      "id": "be48e286-ca5b-459a-9784-7152be1f138c",
+      "comment": "",
+      "command": "click",
+      "target": "name=btnConnexion",
+      "targets": [
+        ["name=btnConnexion", "name"],
+        ["css=.bcFormulaireBoite:nth-child(1) > input:nth-child(4)", "css:finder"],
+        ["xpath=//input[@name='btnConnexion']", "xpath:attributes"],
+        ["xpath=//div[@id='bcInscription']/form/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "390450e7-1ac5-4302-a507-485fd0e8b222",
+      "comment": "",
+      "command": "click",
+      "target": "name=NameEvent",
+      "targets": [
+        ["name=NameEvent", "name"],
+        ["css=tr:nth-child(1) input", "css:finder"],
+        ["xpath=//input[@name='NameEvent']", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr/td[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5836b32a-959c-4f25-96f4-93bd824e3ffa",
+      "comment": "",
+      "command": "type",
+      "target": "name=NameEvent",
+      "targets": [
+        ["name=NameEvent", "name"],
+        ["css=tr:nth-child(1) input", "css:finder"],
+        ["xpath=//input[@name='NameEvent']", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr/td[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Soirée"
+    }, {
+      "id": "7a90533a-f0de-49e1-bd78-13b723faef64",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5523cb91-52b3-450a-921d-58eaa99e1148",
+      "comment": "",
+      "command": "click",
+      "target": "name=LieuEvent",
+      "targets": [
+        ["name=LieuEvent", "name"],
+        ["css=tr:nth-child(2) input", "css:finder"],
+        ["xpath=//input[@name='LieuEvent']", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[2]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[2]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7bf47f4a-6bd4-4e7a-9e45-0a780fcfe4df",
+      "comment": "",
+      "command": "type",
+      "target": "name=LieuEvent",
+      "targets": [
+        ["name=LieuEvent", "name"],
+        ["css=tr:nth-child(2) input", "css:finder"],
+        ["xpath=//input[@name='LieuEvent']", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[2]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[2]/td[2]/input", "xpath:position"]
+      ],
+      "value": "Bar"
+    }, {
+      "id": "088cba31-34f6-41a3-bf35-d8eaec83cc4d",
+      "comment": "",
+      "command": "click",
+      "target": "name=DateEvent1_j",
+      "targets": [
+        ["name=DateEvent1_j", "name"],
+        ["css=tr:nth-child(3) select:nth-child(1)", "css:finder"],
+        ["xpath=//select[@name='DateEvent1_j']", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[3]/td[2]/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5d8c072f-e950-4984-8760-4c25353d653d",
+      "comment": "",
+      "command": "select",
+      "target": "name=DateEvent1_j",
+      "targets": [],
+      "value": "label=10"
+    }, {
+      "id": "bcdf88d2-ab5c-422c-a573-02f3a68a663e",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(3) select:nth-child(1) > option:nth-child(10)",
+      "targets": [
+        ["css=tr:nth-child(3) select:nth-child(1) > option:nth-child(10)", "css:finder"],
+        ["xpath=//option[@value='10']", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[3]/td[2]/select/option[10]", "xpath:idRelative"],
+        ["xpath=//option[10]", "xpath:position"],
+        ["xpath=//option[contains(.,'10')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "160c6819-e66e-41a7-a133-2b169c84ae52",
+      "comment": "",
+      "command": "click",
+      "target": "name=DateEvent1_m",
+      "targets": [
+        ["name=DateEvent1_m", "name"],
+        ["css=tr:nth-child(3) select:nth-child(2)", "css:finder"],
+        ["xpath=//select[@name='DateEvent1_m']", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[3]/td[2]/select[2]", "xpath:idRelative"],
+        ["xpath=//select[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2bf2f396-4ba8-4720-bc29-9d58d0e4ac5c",
+      "comment": "",
+      "command": "select",
+      "target": "name=DateEvent1_m",
+      "targets": [],
+      "value": "label=Octobre"
+    }, {
+      "id": "a0ae956c-11ff-4c86-bf80-acc5927e88ad",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(3) select:nth-child(2) > option:nth-child(10)",
+      "targets": [
+        ["css=tr:nth-child(3) select:nth-child(2) > option:nth-child(10)", "css:finder"],
+        ["xpath=(//option[@value='10'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[3]/td[2]/select[2]/option[10]", "xpath:idRelative"],
+        ["xpath=//select[2]/option[10]", "xpath:position"],
+        ["xpath=//option[contains(.,'Octobre')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c9928f6b-3006-461c-afa6-1d7041328f16",
+      "comment": "",
+      "command": "click",
+      "target": "name=DateEvent1_hr",
+      "targets": [
+        ["name=DateEvent1_hr", "name"],
+        ["css=tr:nth-child(3) select:nth-child(5)", "css:finder"],
+        ["xpath=//select[@name='DateEvent1_hr']", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[3]/td[2]/select[4]", "xpath:idRelative"],
+        ["xpath=//select[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f4385543-d8e6-49d5-9037-316dc0395451",
+      "comment": "",
+      "command": "select",
+      "target": "name=DateEvent1_hr",
+      "targets": [],
+      "value": "label=18"
+    }, {
+      "id": "d8e9e6d0-1358-4dcf-8aa8-cdfe2e7e9cc9",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(3) select:nth-child(5) > option:nth-child(19)",
+      "targets": [
+        ["css=tr:nth-child(3) select:nth-child(5) > option:nth-child(19)", "css:finder"],
+        ["xpath=(//option[@value='18'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[3]/td[2]/select[4]/option[19]", "xpath:idRelative"],
+        ["xpath=//select[4]/option[19]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "08824907-5bf9-4b9d-860d-5519ad2df0d3",
+      "comment": "",
+      "command": "click",
+      "target": "name=DateCloture_j",
+      "targets": [
+        ["name=DateCloture_j", "name"],
+        ["css=tr:nth-child(8) select:nth-child(1)", "css:finder"],
+        ["xpath=//select[@name='DateCloture_j']", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[8]/td[2]/select", "xpath:idRelative"],
+        ["xpath=//tr[8]/td[2]/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "454f0877-220e-4f6b-b508-d58d574d4b72",
+      "comment": "",
+      "command": "select",
+      "target": "name=DateCloture_j",
+      "targets": [],
+      "value": "label=9"
+    }, {
+      "id": "c968efa3-fa7d-4db1-9013-00f4f9788569",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(8) select:nth-child(1) > option:nth-child(9)",
+      "targets": [
+        ["css=tr:nth-child(8) select:nth-child(1) > option:nth-child(9)", "css:finder"],
+        ["xpath=(//option[@value='9'])[21]", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[8]/td[2]/select/option[9]", "xpath:idRelative"],
+        ["xpath=//tr[8]/td[2]/select/option[9]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "69b87cd0-5cfa-4b5a-9267-d809168924e5",
+      "comment": "",
+      "command": "click",
+      "target": "name=DateCloture_m",
+      "targets": [
+        ["name=DateCloture_m", "name"],
+        ["css=tr:nth-child(8) select:nth-child(2)", "css:finder"],
+        ["xpath=//select[@name='DateCloture_m']", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[8]/td[2]/select[2]", "xpath:idRelative"],
+        ["xpath=//tr[8]/td[2]/select[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "38d3a451-decc-4420-aafc-418a130e7167",
+      "comment": "",
+      "command": "select",
+      "target": "name=DateCloture_m",
+      "targets": [],
+      "value": "label=Octobre"
+    }, {
+      "id": "8d922592-ba4f-46f9-90f0-5fb977745d69",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(8) select:nth-child(2) > option:nth-child(10)",
+      "targets": [
+        ["css=tr:nth-child(8) select:nth-child(2) > option:nth-child(10)", "css:finder"],
+        ["xpath=(//option[@value='10'])[22]", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[8]/td[2]/select[2]/option[10]", "xpath:idRelative"],
+        ["xpath=//tr[8]/td[2]/select[2]/option[10]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a685c2c4-a184-4daf-9f6a-2c27d1ab09ed",
+      "comment": "",
+      "command": "click",
+      "target": "name=DateCloture_j",
+      "targets": [
+        ["name=DateCloture_j", "name"],
+        ["css=tr:nth-child(8) select:nth-child(1)", "css:finder"],
+        ["xpath=//select[@name='DateCloture_j']", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[8]/td[2]/select", "xpath:idRelative"],
+        ["xpath=//tr[8]/td[2]/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8df58f4d-3a10-47f1-9183-948c53846a69",
+      "comment": "",
+      "command": "select",
+      "target": "name=DateCloture_j",
+      "targets": [],
+      "value": "label=11"
+    }, {
+      "id": "35a98cee-a752-4d60-a31f-0ae1056d4515",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(8) select:nth-child(1) > option:nth-child(11)",
+      "targets": [
+        ["css=tr:nth-child(8) select:nth-child(1) > option:nth-child(11)", "css:finder"],
+        ["xpath=(//option[@value='11'])[21]", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[8]/td[2]/select/option[11]", "xpath:idRelative"],
+        ["xpath=//tr[8]/td[2]/select/option[11]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bbc4914a-8fb7-4dd0-9344-efcdae19853b",
+      "comment": "",
+      "command": "click",
+      "target": "name=DateCloture_m",
+      "targets": [
+        ["name=DateCloture_m", "name"],
+        ["css=tr:nth-child(8) select:nth-child(2)", "css:finder"],
+        ["xpath=//select[@name='DateCloture_m']", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[8]/td[2]/select[2]", "xpath:idRelative"],
+        ["xpath=//tr[8]/td[2]/select[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f4e82a4b-4dc7-47b1-a4ee-4e9182d6497c",
+      "comment": "",
+      "command": "select",
+      "target": "name=DateCloture_m",
+      "targets": [],
+      "value": "label=Novembre"
+    }, {
+      "id": "6f95271d-817b-4829-bb71-cdd873792719",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(8) select:nth-child(2) > option:nth-child(11)",
+      "targets": [
+        ["css=tr:nth-child(8) select:nth-child(2) > option:nth-child(11)", "css:finder"],
+        ["xpath=(//option[@value='11'])[22]", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[8]/td[2]/select[2]/option[11]", "xpath:idRelative"],
+        ["xpath=//tr[8]/td[2]/select[2]/option[11]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1e715e6b-17e0-42cd-a8f4-7c9baf2281df",
+      "comment": "",
+      "command": "click",
+      "target": "name=DateEvent1_j",
+      "targets": [
+        ["name=DateEvent1_j", "name"],
+        ["css=tr:nth-child(3) select:nth-child(1)", "css:finder"],
+        ["xpath=//select[@name='DateEvent1_j']", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[3]/td[2]/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "96f93e60-0740-4c49-a5d8-3f1399b2aa2c",
+      "comment": "",
+      "command": "select",
+      "target": "name=DateEvent1_j",
+      "targets": [],
+      "value": "label=14"
+    }, {
+      "id": "daf2c5cc-3fbe-41fc-ad5d-8902dd703eef",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(3) select:nth-child(1) > option:nth-child(14)",
+      "targets": [
+        ["css=tr:nth-child(3) select:nth-child(1) > option:nth-child(14)", "css:finder"],
+        ["xpath=//option[@value='14']", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[3]/td[2]/select/option[14]", "xpath:idRelative"],
+        ["xpath=//option[14]", "xpath:position"],
+        ["xpath=//option[contains(.,'14')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4da0b399-4908-447d-b89a-ffb1bebec385",
+      "comment": "",
+      "command": "click",
+      "target": "name=DateEvent1_m",
+      "targets": [
+        ["name=DateEvent1_m", "name"],
+        ["css=tr:nth-child(3) select:nth-child(2)", "css:finder"],
+        ["xpath=//select[@name='DateEvent1_m']", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[3]/td[2]/select[2]", "xpath:idRelative"],
+        ["xpath=//select[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1301fcfa-dcd9-4cb7-9ddc-fd159decf463",
+      "comment": "",
+      "command": "select",
+      "target": "name=DateEvent1_m",
+      "targets": [],
+      "value": "label=Novembre"
+    }, {
+      "id": "a2f75371-91ab-48c4-9f73-c8b6ee7eea13",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(3) select:nth-child(2) > option:nth-child(11)",
+      "targets": [
+        ["css=tr:nth-child(3) select:nth-child(2) > option:nth-child(11)", "css:finder"],
+        ["xpath=(//option[@value='11'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[3]/td[2]/select[2]/option[11]", "xpath:idRelative"],
+        ["xpath=//select[2]/option[11]", "xpath:position"],
+        ["xpath=//option[contains(.,'Novembre')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b97eda0d-e023-40f5-b805-ecdcab1e6178",
+      "comment": "",
+      "command": "click",
+      "target": "name=btnValiderEvent",
+      "targets": [
+        ["name=btnValiderEvent", "name"],
+        ["css=.centered > input", "css:finder"],
+        ["xpath=//input[@name='btnValiderEvent']", "xpath:attributes"],
+        ["xpath=//div[@id='ajout_evenement']/form/table/tbody/tr[9]/td/input", "xpath:idRelative"],
+        ["xpath=//tr[9]/td/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "08b4d43b-7ba3-45b1-a732-8f19f2689792",
+      "comment": "",
+      "command": "click",
+      "target": "css=button",
+      "targets": [
+        ["css=button", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Déconnexion')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "9341e0c5-ae30-4661-8f6f-e85831b332b7",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://m2gl.deptinfo-st.univ-fcomte.fr/~m2test3/preprod/index.php"],
+  "plugins": []
+}
