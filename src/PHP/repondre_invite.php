@@ -20,7 +20,8 @@ goodle_header();
 	$bd = bd_connect();
 	 
 	if(isset($_POST["btnValiderEvent"])){
-		
+			
+			$IDevent = $_POST["IDevent"];
 			$idInvite = insert_db_into_invite($bd, $IDevent, $_SESSION["ID"]);		
 			$listeDateEvent = unserialize($_POST["listeDateEvent"]);
 			$length = $_POST["length"];
@@ -88,6 +89,7 @@ goodle_header();
 					
 					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_SUBMIT,'btnValiderEvent','Valider'), '</td></tr>';
 					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'length', $length), '</td></tr>';
+					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'IDevent', $IDevent), '</td></tr>';
 
 					$listeAEnvoyer = serialize($listeDateEvent);
 					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'listeDateEvent', $listeAEnvoyer), '</td></tr></table>';
