@@ -60,7 +60,6 @@ function l_contenu_ae($err){
     '<a id="lien_connect" href="./login.php" title="Se Connecter">Connexion</a>';
 
   } else {
-    echo $_SESSION['ID'];
 
     echo '<div id="ajout_evenement">';
 
