@@ -52,7 +52,7 @@ goodle_header();
 			  return;
 			}*/
 			
-			$sql2='SELECT date.*, evenement.*, dateevenement.id FROM dateevenement, evenement, date WHERE dateevenement.IDEvent = evenement.ID AND date.ID = dateevenement.IDDate AND evenement.ID =  ' . $IDevent . ';';
+			$sql2='SELECT Date.*, Evenement.*, DateEvenement.id FROM DateEvenement, Evenement, Date WHERE DateEvenement.IDEvent = Evenement.ID AND Date.ID = DateEvenement.IDDate AND Evenement.ID =  ' . $IDevent . ';';
 			$res2 = mysqli_query($bd, $sql2);
 			
 			$length=mysqli_num_rows($res2);
