@@ -129,7 +129,7 @@ function insert_db_into_reponse($bd, $reponses, $idInvite,  $idDateEvent){
 
 function insert_db_into_invite($bd, $iDEvent, $idPersonne){
 	
-   $sql = "INSERT INTO reponse (IDEvent, IDPersonne) VALUES ($iDEvent,$idPersonne)";
+   $sql = "INSERT INTO invite (IDEvent, IDPersonne) VALUES ($iDEvent,$idPersonne)";
 
 	mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
