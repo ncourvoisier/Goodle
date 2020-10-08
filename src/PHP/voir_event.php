@@ -44,10 +44,7 @@ function l_contenu_ve($errors){
     $t = mysqli_fetch_assoc($res);
   	$idPersonne = $t['Referent'];
 
-    if ($idPersonne != $_SESSION['ID']){
-      echo '<p>Vous n\'êtes pas le créateur de cet évènement</p><p>Retour à la page d\'accueil : <a href="../../index.php">Accueil</a></p>';
-      return;
-    }
+
 		echo '<h2>Evenement ' . $event .'</h2>' . '<ul>';
 
 		$sql = 'SELECT * FROM Evenement WHERE ID = ' . $_GET['event'] . ';';
@@ -78,7 +75,11 @@ function l_contenu_ve($errors){
 			}
 			echo '</ul>';
 
-      echo '<p> Ajouter une date à cet évènement : <a href="./ajouter_date_evenement.php?event='.$event.'">Ajouter Date</a></p>';
+			if ($idPersonne == $_SESSION['ID']){
+	      echo '<p> Ajouter une date à cet évènement : <a href="./ajouter_date_evenement.php?event='.$event.'">Ajouter Date</a></p>';
+	    }
+
+
 
 			if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
 				echo '</br><a href="evenement.php?remove_event=' . $_GET['event'] . '"><button>Supprimer</button></a>';
