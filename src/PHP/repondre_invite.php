@@ -21,7 +21,7 @@ goodle_header();
 	 
 	if(isset($_POST["btnValiderEvent"])){
 		
-			$idInvite = $_POST["idInvite"];			
+			$idInvite = insert_db_into_invite($bd, $IDevent, $_SESSION["ID"]);		
 			$listeDateEvent = unserialize($_POST["listeDateEvent"]);
 			$length = $_POST["length"];
 			l_ajout_reponses($bd, $length, $idInvite,$listeDateEvent, $update);			
@@ -48,9 +48,7 @@ goodle_header();
 			$t = mysqli_fetch_assoc($res);
 
 			
-			if (mysqli_num_rows($res) <= 0) {
-			  $idInvite=insert_db_into_invite($bd, $IDevent, $_SESSION["ID"]);
-			}else{
+			if (mysqli_num_rows($res) > 0) {
 			  mysqli_free_result($res);
 			  mysqli_close($bd);
 			  echo '<p>Vous avez déjà fait une première réponse à cette invitation.</p>',
@@ -89,7 +87,6 @@ goodle_header();
 				}while($t = mysqli_fetch_assoc($res2));
 					
 					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_SUBMIT,'btnValiderEvent','Valider'), '</td></tr>';
-					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'idInvite', $idInvite), '</td></tr>';
 					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'length', $length), '</td></tr>';
 
 					$listeAEnvoyer = serialize($listeDateEvent);
