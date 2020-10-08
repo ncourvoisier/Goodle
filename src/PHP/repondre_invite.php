@@ -121,7 +121,7 @@ function l_ajout_reponses($bd, $length,$idInvite, $listeDateEvent){
 
 function insert_db_into_reponse($bd, $reponses, $idInvite,  $idDateEvent){
 	
-   $sql = "INSERT INTO reponse (IDDateEvent, IDInvite, response) VALUES ($idDateEvent,$idInvite, '$reponses')";
+   $sql = "INSERT INTO Reponse (IDDateEvent, IDInvite, response) VALUES ($idDateEvent,$idInvite, '$reponses')";
 
 	mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 		
@@ -129,7 +129,7 @@ function insert_db_into_reponse($bd, $reponses, $idInvite,  $idDateEvent){
 
 function insert_db_into_invite($bd, $iDEvent, $idPersonne){
 	
-   $sql = "INSERT INTO invite (IDEvent, IDPersonne) VALUES ($iDEvent,$idPersonne)";
+   $sql = "INSERT INTO Invite (IDEvent, IDPersonne) VALUES ($iDEvent,$idPersonne)";
 
 	mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
