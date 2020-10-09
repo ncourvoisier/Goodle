@@ -24,10 +24,25 @@ goodle_header();
 	if(isset($_POST["btnValiderRep"])){
 			
 			$IDevent = $_POST["IDevent"];
-			$idInvite = insert_db_into_invite($bd, $IDevent, $_SESSION["ID"]);		
+			$sql = 'SELECT * FROM Invite WHERE IDEvent='.$IDevent.' AND IDPersonne = '.$_SESSION["ID"].';';
+			print($sql);
+			$res = mysqli_query($bd, $sql);
+			$idInvite=0;
+			$alreadyI = mysqli_num_rows($res);
+
+			if($alreadyI ==0){
+				$idInvite = insert_db_into_invite($bd, $IDevent, $_SESSION["ID"]);		
+			}else{	
+				$t= mysqli_fetch_assoc($res);
+				print($alreadyI);
+				print_r($t);
+				$idInvite = $t["ID"];
+				print($idInvite);
+			}
+
 			$listeDateEvent = unserialize($_POST["listeDateEvent"]);
 			$length = $_POST["length"];
-			l_ajout_reponses($bd, $length, $idInvite,$listeDateEvent, $update);			
+			l_ajout_reponses($bd,$length,$idInvite,$listeDateEvent);			
 			mysqli_close($bd);
 			redirige("reponse_ok.php");
 	}	
@@ -50,16 +65,8 @@ goodle_header();
 			$res = mysqli_query($bd, $sql);
 			$t = mysqli_fetch_assoc($res);
 
-			// verifie s 'il y deja eu une première à l'invitation.
-			if (mysqli_num_rows($res) > 0) {
-			  mysqli_free_result($res);
-			  mysqli_close($bd);
-			  echo '<p>Vous avez déjà fait une première réponse à cette invitation.</p>',
-			  '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
-			  return;
-			}
 
-			$sql2='SELECT Date.*, Evenement.*, DateEvenement.id FROM DateEvenement, Evenement, Date WHERE DateEvenement.IDEvent = Evenement.ID AND Date.ID = DateEvenement.IDDate AND Evenement.ID =  ' . $IDevent . ';';
+			$sql2='SELECT Date.*, Evenement.*, DateEvenement.ID as IDDateEvent FROM DateEvenement, Evenement, Date WHERE DateEvenement.IDEvent = Evenement.ID AND Date.ID = DateEvenement.IDDate AND Evenement.ID =  ' . $IDevent . ';';
 			$res2 = mysqli_query($bd, $sql2);
 			
 			$length=mysqli_num_rows($res2);
@@ -84,7 +91,7 @@ goodle_header();
 				$listeR="";
 				do{
 					$ListeR='reponse'.$i;
-					array_push($listeDateEvent,$t['ID']);
+					array_push($listeDateEvent,$t['IDDateEvent']);
 					$minu=$t['Minute']<=9?'0'.$t['Minute']:$t['Minute'];
 					$date = 'Le '.$t['Jour'] . ' ' . get_mois($t['Mois']) . ' ' . $t['Annee'];
 					$heure = 'à ' . $t['Heure'] . 'h' . $minu ;
@@ -119,13 +126,33 @@ function l_controle_piratage_ai() {
 
 }
 
-function l_ajout_reponses($bd, $length,$idInvite, $listeDateEvent){
+function l_ajout_reponses($bd,$length, $idInvite, $listeDateEvent){
 	
+	$sql=" SELECT * FROM Reponse WHERE IDInvite=".$idInvite.";";
+	print($sql);
+	$res = mysqli_query($bd, $sql);
+	$t = mysqli_fetch_assoc($res);
+	if (mysqli_num_rows($res) > 0){
+		for($i = 0;$i<$length;$i++){
+
+			print_r($t);
+			$reponse='reponse'.($i+1);
+			$reponses=$_POST[$reponse];
+			echo ' - ';
+			print($reponses);
+			echo '</br>';
+			if($listeDateEvent[$i]==$t["IDDateEvent"] && strcmp($reponses, $t["Response"]) != 0){
+				update_db_set_reponse($bd, $reponses,$idInvite, $listeDateEvent[$i]);
+			}
+			$t = mysqli_fetch_assoc($res);
+		}
+	}else{
 		
-	for($i = 0;$i<$length;$i++){
-		$reponse='reponse'.($i+1);
-		$reponses=$_POST[$reponse];
-		insert_db_into_reponse($bd, $reponses, $idInvite, $listeDateEvent[$i]);	
+		for($i = 0;$i<$length;$i++){
+			$reponse='reponse'.($i+1);
+			$reponses=$_POST[$reponse];
+			insert_db_into_reponse($bd, $reponses, $idInvite, $listeDateEvent[$i]);	
+		}
 	}
 }
 
@@ -146,7 +173,12 @@ function insert_db_into_invite($bd, $iDEvent, $idPersonne){
 	return mysqli_insert_id($bd);
 		
 }
+function update_db_set_reponse($bd, $reponses,$idInvite, $idDateEvent){
 
+	$sql = " UPDATE Reponse SET response = '".$reponses."'  WHERE idInvite = ".$idInvite." AND IDDateEvent=".$idDateEvent.";";
+
+	mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+}
 
 	
 	

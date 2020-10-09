@@ -20,63 +20,81 @@ goodle_header();
 
 	$bd = bd_connect();
 
+	$idRef = $_SESSION["ID"];
+	$sql='SELECT * FROM Evenement WHERE Referent='.$idRef.' ;';
 
-	if(isset($_POST["btnValiderRep"])){
+	$res = mysqli_query($bd, $sql);
 
+	if (mysqli_num_rows($res) < 1) {
+		mysqli_free_result($res);
+		mysqli_close($bd);
+		echo '<p>Vous n\'avez aucun événement référent </p>',
+			 '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
+		return;
+	}
 
+	echo '<h1> Etat des Votes </h1><ul>';
 
-	}else{
+	while($t = mysqli_fetch_assoc($res)){
 
-		$idRef = $_SESSION["ID"];
-		$sql='SELECT Date.*, Evenement.*, Reponse.Response, COUNT(Response) as cpt, Date.ID as IDDate, Evenement.ID as IDEvent
-				   FROM DateEvenement, Evenement, Date, Reponse
-				   WHERE DateEvenement.IDEvent = Evenement.ID
-				   AND Date.ID = DateEvenement.IDDate
-                   AND DateEvenement.ID = Reponse.IDDateEvent
-				   AND Evenement.Referent = '.$idRef.'
-                   GROUP BY Reponse.IDDateEvent,Response;';
-
-		$res = mysqli_query($bd, $sql);
-
-		if (mysqli_num_rows($res) < 1) {
-			mysqli_free_result($res);
-			mysqli_close($bd);
-			echo '<p>Vous n\'avez aucun evenement référent ou vos evenement `n\'ont pas encore de vote</p>',
-				 '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
-			return;
-		}
-
-		$t = mysqli_fetch_assoc($res);
-		echo '<h1> Etat des Votes </h1><ul>';
-		$idDate=$t["IDDate"];
-		$idEvent=$t["IDEvent"];
-		$minu=$t['Minute']<=9?'0'.$t['Minute']:$t['Minute'];
-		$date = 'Le '.$t['Jour'] . ' ' . get_mois($t['Mois']) . ' ' . $t['Annee'];
-		$heure = 'à ' . $t['Heure'] . 'h' . $minu ;
-			echo '<h2>',$t['Nom'],' - ',$t['Lieu'],'</h2><ul>';
-			echo '<p><h3>',$date,' ',$heure,'</h3></p>';
+		$sql2='SELECT * , COUNT(Response) as cpt FROM DateEvenement, Date, Reponse 
+			   WHERE Date.ID = DateEvenement.IDDate
+			   AND DateEvenement.ID = Reponse.IDDateEvent
+			   AND DateEvenement.IDevent = '.$t['ID'].'
+			   GROUP BY IDDateEvent, response ;';
+		
+		//print_r($sql2);
+		echo '<h2>',$t['Nom'],' - ',$t['Lieu'],'</h2><ul>';
+		$res2 = mysqli_query($bd, $sql2);
+		$t2= mysqli_fetch_assoc($res2);
+		$oldt2=$t2;
+		$VPeutetre=0;
+		$VOui=0;
+		$VNon=0;
 		do{
 
-			if($t["IDEvent"] != $idEvent )
-				echo '</ul><h2>',$t['Nom'],' - ',$t['Lieu'],'</h2><ul>';
-
-			if(	$t["IDDate"] != $idDate ){
-				$minu=$t['Minute']<=9?'0'.$t['Minute']:$t['Minute'];
-				$date = 'Le '.$t['Jour'] . ' ' . get_mois($t['Mois']) . ' ' . $t['Annee'];
-				$heure = 'à ' . $t['Heure'] . 'h' . $minu ;
-				echo '<h3>',$date,' ',$heure,'</h3>';
+			if($t2["IDDate"] != $oldt2["IDDate"]){
+				
+				l_affiche_vote($oldt2['Heure'], $oldt2['Minute'], $oldt2['Jour'], $oldt2['Mois'], $oldt2['Annee'],$VPeutetre,$VOui,$VNon);
+			
+				$VPeutetre=0;
+				$VOui=0;
+				$VNon=0;
+				
 			}
-				echo '<ul>',
-					 '<li>Vote : ',$t["Response"],' (',$t["cpt"],')</li>',
-					 '</ul>';
+			
+			if(strcmp($t2["Response"],'Peutetre')==0)
+				$VPeutetre=	$t2["cpt"];
+			if(strcmp($t2["Response"],'Oui')==0)
+				$VOui=	$t2["cpt"];
+			if(strcmp($t2["Response"],'Non')==0)
+				$VNon=	$t2["cpt"];
+			
+			$oldt2=$t2;
+		}while($t2= mysqli_fetch_assoc($res2));
 
-			$idDate=$t["IDDate"];
-			$idEvent=$t["IDEvent"];
-		}while($t = mysqli_fetch_assoc($res));
+		l_affiche_vote($oldt2['Heure'], $oldt2['Minute'], $oldt2['Jour'], $oldt2['Mois'], $oldt2['Annee'],$VPeutetre,$VOui,$VNon);
+
 		echo '</ul>';
 	}
+	echo '</ul>';
+		
 }
+
 
 html_fin();
 
 ob_end_flush();
+
+
+function l_affiche_vote( $heur, $min, $jour, $mois, $annee,  $voteP, $voteO, $voteN){
+
+	$minu=$min<=9?'0'.$min:$min;
+	$date = 'Le '.$jour . ' ' . get_mois($mois) . ' ' . $annee;
+	$heure = 'à ' . $heur . 'h' . $minu ;
+	echo '<h3>',$date,' ',$heure,'</h3>',
+	 '<ul>';
+	echo '<li>Vote : Peut être (',$voteP,')</li>';
+	echo '<li>Vote : Oui (',$voteO,')</li>';
+	echo '<li>Vote : Non (',$voteN,')</li></ul>';
+}
