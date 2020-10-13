@@ -70,11 +70,11 @@ html_fin();
 
 function l_notifications_auv($user_deleted, $deleting_error, $no_user) {
   if ($user_deleted) {
-    echo '<p class="success">L\'utilisateur ' . $_GET['remove_user'] . ' a bien été supprimé.';
+    echo '<p class="alert alert-success">L\'utilisateur ' . $_GET['remove_user'] . ' a bien été supprimé.';
   } else if ($deleting_error) {
-    echo '<p class="erreur">La suppression de l\'utilisateur ' . $_GET['remove_user'] . ' a rencontré un problème.';
+    echo '<p class="alert alert-danger">La suppression de l\'utilisateur ' . $_GET['remove_user'] . ' a rencontré un problème.';
   } else if ($no_user) {
-    echo '<p class="erreur">L\'utilisateur ' . $_GET['remove_user'] . ' n\'existe pas.';
+    echo '<p class="alert alert-danger">L\'utilisateur ' . $_GET['remove_user'] . ' n\'existe pas.';
   }
 }
 
