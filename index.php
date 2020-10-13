@@ -21,10 +21,12 @@ function l_contenu() {
 	if (isset($_SESSION['ID'])){
 			echo
 			'<h1>Bienvenue sur Goodle !</h1>',
-			'<p><a href="./src/PHP/ajout_evenement.php">Ajouter un évènement</a></p>';
+			'<p><a href="./src/PHP/ajout_evenement.php">Ajouter un évènement</a></p>',
+			'<p><a href="./src/PHP/invitation">Voir les invitations</a><p>';
 			if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1 ){
 				echo '<p>Voir les événements : <a href="./src/PHP/evenement.php">event</a>. </p>';
 			}
+			
 		} else {
 
 	echo
