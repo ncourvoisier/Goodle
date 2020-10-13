@@ -11,6 +11,9 @@ $errors = l_controle_piratage_ve();
 html_debut('Goodle | Voir event', '../src/CSS/styles.css');
 
 goodle_header();
+if (isset($_SESSION['ID'])) {
+	echo '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
+}
 
 if (isset($_POST['btnSupprimerEventUtilisateur']) && count($errors)==0){
 	$err = l_supprimer_event();
