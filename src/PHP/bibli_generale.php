@@ -521,7 +521,12 @@ function compare_deux_heures($heure1, $minute1, $heure2, $minute2){
 }
 
 function ecrireHeure($heure, $minute){
-	$res = "$heure h ";
+	$res = "";
+	if ($heure == 0){
+		$res=$res.'00 h ';
+	}else{
+		$res=$res."$heure h ";
+	}
 	if ($minute == 0){
 		$res=$res.'00';
 	}else{

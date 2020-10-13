@@ -9,6 +9,8 @@ error_reporting(E_ALL); // toutes les erreurs sont capturées (utile lors de la 
 // si $_POST non vide
 ($_POST) && l_control_piratage();
 
+echo '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
+
 // si utilisateur déjà authentifié, on le redirige sur la page appelante, ou à défaut sur l'index
 if (isset($_SESSION['ID'])){
     $page = '../../index.php';

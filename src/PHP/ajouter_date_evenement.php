@@ -11,6 +11,9 @@ $errorsChamps = isset($_POST['btnValiderAjoutDate']) ? l_verify_ajout_date() : a
 html_debut('Goodle | Date Event', '../CSS/style.css');
 
 goodle_header();
+if (isset($_SESSION['ID'])) {
+	echo '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
+}
 
 l_contenu($errorsPiratage, $errorsChamps);
 html_fin();
