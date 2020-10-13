@@ -38,12 +38,21 @@ if (isset($_SESSION['ID'])) {
 	echo '<h1> Etat des Votes </h1><ul>';
 
 	while($t = mysqli_fetch_assoc($res)){
+    $order = '';
+    $dir = 'ASC';
+
+    if (isset($_GET['order']) && isset($_GET['dir']) && $_GET['dir'] == 'desc') {
+      $dir = 'DESC';
+    }
+    if (isset($_GET['order']) && $_GET['order'] == 'date') {
+      $order = 'ORDER BY Annee ' . $dir .', Mois ' . $dir . ' , Jour ' . $dir . ', Heure ' . $dir . ', Minute ' . $dir;
+    }
 
 		$sql2='SELECT * , COUNT(Response) as cpt FROM DateEvenement, Date, Reponse
 			   WHERE Date.ID = DateEvenement.IDDate
 			   AND DateEvenement.ID = Reponse.IDDateEvent
 			   AND DateEvenement.IDevent = '.$t['ID'].'
-			   GROUP BY IDDateEvent, response ;';
+			   GROUP BY IDDateEvent, Response ' . $order . ';';
 
 		//print_r($sql2);
 		echo '<h2>',$t['Nom'],' - ',$t['Lieu'],'</h2><ul>';
@@ -81,6 +90,7 @@ if (isset($_SESSION['ID'])) {
 
 		}while($t2= mysqli_fetch_assoc($res2));
 
+    choose_order("./voir_etat_vote.php");
     if ($afficher){
       l_affiche_vote($oldt2['Heure'], $oldt2['Minute'], $oldt2['Jour'], $oldt2['Mois'], $oldt2['Annee'],$VPeutetre,$VOui,$VNon);
 
