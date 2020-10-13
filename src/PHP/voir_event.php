@@ -78,7 +78,18 @@ function l_contenu_ve($errors){
 				echo '</br>';
 			}
 
-			$sql3 = 'SELECT * FROM DateEvenement NATURAL JOIN Date WHERE IDEvent ='.$_GET['event'].';';
+			$order = '';
+			$dir = 'ASC';
+
+			if (isset($_GET['order']) && isset($_GET['dir']) && $_GET['dir'] == 'desc') {
+				$dir = 'DESC';
+			}
+			if (isset($_GET['order']) && $_GET['order'] == 'date') {
+				$order = 'ORDER BY Annee ' . $dir .', Mois ' . $dir . ' , Jour ' . $dir . ', Heure ' . $dir . ', Minute ' . $dir;
+			}
+
+
+			$sql3 = 'SELECT * FROM DateEvenement NATURAL JOIN Date WHERE IDEvent ='.$_GET['event'].' ' . $order . ';';
 			$res3 = mysqli_query($bd, $sql3);
 
 			echo '<ul>';
@@ -93,6 +104,7 @@ function l_contenu_ve($errors){
 				echo '</li>';
 			}
 			echo '</ul>';
+			choose_order("./voir_event.php");
 
 			if ($createurConnecte){
 	      echo '<p> Ajouter une date à cet évènement : <a href="./ajouter_date_evenement.php?event='.$event.'">Ajouter Date</a></p>';

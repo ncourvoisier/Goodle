@@ -77,7 +77,17 @@ goodle_header();
 
 			$IDevent = $_GET["IDEvent"];
 
-			$sql2='SELECT Date.*, Evenement.*, DateEvenement.ID as IDDateEvent FROM DateEvenement, Evenement, Date WHERE DateEvenement.IDEvent = Evenement.ID AND Date.ID = DateEvenement.IDDate AND Evenement.ID =  ' . $IDevent . ';';
+			$order = '';
+			$dir = 'ASC';
+
+			if (isset($_GET['order']) && isset($_GET['dir']) && $_GET['dir'] == 'desc') {
+				$dir = 'DESC';
+			}
+			if (isset($_GET['order']) && $_GET['order'] == 'date') {
+				$order = 'ORDER BY Annee ' . $dir .', Mois ' . $dir . ' , Jour ' . $dir . ', Heure ' . $dir . ', Minute ' . $dir;
+			}
+
+			$sql2='SELECT Date.*, Evenement.*, DateEvenement.ID as IDDateEvent FROM DateEvenement, Evenement, Date WHERE DateEvenement.IDEvent = Evenement.ID AND Date.ID = DateEvenement.IDDate AND Evenement.ID =  ' . $IDevent . ' ' . $order . ';';
 			$res2 = mysqli_query($bd, $sql2);
 
 			$length=mysqli_num_rows($res2);
@@ -119,9 +129,7 @@ goodle_header();
 					mysqli_free_result($response_result);
 					$i++;
 				}while($t = mysqli_fetch_assoc($res2));
-
-				print_r($listeDateEvent);
-
+					choose_order("./repondre_invite.php", "IDEvent");
 					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_SUBMIT,'btnValiderRep','Valider'), '</td></tr>';
 					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'length', $length), '</td></tr>';   //taille des reponse au date
 					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'IDevent', $IDevent), '</td></tr>'; //id de l'événement de l'invitation

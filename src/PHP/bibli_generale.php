@@ -535,4 +535,12 @@ function goodle_header($pathToRoot = '../../') {
         echo '<a href="', $pathToRoot,'/src/PHP/deconnexion.php"><button type="button" class="btn btn-danger">Déconnexion</button></a>';
     }
 }
+
+function choose_order($path, $event_param = 'event') {
+	echo '<div class="btn-group" role="group" aria-label="Basic example">
+		<a href="'. $path . '?' . $event_param . '=' . $_GET[$event_param] . '&order=date&dir=asc"><button type="button" class="btn btn-secondary">Date croissante</button></a>
+		<a href="'. $path .'?' . $event_param . '=' . $_GET[$event_param] . '&order=date&dir=desc"><button type="button" class="btn btn-secondary">Date décroissante</button></a>
+		<a href="'. $path . '?' . $event_param .'=' . $_GET[$event_param] . '"><button type="button" class="btn btn-secondary">Pas de tri</button></a>
+	</div>';
+}
 ?>
