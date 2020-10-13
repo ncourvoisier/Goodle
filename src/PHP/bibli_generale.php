@@ -284,7 +284,7 @@ function form_input($type, $name, $value, $size=0, $checked=0) {
    $value =  protect_sortie($value);
    $size = ($size == 0) ? '' : "size='{$size}'";
    $checked = ($checked==0) ? '' : "checked";
-   
+
    return "<input type='{$type}' name='{$name}' {$size} value='{$value}' {$checked}>";
 }
 
@@ -515,6 +515,16 @@ function compare_deux_heures($heure1, $minute1, $heure2, $minute2){
 		return 1;
 	}
 	return 1;
+}
+
+function ecrireHeure($heure, $minute){
+	$res = "$heure h ";
+	if ($minute == 0){
+		$res=$res.'00';
+	}else{
+		$res=$res."$minute";
+	}
+	return $res;
 }
 
 function goodle_header($pathToRoot = '../../') {
