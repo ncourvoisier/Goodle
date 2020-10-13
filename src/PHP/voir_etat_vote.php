@@ -37,48 +37,61 @@ goodle_header();
 
 	while($t = mysqli_fetch_assoc($res)){
 
-		$sql2='SELECT * , COUNT(Response) as cpt FROM DateEvenement, Date, Reponse 
+		$sql2='SELECT * , COUNT(Response) as cpt FROM DateEvenement, Date, Reponse
 			   WHERE Date.ID = DateEvenement.IDDate
 			   AND DateEvenement.ID = Reponse.IDDateEvent
 			   AND DateEvenement.IDevent = '.$t['ID'].'
 			   GROUP BY IDDateEvent, response ;';
-		
+
 		//print_r($sql2);
 		echo '<h2>',$t['Nom'],' - ',$t['Lieu'],'</h2><ul>';
 		$res2 = mysqli_query($bd, $sql2);
 		$t2= mysqli_fetch_assoc($res2);
+
 		$oldt2=$t2;
 		$VPeutetre=0;
 		$VOui=0;
 		$VNon=0;
+
+    $afficher = ($t2['cpt']!=0);
+
 		do{
 
 			if($t2["IDDate"] != $oldt2["IDDate"]){
-				
+        /*echo 'a';
 				l_affiche_vote($oldt2['Heure'], $oldt2['Minute'], $oldt2['Jour'], $oldt2['Mois'], $oldt2['Annee'],$VPeutetre,$VOui,$VNon);
-			
+*/
 				$VPeutetre=0;
 				$VOui=0;
 				$VNon=0;
-				
-			}
-			
-			if(strcmp($t2["Response"],'Peutetre')==0)
-				$VPeutetre=	$t2["cpt"];
-			if(strcmp($t2["Response"],'Oui')==0)
-				$VOui=	$t2["cpt"];
-			if(strcmp($t2["Response"],'Non')==0)
-				$VNon=	$t2["cpt"];
-			
+
+			} else {
+
+  			if(strcmp($t2["Response"],'Peutetre')==0)
+  				$VPeutetre=	$t2["cpt"];
+  			if(strcmp($t2["Response"],'Oui')==0)
+  				$VOui=	$t2["cpt"];
+  			if(strcmp($t2["Response"],'Non')==0)
+  				$VNon=	$t2["cpt"];
+
+      }
 			$oldt2=$t2;
+
 		}while($t2= mysqli_fetch_assoc($res2));
 
-		l_affiche_vote($oldt2['Heure'], $oldt2['Minute'], $oldt2['Jour'], $oldt2['Mois'], $oldt2['Annee'],$VPeutetre,$VOui,$VNon);
+    if ($afficher){
+      l_affiche_vote($oldt2['Heure'], $oldt2['Minute'], $oldt2['Jour'], $oldt2['Mois'], $oldt2['Annee'],$VPeutetre,$VOui,$VNon);
 
-		echo '</ul>';
+    } else {
+      echo '<p>Cet évènement ne possède encore aucune réponses</p>';
+    }
+
+    echo '<p><a href="./voir_event.php?event='.$t['ID'].'">Voir l\'évènement</a></p>';
+
+echo '</ul>';
 	}
 	echo '</ul>';
-		
+
 }
 
 
@@ -91,10 +104,11 @@ function l_affiche_vote( $heur, $min, $jour, $mois, $annee,  $voteP, $voteO, $vo
 
 	$minu=$min<=9?'0'.$min:$min;
 	$date = 'Le '.$jour . ' ' . get_mois($mois) . ' ' . $annee;
-	$heure = 'à ' . $heur . 'h' . $minu ;
+	$heure = 'à ' . ecrireHeure($heur,$minu) ;
 	echo '<h3>',$date,' ',$heure,'</h3>',
 	 '<ul>';
 	echo '<li>Vote : Peut être (',$voteP,')</li>';
 	echo '<li>Vote : Oui (',$voteO,')</li>';
 	echo '<li>Vote : Non (',$voteN,')</li></ul>';
+
 }

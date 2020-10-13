@@ -74,9 +74,8 @@ goodle_header();
 
 			$sql = "SELECT * FROM Invite Where IDEvent=".$IDevent." AND IDPersonne=".$_SESSION["ID"].";";
 
-			$res = mysqli_query($bd, $sql);
-			$t = mysqli_fetch_assoc($res);
 
+			$IDevent = $_GET["IDEvent"];
 
 			$sql2='SELECT Date.*, Evenement.*, DateEvenement.ID as IDDateEvent FROM DateEvenement, Evenement, Date WHERE DateEvenement.IDEvent = Evenement.ID AND Date.ID = DateEvenement.IDDate AND Evenement.ID =  ' . $IDevent . ';';
 			$res2 = mysqli_query($bd, $sql2);
