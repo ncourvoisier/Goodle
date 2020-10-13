@@ -239,6 +239,11 @@ $err = isset($_POST['btnValiderEvent']) ? l_verify_event() : array();
 html_debut('Goodle | Evènement', '../CSS/style.css');
 
 goodle_header();
+if (isset($_SESSION['ID'])) {
+	echo '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
+	$pagePrec = $_SERVER['HTTP_REFERER'];
+	echo '<a href='.$pagePrec.'>Retour</a>';
+}
 
 l_contenu_me($err);
 
