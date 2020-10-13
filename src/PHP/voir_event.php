@@ -92,7 +92,11 @@ function l_contenu_ve($errors){
 			}
 
 
-			$sql3 = 'SELECT * FROM DateEvenement NATURAL JOIN Date WHERE IDEvent ='.$_GET['event'].' ' . $order . ';';
+			echo " ", $_GET['event'], " ";
+					
+					
+			//cette requete est fausse
+			$sql3 = 'SELECT * FROM DateEvenement INNER JOIN date ON DateEvenement.IDDate = Date.ID AND DateEvenement.IDEvent ='.$_GET['event'].' ' . $order . ';';
 			$res3 = mysqli_query($bd, $sql3);
 
 			echo '<ul>';
