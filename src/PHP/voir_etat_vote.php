@@ -37,12 +37,12 @@ goodle_header();
 
 	while($t = mysqli_fetch_assoc($res)){
 
-		$sql2='SELECT * , COUNT(Response) as cpt FROM DateEvenement, Date, Reponse 
+		$sql2='SELECT * , COUNT(Response) as cpt FROM DateEvenement, Date, Reponse
 			   WHERE Date.ID = DateEvenement.IDDate
 			   AND DateEvenement.ID = Reponse.IDDateEvent
 			   AND DateEvenement.IDevent = '.$t['ID'].'
 			   GROUP BY IDDateEvent, response ;';
-		
+
 		//print_r($sql2);
 		echo '<h2>',$t['Nom'],' - ',$t['Lieu'],'</h2><ul>';
 		$res2 = mysqli_query($bd, $sql2);
@@ -54,22 +54,22 @@ goodle_header();
 		do{
 
 			if($t2["IDDate"] != $oldt2["IDDate"]){
-				
+
 				l_affiche_vote($oldt2['Heure'], $oldt2['Minute'], $oldt2['Jour'], $oldt2['Mois'], $oldt2['Annee'],$VPeutetre,$VOui,$VNon);
-			
+
 				$VPeutetre=0;
 				$VOui=0;
 				$VNon=0;
-				
+
 			}
-			
+
 			if(strcmp($t2["Response"],'Peutetre')==0)
 				$VPeutetre=	$t2["cpt"];
 			if(strcmp($t2["Response"],'Oui')==0)
 				$VOui=	$t2["cpt"];
 			if(strcmp($t2["Response"],'Non')==0)
 				$VNon=	$t2["cpt"];
-			
+
 			$oldt2=$t2;
 		}while($t2= mysqli_fetch_assoc($res2));
 
@@ -78,7 +78,7 @@ goodle_header();
 		echo '</ul>';
 	}
 	echo '</ul>';
-		
+
 }
 
 
@@ -91,7 +91,7 @@ function l_affiche_vote( $heur, $min, $jour, $mois, $annee,  $voteP, $voteO, $vo
 
 	$minu=$min<=9?'0'.$min:$min;
 	$date = 'Le '.$jour . ' ' . get_mois($mois) . ' ' . $annee;
-	$heure = 'à ' . $heur . 'h' . $minu ;
+	$heure = 'à ' . ecrireHeure($heur,$minu) ;
 	echo '<h3>',$date,' ',$heure,'</h3>',
 	 '<ul>';
 	echo '<li>Vote : Peut être (',$voteP,')</li>';

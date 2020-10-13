@@ -67,6 +67,11 @@ function l_contenu_ve($errors){
 					$res2 = mysqli_query($bd, $sql2);
 					$t2 = mysqli_fetch_assoc($res2);
 					echo $field . ' : ' . $t2['Prenom'] . ' ' . $t2['Nom'] . '. Username : ' . $t2['Username'] . ', Email : ' . $t2['Email'];
+				} else if ($field == "DateCloture"){
+					$dateF = explode(' ', $value);
+					$partieDate = explode('-',$dateF[0]);
+					$partieHeure = explode(':',$dateF[1]);
+					echo "Date de clôture : ".$partieDate[2].' '.get_mois($partieDate[1]).' '.$partieDate[0].' à '.ecrireHeure($partieHeure[0], $partieHeure[1]);
 				} else {
 					echo $field . ' : ' . $value;
 				}
@@ -81,7 +86,7 @@ function l_contenu_ve($errors){
 			$createurConnecte = ($idPersonne == $_SESSION['ID']);
 
 			while ($t3 = mysqli_fetch_assoc($res3)) {
-				echo '<li>Date : Le ' . $t3['Jour'] . ' ' . get_mois($t3['Mois']) . ' ' . $t3['Annee'] . ' à ' . $t3['Heure'] . 'h' . $t3['Minute'];
+				echo '<li>Date : Le ' . $t3['Jour'] . ' ' . get_mois($t3['Mois']) . ' ' . $t3['Annee'] . ' à ' . ecrireHeure($t3['Heure'],$t3['Minute']);
 				if ($createurConnecte){
 					echo ' <a href="./supprimer_date_event?dateEvent='.$t3['ID'].'&event='.$_GET['event'].'">Supprimer</a>';
 				}

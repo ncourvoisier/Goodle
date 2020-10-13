@@ -93,7 +93,7 @@ function l_contenu_sde($errors, $deja_supp){
 
   $champsDateSupp = mysqli_fetch_assoc($res);
 
-  echo '<h2>Suppression de la date '.$champsDateSupp['Jour'].' '.get_mois($champsDateSupp['Mois']).' '.$champsDateSupp['Annee'].' ['.$champsDateSupp['Heure'].':'.$champsDateSupp['Minute'].']</h2>';
+  echo '<h2>Suppression de la date '.$champsDateSupp['Jour'].' '.get_mois($champsDateSupp['Mois']).' '.$champsDateSupp['Annee'].' à '.ecrireHeure($champsDateSupp['Heure'],$champsDateSupp['Minute']).'</h2>';
 
   echo 'Etes vous sûr de bien vouloir supprimer cette date ?';
 
