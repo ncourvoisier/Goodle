@@ -12,7 +12,14 @@ html_debut('Goodle | Voir event', '../src/CSS/styles.css');
 
 goodle_header();
 
-l_contenu_ve($errors);
+if (isset($_POST['btnSupprimerEventUtilisateur']) && count($errors)==0){
+	$err = l_supprimer_event();
+	if(count($err)){
+		l_contenu_ve($err);
+	}
+} else {
+	l_contenu_ve($errors);
+}
 html_fin();
 ob_end_flush();
 
@@ -66,7 +73,7 @@ function l_contenu_ve($errors){
 				echo '</br>';
 			}
 
-			$sql3 = 'SELECT * FROM DateEvenement NATURAL JOIN Date WHERE IDEvent =' . $_GET['event'] . ';';
+			$sql3 = 'SELECT * FROM DateEvenement NATURAL JOIN Date WHERE IDEvent ='.$_GET['event'].';';
 			$res3 = mysqli_query($bd, $sql3);
 
 			echo '<ul>';
@@ -86,10 +93,12 @@ function l_contenu_ve($errors){
 	      echo '<p> Ajouter une date à cet évènement : <a href="./ajouter_date_evenement.php?event='.$event.'">Ajouter Date</a></p>';
 	    }
 
-
-
 			if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
 				echo '</br><a href="evenement.php?remove_event=' . $_GET['event'] . '"><button>Supprimer</button></a>';
+			} else if ($createurConnecte){
+					echo '<form method=POST action="voir_event.php?event='.$_GET['event'].'">',
+					form_input(Z_SUBMIT,'btnSupprimerEventUtilisateur','Supprimer l\'évènement'),
+					'</form>';
 			}
 		}
 	}
@@ -103,6 +112,44 @@ function l_controle_piratage_ve() {
 		$err['event_format'] = "L'identifiant de l'evenement doit être un nombre.";
 	}
 	return $err;
+}
+
+function l_supprimer_event(){
+
+	$errors=array();
+
+	if (!isset($_GET['event'])) {
+		$errors['event'] = "L'id de l'évènement' être renseignée.";
+	}
+	if (!preg_match('/^[0-9]*$/', $_GET['event'])) {
+		$errors['event'] = "L'identifiant de l'évènement doit être un nombre.";
+	}
+
+	if (count($errors)!=0){
+		return $errors;
+	}
+
+	$bd=bd_connect();
+
+	$sql = 'SELECT * FROM Evenement WHERE ID = \'' . $_GET['event'] . '\';';
+	$res = mysqli_query($bd, $sql);
+
+	if (mysqli_num_rows($res) == 0) {
+		$errors['event'] = "Cet évènement n'existe pas";
+		return $errors;
+	}
+
+	$sql = 'DELETE date, dateevenement FROM date INNER JOIN dateevenement ON date.ID = dateevenement.IDDate WHERE dateevenement.IDEvent = '.$_GET['event'].';';
+	$res = mysqli_query($bd, $sql);
+
+	$sql = 'DELETE FROM Evenement WHERE ID = '.$_GET['event'].';';
+	$res = mysqli_query($bd, $sql);
+
+	echo '<p> L\'évènement a bien été supprimé</p>';
+
+	echo '<p><a href="../../index.php">Retour accueil</a></p>';
+
+	return $errors;
 }
 
 ?>
