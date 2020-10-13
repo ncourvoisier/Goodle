@@ -70,12 +70,19 @@ function l_contenu_ve($errors){
 			$res3 = mysqli_query($bd, $sql3);
 
 			echo '<ul>';
+
+			$createurConnecte = ($idPersonne == $_SESSION['ID']);
+
 			while ($t3 = mysqli_fetch_assoc($res3)) {
-				echo '<li>Date : Le ' . $t3['Jour'] . ' ' . get_mois($t3['Mois']) . ' ' . $t3['Annee'] . ' à ' . $t3['Heure'] . 'h' . $t3['Minute'] . '</li>';
+				echo '<li>Date : Le ' . $t3['Jour'] . ' ' . get_mois($t3['Mois']) . ' ' . $t3['Annee'] . ' à ' . $t3['Heure'] . 'h' . $t3['Minute'];
+				if ($createurConnecte){
+					echo ' <a href="./supprimer_date_event?dateEvent='.$t3['ID'].'&event='.$_GET['event'].'">Supprimer</a>';
+				}
+				echo '</li>';
 			}
 			echo '</ul>';
 
-			if ($idPersonne == $_SESSION['ID']){
+			if ($createurConnecte){
 	      echo '<p> Ajouter une date à cet évènement : <a href="./ajouter_date_evenement.php?event='.$event.'">Ajouter Date</a></p>';
 	    }
 
