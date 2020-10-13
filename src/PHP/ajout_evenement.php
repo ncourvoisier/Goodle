@@ -58,6 +58,7 @@ function l_contenu_ae($err){
 
     echo '<p>Vous n\'êtes pas connecté<p>',
     '<a id="lien_connect" href="./login.php" title="Se Connecter">Connexion</a>';
+	redirige('./login.php');
 
   } else {
 

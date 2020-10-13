@@ -7,6 +7,9 @@ require_once 'bibli_generale.php';
 html_debut('Goodle | Invitation', '../src/CSS/styles.css');
 
 goodle_header();
+if (isset($_SESSION['ID'])) {
+	echo '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
+}
 
 
 //verifie si l'utilisateur est connecté
