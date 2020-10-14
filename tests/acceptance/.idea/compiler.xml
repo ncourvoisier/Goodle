@@ -9,5 +9,8 @@
         <module name="acceptance" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="acceptance" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
