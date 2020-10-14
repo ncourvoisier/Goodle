@@ -105,9 +105,9 @@ if (isset($_SESSION['ID'])) {
 			if( $timestamp1 < $timestamp2) {
 				echo '<p class="erreur">Vous avez depassé la date de cloture. (date de cloture :' . $dateCloture . ').</p>';
 				$test = true;
-				mysqli_close($bd);
+				//mysqli_close($bd);
 				echo '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
-				  return;
+				  //return;
 			}/*else{
 
 				 echo '<form method="POST" action="repondre_invite.php">',
