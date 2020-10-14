@@ -46,7 +46,8 @@ function l_contenu($errorsPiratage, $errorsChamps){
     }
 
 
-    $sql = "SELECT Referent FROM Evenement WHERE ID = $event";
+
+    $sql = "SELECT Referent, DateCloture FROM Evenement WHERE ID = $event";
     $res = mysqli_query($bd, $sql);
 
     if (mysqli_num_rows($res) != 1) {
@@ -57,6 +58,16 @@ function l_contenu($errorsPiratage, $errorsChamps){
     }
 
     $t = mysqli_fetch_assoc($res);
+
+    $testDateCloture = $t['DateCloture'];
+    $timestamp1=strtotime($testDateCloture);
+		$timestamp2= strtotime(date('Y-n-j'));
+    if( $timestamp1 < $timestamp2) {
+      echo '<p class="erreur">Vous avez depassé la date de cloture. (date de cloture :' . $testDateCloture . ').</p>';
+      mysqli_close($bd);
+      return;
+    }
+
   	$idPersonne = $t['Referent'];
 
     if ($idPersonne != $_SESSION['ID']){

@@ -101,45 +101,49 @@ if (isset($_SESSION['ID'])) {
 			$dateCloture=date_format(new DateTime($t['DateCloture']),'Y-m-d');
 			$timestamp1=strtotime($dateCloture);
 			$timestamp2= strtotime(date('Y-n-j'));
+			$test = false; // pour désactiver els boutons radio dans le cas d'un dépassement de la date cloture
 			if( $timestamp1 < $timestamp2) {
 				echo '<p class="erreur">Vous avez depassé la date de cloture. (date de cloture :' . $dateCloture . ').</p>';
-				mysqli_close($bd);
-				echo '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
-				  return;
-			}else{
-
-				 echo '<form method="POST" action="repondre_invite.php">',
-				'<h2>',$t['Nom'],' - ',$t['Lieu'],'</h2><table>';
-				$i=1;
-				$listeR="";
-				do{
-					$sql='SELECT Response, count(Reponse.ID) as Num FROM Reponse WHERE IDDateEvent = ' . $t['IDDateEvent'] . ' GROUP BY Response;';
-					$response_result = mysqli_query($bd, $sql);
-					$responses = array();
-					$responses['Oui'] = 0;
-					$responses['Non'] = 0;
-					$responses['Peutetre'] = 0;
-					while($resp = mysqli_fetch_assoc($response_result)) {
-						$responses[$resp['Response']] = $resp['Num'];
-					}
-					$ListeR = $t['Annee'] . $t['Mois'] . $t['Jour'] . $t['Heure'] . $t['Minute'];
-					$listeDateEvent[$ListeR] = $t['IDDateEvent'];
-					$minu=$t['Minute']<=9?'0'.$t['Minute']:$t['Minute'];
-					$date = 'Le '.$t['Jour'] . ' ' . get_mois($t['Mois']) . ' ' . $t['Annee'];
-					$heure = 'à ' . $t['Heure'] . 'h' . $minu ;
-					echo '<tr><td>',$date,' ',$heure,'</td><td>',form_input(Z_RADIO, $ListeR,'Oui'),'Oui (' . $responses['Oui'] . ')</td><td>',form_input(Z_RADIO, $ListeR,'Non'),'Non (' . $responses['Non'] . ')</td><td>',form_input(Z_RADIO, $ListeR, 'Peutetre', 0, 1),'Peut-être (' . $responses['Peutetre'] . ')</td></tr>';
-					mysqli_free_result($response_result);
-					$i++;
-				}while($t = mysqli_fetch_assoc($res2));
-					choose_order("./repondre_invite.php", "IDEvent");
-					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_SUBMIT,'btnValiderRep','Valider'), '</td></tr>';
-					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'length', $length), '</td></tr>';   //taille des reponse au date
-					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'IDevent', $IDevent), '</td></tr>'; //id de l'événement de l'invitation
-
-					$listeAEnvoyer = serialize($listeDateEvent);
-					echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'listeDateEvent', $listeAEnvoyer), '</td></tr></table>'; // le tableau de dateevenement
-
+				$test = true;
 			}
+
+			echo '<form method="POST" action="repondre_invite.php">',
+			'<h2>',$t['Nom'],' - ',$t['Lieu'],'</h2><table>';
+			$i=1;
+			$listeR="";
+			do{
+				$sql='SELECT Response, count(Reponse.ID) as Num FROM Reponse WHERE IDDateEvent = ' . $t['IDDateEvent'] . ' GROUP BY Response;';
+				$response_result = mysqli_query($bd, $sql);
+				$responses = array();
+				$responses['Oui'] = 0;
+				$responses['Non'] = 0;
+				$responses['Peutetre'] = 0;
+				while($resp = mysqli_fetch_assoc($response_result)) {
+					$responses[$resp['Response']] = $resp['Num'];
+				}
+				$ListeR = $t['Annee'] . $t['Mois'] . $t['Jour'] . $t['Heure'] . $t['Minute'];
+				$listeDateEvent[$ListeR] = $t['IDDateEvent'];
+				$minu=$t['Minute']<=9?'0'.$t['Minute']:$t['Minute'];
+				$date = 'Le '.$t['Jour'] . ' ' . get_mois($t['Mois']) . ' ' . $t['Annee'];
+				$heure = 'à ' . $t['Heure'] . 'h' . $minu ;
+				if($test == false)
+				{
+					echo '<tr><td>',$date,' ',$heure,'</td><td>',form_input(Z_RADIO, $ListeR,'Oui'),'Oui (' . $responses['Oui'] . ')</td><td>',form_input(Z_RADIO, $ListeR,'Non'),'Non (' . $responses['Non'] . ')</td><td>',form_input(Z_RADIO, $ListeR, 'Peutetre', 0, 1),'Peut-être (' . $responses['Peutetre'] . ')</td></tr>';
+				}
+				if($test)
+				{
+					echo '<tr><td>',$date,' ',$heure,'</td><td> Oui (' . $responses['Oui'] . ')</td><td>Non (' . $responses['Non'] . ')</td><td>Peut-être (' . $responses['Peutetre'] . ')</td></tr>';
+				}
+				mysqli_free_result($response_result);
+				$i++;
+			}while($t = mysqli_fetch_assoc($res2));
+				choose_order("./repondre_invite.php", "IDEvent");
+				//echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_SUBMIT,'btnValiderRep','Valider'), '</td></tr>';
+				echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'length', $length), '</td></tr>';   //taille des reponse au date
+				echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'IDevent', $IDevent), '</td></tr>'; //id de l'événement de l'invitation
+
+				$listeAEnvoyer = serialize($listeDateEvent);
+				echo '<tr><td colspan="4" style="padding-top: 10px;" class="centered">', form_input(Z_HIDDEN,'listeDateEvent', $listeAEnvoyer), '</td></tr></table>'; // le tableau de dateevenement
 
 	}
 }
