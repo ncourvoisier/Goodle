@@ -5,7 +5,7 @@ session_start();
 require_once 'bibli_generale.php';
 
 function l_contenu_me($err ){
-	
+
 	$bd = bd_connect();
 
 	$errors=l_controle_piratage_ai();
@@ -13,37 +13,37 @@ function l_contenu_me($err ){
 		foreach ($errors as $code => $e) {
 		echo '<p class="erreur">' . $e . '</p>';
 		}
-		
+
 	} else {
-		
+
 	  $idEvent=$_GET['event'];
 
-	  $sql='SELECT * FROM Evenement, DateEvenement, date WHERE Evenement.ID = DateEvenement.IDEvent AND DateEvenement.IDDate = date.ID AND Evenement.ID = '.$idEvent.' ;';
-	  
+	  $sql='SELECT * FROM Evenement, DateEvenement, Date WHERE Evenement.ID = DateEvenement.IDEvent AND DateEvenement.IDDate = Date.ID AND Evenement.ID = '.$idEvent.' ;';
+
 	  $res = mysqli_query($bd, $sql);
-	  
+
 	  $date_j = array();
 	  $date_m = array();
 	  $date_a = array();
 	  $heure_h = array();
 	  $heure_m = array();
 	  $listIDDate = array();
-	  
-	  $length=mysqli_num_rows($res);
+
+	  $length = mysqli_num_rows($res);
 	  $t = mysqli_fetch_assoc($res);
 
-		  
+
 	  $nameEvent = isset($_POST['NameEvent']) ? $_POST['NameEvent'] : $t['Nom'];
 	  $lieuEvent = isset($_POST['LieuEvent']) ? $_POST['LieuEvent'] : $t['Lieu'];
-	  
+
 	  $dateCloture_j = isset($_POST['DateCloture_j'])?$_POST['DateCloture_j']:date_format(new DateTime($t['DateCloture']),'d');
 	  $dateCloture_m = isset($_POST['DateCloture_m'])?$_POST['DateCloture_m']:date_format(new DateTime($t['DateCloture']),'m');
 	  $dateCloture_a = isset($_POST['DateCloture_a'])?$_POST['DateCloture_a']:date_format(new DateTime($t['DateCloture']),'Y');
 	  $heureCloture_h = isset($_POST['DateCloture_hr'])?$_POST['DateCloture_hr']:date_format(new DateTime($t['DateCloture']),'H');
 	  $heureCloture_m = isset($_POST['DateCloture_min'])?$_POST['DateCloture_min']:date_format(new DateTime($t['DateCloture']),'i');
-	  
+
 	  for($i = 0; $i<$length;$i++){
-		  
+
 		  array_push($date_j, $t['Jour']);
 		  array_push($date_m,  $t['Mois']);
 		  array_push($date_a,  $t['Annee']);
@@ -51,16 +51,16 @@ function l_contenu_me($err ){
 		  array_push($heure_m,  $t['Minute']);
 		  array_push($listIDDate,  $t['IDDate']);
 		  $num=$i+1;
-		  
+
 		  $date_j[$i] = isset($_POST['DateEvent'.$num .'_j'])?$_POST['DateEvent'.$num .'_j']:$t['Jour'];
 		  $data_j[$i] = isset($_POST['DateEvent'.$num .'_m'])?$_POST['DateEvent'.$num .'_m']: $t['Mois'];
 		  $date_a[$i] = isset($_POST['DateEvent'.$num .'_a'])?$_POST['DateEvent'.$num .'_a']:$t['Annee'];
 		  $heure_h[$i] = isset($_POST['DateEvent'.$num .'_hr'])?$_POST['DateEvent'.$num .'_hr']:$t['Heure'];
 		  $heure_m[$i] = isset($_POST['DateEvent'.$num .'_min'])?$_POST['DateEvent'.$num .'_min']:$t['Minute'];
-		  
+
 		  $t=mysqli_fetch_assoc($res);
-			
-	  }  
+
+	  }
 	  $listIDDate=serialize($listIDDate);
 	  echo '<h1>Modification de l\'évènement '. $nameEvent.'</h1>';
 
@@ -102,7 +102,7 @@ function l_contenu_me($err ){
 
 function l_verify_event(){
   $err = array();
-  
+
   $date_j = array();
   $date_m = array();
   $date_a = array();
@@ -113,7 +113,7 @@ function l_verify_event(){
 
 
   $length=$_POST['lengthDate'];
-  
+
   for($i=0;$i<$length;$i++){
 	 $num=$i+1;
 	array_push($date_j, $_POST['DateEvent'.$num .'_j']);
@@ -162,12 +162,12 @@ function l_verify_event(){
     * VERIFICATION DES DATES
     *
     */
-	
+
 	$res = compare_date($dateCloture_j, $dateCloture_m, $dateCloture_a, 0, 0);
     if ($res == 1){
       $err['DateCloture'] = "[Date clôture] Veuillez choisir une date future";
     }
-	
+
 	for ($i=0;$i<$length;$i++){
 		 $num=$i+1;
 		$res = compare_date($date_j[$i], $date_m[$i], $date_a[$i], $heure_h[$i], $heure_m[$i]);
@@ -201,7 +201,7 @@ function l_verify_event(){
 		for($i=0;$i<$length;$i++){
 			//print($listIDDate[$i]);
 			update_db_date($bd, $date_j[$i], $date_m[$i], $date_a[$i], $heure_h[$i], $heure_m[$i],$listIDDate[$i]);
-		
+
 		}
 
 			mysqli_close($bd);
@@ -241,7 +241,7 @@ html_debut('Goodle | Evènement', '../CSS/style.css');
 goodle_header();
 if (isset($_SESSION['ID'])) {
 	echo '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
-	$pagePrec = $_SERVER['HTTP_REFERER'];
+	$pagePrec = /*$_SERVER['HTTP_REFERER'] ? $_SERVER['HTTP_REFERER'] :*/ '../../index/php';
 	echo '<a href='.$pagePrec.'>Retour</a>';
 }
 
