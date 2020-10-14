@@ -20,16 +20,16 @@ if (isset($_SESSION['ID'])){
         $nom_page = url_get_nom_fichier($page);
         // suppression des éventuelles boucles de redirection
         if (($nom_page == 'login.php') || ($nom_page == 'inscription.php')){
-            $page = '../../index.php'; 
+            $page = '../../index.php';
         } // si la page appelante n'appartient pas à notre site
 	else if (! in_array($nom_page, get_pages_goodle())){
             $page = '../../index.php';
-        }  
+        }
     }
     redirige($page);
 }
 
-$err = isset($_POST['btnSInscrire']) ? l_inscription() : array(); 
+$err = isset($_POST['btnSInscrire']) ? l_inscription() : array();
 
 html_debut('Goodle | Inscription', '../styles/bookshop.css');
 
@@ -59,16 +59,16 @@ function l_contenu($err) {
 	$naiss_m = isset($_POST['naiss_m']) ? $_POST['naiss_m'] : 1;
 	$naiss_a = isset($_POST['naiss_a']) ? $_POST['naiss_a'] : 2000;
 
-	echo 
+	echo
 		'<H1>Inscription</H1>';
 	if (count($err) > 0) {
-		echo '<p class="erreur">Votre inscription n\'a pas pu être réalisée à cause des erreurs suivantes : ';
+		echo '<p id="error_inscription" class="erreur">Votre inscription n\'a pas pu être réalisée à cause des erreurs suivantes : ';
 		foreach ($err as $v) {
 			echo '<br> - ', $v;
 		}
-		echo '</p>';	
+		echo '</p>';
 	}
-	
+
     if (isset($_POST['source'])){
         $source = $_POST['source'];
     }
@@ -83,8 +83,8 @@ function l_contenu($err) {
     else{
         $source = '../../index.php';
     }
-	
-	echo 	
+
+	echo
 		'<form method="post" action="inscription.php">',
 			form_input(Z_HIDDEN, 'source', $source),
 			'<p>Pour vous inscrire, merci de fournir les informations suivantes. </p>',
@@ -99,7 +99,7 @@ function l_contenu($err) {
 				'<tr><td colspan="2" style="padding-top: 10px;" class="centered">', form_input(Z_SUBMIT,'btnSInscrire','Je m\'inscris !'), '</td></tr>',
 			'</table>',
 		'</form>';
-}	
+}
 
 /**
  * Objectif : détecter les tentatives de piratage
@@ -135,7 +135,7 @@ function l_control_piratage(){
         $aa = date('Y');
         ($_POST['naiss_j'] < 1 || $_POST['naiss_j'] > 31 || $_POST['naiss_m'] < 1 || $_POST['naiss_m'] > 12 ||
         $_POST['naiss_a'] > $aa || $_POST['naiss_a'] <= $aa - NB_ANNEES_DATE_NAISSANCE) && exit_session();
-        
+
         return;     // => ok, pas de problème détecté
     }
     exit_session();
@@ -143,7 +143,7 @@ function l_control_piratage(){
 
 function l_verify_data($email, $pass1, $pass2, $nom, $prenom, $username, $naiss_j, $naiss_m, $naiss_a) {
     $err = array();
-    
+
     /*$email = trim($_POST['email']);
 	$pass1 = trim($_POST['pass1']);
 	$pass2 = trim($_POST['pass2']);
@@ -153,7 +153,7 @@ function l_verify_data($email, $pass1, $pass2, $nom, $prenom, $username, $naiss_
 	$naiss_j = (int)$_POST['naiss_j'];
 	$naiss_m = (int)$_POST['naiss_m'];
 	$naiss_a = (int)$_POST['naiss_a'];*/
-	
+
 	// vérification email
     $noTags = strip_tags($email);
     if ($noTags != $email){
@@ -163,17 +163,17 @@ function l_verify_data($email, $pass1, $pass2, $nom, $prenom, $username, $naiss_
         /*$i = mb_strpos($email, '@', 0, 'UTF-8');
         $j = mb_strpos($email, '.', 0, 'UTF-8');
         if ($i === FALSE || $j === FALSE || $i >= j){
-            $err['email'] = 'L\'adresse email ne respecte pas le bon format.';	
+            $err['email'] = 'L\'adresse email ne respecte pas le bon format.';
         }
         // le test suivant rend inutile celui qui précède
         else */if (! filter_var($email, FILTER_VALIDATE_EMAIL)){
             $err['email'] = 'L\'adresse email ne respecte pas le bon format.';
         }
     }
-    
+
 	// vérification des mots de passe
 	if ($pass1 != $pass2) {
-		$err['pass1'] = 'Les mots de passe doivent être identiques.';	
+		$err['pass1'] = 'Les mots de passe doivent être identiques.';
 	}
 	else {
 		$nb = mb_strlen($pass1, 'UTF-8');
@@ -186,7 +186,7 @@ function l_verify_data($email, $pass1, $pass2, $nom, $prenom, $username, $naiss_
         }
 
 
-        
+
         //vérification que le mot de passe est composé d'au moin une majuscule, un chiffre et un caractére spécial
         $maj = false;
         $digit = false;
@@ -223,16 +223,16 @@ function l_verify_data($email, $pass1, $pass2, $nom, $prenom, $username, $naiss_
             $err['pass1'] = 'Le mot de passe doit contenir au moin une majuscule, un chiffre et un caractère spécial.';
         }
         */
-			
+
 	}
-	
+
 	// vérification des noms et prenoms
 	$noTags = strip_tags($prenom);
     if ($noTags != $prenom){
         $err['prenom'] = 'Le prénom ne peut pas contenir de code HTML.';
     }
     else if (empty($prenom)) {
-		$err['prenom'] = 'Le prénom doit être renseigné.';	
+		$err['prenom'] = 'Le prénom doit être renseigné.';
     }
     /*elseif (! preg_match("/^[[:alpha:]][[:alpha:]\- ']{1,99}$/", $nomprenom)) { // ne fct pas avec les accents
         $err['nomprenom'] = 'Le nom et le prénom ne sont pas valides.';
@@ -240,13 +240,13 @@ function l_verify_data($email, $pass1, $pass2, $nom, $prenom, $username, $naiss_
     elseif (mb_regex_encoding ('UTF-8') && ! mb_ereg_match("^[[:alpha:]][[:alpha:]\- ']{1,99}$", $prenom)) {
         $err['prenom'] = 'Le prénom n\'est pas valide.';
     }
-    
+
     $noTags = strip_tags($nom);
     if ($noTags != $nom){
         $err['nom'] = 'Le nom ne peut pas contenir de code HTML.';
     }
     else if (empty($nom)) {
-		$err['nom'] = 'Le nom doit être renseigné.';	
+		$err['nom'] = 'Le nom doit être renseigné.';
     }
     /*elseif (! preg_match("/^[[:alpha:]][[:alpha:]\- ']{1,99}$/", $nomprenom)) { // ne fct pas avec les accents
         $err['nomprenom'] = 'Le nom et le prénom ne sont pas valides.';
@@ -254,13 +254,13 @@ function l_verify_data($email, $pass1, $pass2, $nom, $prenom, $username, $naiss_
     elseif (mb_regex_encoding ('UTF-8') && ! mb_ereg_match("^[[:alpha:]][[:alpha:]\- ']{1,99}$", $nom)) {
         $err['nom'] = 'Le nom n\'est pas valide.';
     }
-	
+
 	$noTags = strip_tags($username);
     if ($noTags != $username){
         $err['username'] = 'Le nom d\'utilisateur ne peut pas contenir de code HTML.';
     }
     else if (empty($username)) {
-		$err['username'] = 'Le nom d\'utilisateur doit être renseigné.';	
+		$err['username'] = 'Le nom d\'utilisateur doit être renseigné.';
     }
     /*elseif (! preg_match("/^[[:alpha:]][[:alpha:]\- ']{1,99}$/", $nomprenom)) { // ne fct pas avec les accents
         $err['nomprenom'] = 'Le nom et le prénom ne sont pas valides.';
@@ -268,72 +268,72 @@ function l_verify_data($email, $pass1, $pass2, $nom, $prenom, $username, $naiss_
     elseif (mb_regex_encoding ('UTF-8') && ! mb_ereg_match("^[[:alpha:]][[:alpha:]\-']{1,99}$", $username)) {
         $err['username'] = 'Le nom d\'utilisateur n\'est pas valide.';
     }
-    
+
 	// vérification de la date de naissance
 	if (! checkdate($naiss_m, $naiss_j, $naiss_a)) {
-		$err['date'] = 'La date de naissance est incorrecte.';	
-	}	
+		$err['date'] = 'La date de naissance est incorrecte.';
+	}
 	else {
 		$dateDuJour = getDate();
 		if (($naiss_a < $dateDuJour['year'] - 120) ||
             ($naiss_a == $dateDuJour['year'] - 120 && $naiss_m < $dateDuJour['mon']) ||
             ($naiss_a == $dateDuJour['year'] - 120 && $naiss_m == $dateDuJour['mon'] && $naiss_j <= $dateDuJour['mday'])) {
-			$err['date'] = 'Votre date de naissance indique que vous avez plus de 120 ans.';	
+			$err['date'] = 'Votre date de naissance indique que vous avez plus de 120 ans.';
 		}
-		else if (($naiss_a > $dateDuJour['year'] - 12) || 
-				 ($naiss_a == $dateDuJour['year'] - 12 && $naiss_m > $dateDuJour['mon']) || 
-				 ($naiss_a == $dateDuJour['year'] - 12 && $naiss_m == $dateDuJour['mon'] && $naiss_j > $dateDuJour['mday'])) {   	
+		else if (($naiss_a > $dateDuJour['year'] - 12) ||
+				 ($naiss_a == $dateDuJour['year'] - 12 && $naiss_m > $dateDuJour['mon']) ||
+				 ($naiss_a == $dateDuJour['year'] - 12 && $naiss_m == $dateDuJour['mon'] && $naiss_j > $dateDuJour['mday'])) {
 			$err['date'] = 'Votre date de naissance indique que vous avez moins de 12 ans.';
 		}
 	}
 
 	if (count($err) == 0) {
-		// vérification de l'unicité de l'adresse email 
+		// vérification de l'unicité de l'adresse email
 		// (uniquement si pas d'autres erreurs, parce que ça coûte un bras)
 		$bd = bd_connect();
 
 		// pas utile, car l'adresse a déjà été vérifiée, mais tellement plus sécurisant...
 		$email = bd_protect($bd, $email);
 		//TODO requete sql
-		$sql = "SELECT ID FROM Personne WHERE Email = '$email'"; 
-	
+		$sql = "SELECT ID FROM Personne WHERE Email = '$email'";
+
 		$res = mysqli_query($bd,$sql) or bd_erreur($bd,$sql);
-		
+
 		if (mysqli_num_rows($res) != 0) {
 			$err['email'] = 'L\'adresse email spécifiée existe déjà.';
-            // libération des ressources 
+            // libération des ressources
             mysqli_free_result($res);
 		}
         else{
-            // libération des ressources 
+            // libération des ressources
             mysqli_free_result($res);
         }
-		
+
             mysqli_close($bd);
 	}
 	return $err;
 }
 
 /**
- *	Traitement de l'inscription 
+ *	Traitement de l'inscription
  *
  *		Etape 1. vérification de la validité des données
  *					-> return des erreurs si on en trouve
  *		Etape 2. enregistrement du nouvel inscrit dans la base
- *		Etape 3. ouverture de la session et redirection vers la page appelante. 
+ *		Etape 3. ouverture de la session et redirection vers la page appelante.
  *
  * @global  array     $_POST
  *
  * @return array 	tableau assosiatif contenant les erreurs
  */
 function l_inscription() {
-    
+
 	//$err = array();
-	
-	
+
+
     $bd = bd_connect();
-	
-	
+
+
 	$email = trim($_POST['email']);
 	$pass1 = trim($_POST['pass1']);
 	$pass2 = trim($_POST['pass2']);
@@ -343,14 +343,14 @@ function l_inscription() {
 	$naiss_j = (int)$_POST['naiss_j'];
 	$naiss_m = (int)$_POST['naiss_m'];
 	$naiss_a = (int)$_POST['naiss_a'];
-	
+
 	$err = l_verify_data($email, $pass1, $pass2, $nom, $prenom, $username, $naiss_j, $naiss_m, $naiss_a);
-	
-	// s'il y a des erreurs ==> on retourne le tableau d'erreurs	
-	if (count($err) > 0) { 	
-		return $err;	
+
+	// s'il y a des erreurs ==> on retourne le tableau d'erreurs
+	if (count($err) > 0) {
+		return $err;
 	}
-	
+
 	// pas d'erreurs ==> enregistrement de l'utilisateur
 	$email = bd_protect($bd, $email);
 	$nom = bd_protect($bd, $nom);
@@ -363,28 +363,28 @@ function l_inscription() {
     // (Contrainte NON NULL dans la table 'client' sans indiquer de valeur par défaut)
     //$invalid = INVALID_STRING;
     //$code_postal = INVALID_CODE_POSTAL;
-    
-	$sql = "INSERT INTO Personne(Nom, Prenom, Admin, Username, Email, EmailVerifie, motDePasse, DateNaissance) 
+
+	$sql = "INSERT INTO Personne(Nom, Prenom, Admin, Username, Email, EmailVerifie, motDePasse, DateNaissance)
 			VALUES ('$nom', '$prenom', false, '$username', '$email', false, '$pass', '$aaaammjj')";
-		
-            
+
+
 	mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
 	$id = mysqli_insert_id($bd);
 
 	// libération des ressources
 	mysqli_close($bd);
-	
-	// mémorisation de l'ID dans une variable de session 
+
+	// mémorisation de l'ID dans une variable de session
     // cette variable de session permet de savoir si le client est authentifié
 	$_SESSION['ID'] = $id;
-    
+
     // redirection vers la page d'origine
     redirige($_POST['source']);
-	
+
 	return $err;
 }
-	
+
 
 
 ?>

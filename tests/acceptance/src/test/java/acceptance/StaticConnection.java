@@ -7,12 +7,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class AcceptanceConnector {
+public class StaticConnection {
+
+    public static String distanteConnection = "http://m2gl.deptinfo-st.univ-fcomte.fr/~m2test3/preprod";
+    public static String localConnection = "http://localhost/Goodle/Goodle"; //a changer pour chacun
+
     public static Connection getDatabaseConnector() throws SQLException {
 
         String dbUrl= "jdbc:mysql://localhost/m2test3?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-        String dbUsername= "m2test3";
-        String dbPassword= "m2test3";
+        String dbUsername= "root";
+        String dbPassword= "";
 
         return DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
     }

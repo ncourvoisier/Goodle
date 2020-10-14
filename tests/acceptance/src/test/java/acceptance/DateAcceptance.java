@@ -9,8 +9,8 @@ import cucumber.api.java.fr.Quand;
 public class DateAcceptance {
     @Etantdonné("^l'utilisateur ajoute une proposition de date et heure$")
     public void lUtilisateurAjouteUnePropositionDeDateEtHeure() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        System.out.println("true");
+        assert(true);
     }
 
     @Quand("^la date et l'heure sont suppérieure à la date actuelle$")
@@ -30,4 +30,6 @@ public class DateAcceptance {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
+
+
 }
