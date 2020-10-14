@@ -1,3 +1,5 @@
+package acceptance;
+
 import cucumber.api.PendingException;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Et;
