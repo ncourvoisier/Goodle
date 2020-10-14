@@ -91,7 +91,7 @@ function l_contenu_ve($errors){
 				$order = 'ORDER BY Annee ' . $dir .', Mois ' . $dir . ' , Jour ' . $dir . ', Heure ' . $dir . ', Minute ' . $dir;
 			}
 
-			$sql3 = 'SELECT * FROM DateEvenement INNER JOIN date ON DateEvenement.IDDate = Date.ID AND DateEvenement.IDEvent ='.$_GET['event'].' ' . $order . ';';
+			$sql3 = 'SELECT * FROM DateEvenement INNER JOIN Date ON DateEvenement.IDDate = Date.ID AND DateEvenement.IDEvent ='.$_GET['event'].' ' . $order . ';';
 			$res3 = mysqli_query($bd, $sql3);
 
 			echo '<ul>';
@@ -111,7 +111,7 @@ function l_contenu_ve($errors){
 			if ($createurConnecte){
 				echo '<p> Ajouter une date à cet évènement : <a href="./ajouter_date_evenement.php?event='.$event.'">Ajouter Date</a><br/>';
 				echo 'Voir l\'état des votes de cet événement : <a href="./voir_etat_vote.php?event='.$event.'">Les votes</a></p>';
-				
+
 			}
 
 			if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {

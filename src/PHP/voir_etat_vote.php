@@ -90,7 +90,7 @@ if (isset($_SESSION['ID'])) {
 
 		}while($t2= mysqli_fetch_assoc($res2));
 
-    choose_order("./voir_etat_vote.php");
+    choose_order("./voir_etat_vote.php", "IDEvent");
     if ($afficher){
       l_affiche_vote($oldt2['Heure'], $oldt2['Minute'], $oldt2['Jour'], $oldt2['Mois'], $oldt2['Annee'],$VPeutetre,$VOui,$VNon);
 
