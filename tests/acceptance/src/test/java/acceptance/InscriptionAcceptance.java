@@ -25,64 +25,94 @@ public class InscriptionAcceptance {
 
     private String urlPage = StaticConnection.localConnection;
 
+
+    private String getMois(String moisNB){
+        switch (moisNB){
+            case "01":
+                return "Janvier";
+            case "02":
+                return "Février";
+            case "03":
+                return "Mars";
+            case "04":
+                return "Avril";
+            case "05":
+                return "Mai";
+            case "06":
+                return "Juin";
+            case "07":
+                return "Juillet";
+            case "08":
+                return "Août";
+            case "09":
+                return "Septembre";
+            case "10":
+                return "Octobre";
+            case "11":
+                return "Novembre";
+            case "12":
+                return "Décembre";
+        }
+        return null;
+    }
+
     @Before
     public void setUp() throws SQLException {
         Logger logger = Logger.getLogger("");
         logger.setLevel(Level.OFF);
 
-        System.out.println("1");
-
         driver = StaticConnection.getHtmlDriver();
         con = StaticConnection.getDatabaseConnector();
 
-        System.out.println("2");
     }
 
     @Etantdonné("^l'utilisateur est sur le formulaire d'inscription$")
     public void lUtilisateurEstSurLeFormulaireDInscription() {
-        System.out.println("3");
         driver.get(urlPage+"/src/PHP/inscription.php");
     }
 
     @Quand("^l'utilisateur a saisie comme nom de compte \"([^\"]*)\"$")
     public void lUtilisateurASaisieCommeNomDeCompte(String arg0) throws Throwable {
-        driver.findElementByName("username").sendKeys("mokos");
+        driver.findElementByName("username").sendKeys(arg0);
 
     }
 
     @Et("^l'utilisateur a saisie comme mot de passe \"([^\"]*)\"$")
     public void lUtilisateurASaisieCommeMotDePasse(String arg0) throws Throwable {
-        driver.findElementByName("pass1").sendKeys("jean");
+        driver.findElementByName("pass1").sendKeys(arg0);
 
     }
 
     @Et("^l'utilisateur a saisie comme date de naissance \"([^\"]*)\"$")
     public void lUtilisateurASaisieCommeDateDeNaissance(String arg0) throws Throwable {
+        String[] date = arg0.split("/");
+
         {
             WebElement dropdown = driver.findElement(By.name("naiss_j"));
-            dropdown.findElement(By.xpath("//option[. = '1']")).click();
+            dropdown.findElement(By.xpath("//option[. = '"+date[0]+"']")).click();
         }
 
         {
+            String mois = getMois(date[1]);
             WebElement dropdown = driver.findElement(By.name("naiss_m"));
-            dropdown.findElement(By.xpath("//option[. = 'Février']")).click();
+            dropdown.findElement(By.xpath("//option[. = '"+mois+"']")).click();
         }
 
         {
             WebElement dropdown = driver.findElement(By.name("naiss_a"));
-            dropdown.findElement(By.xpath("//option[. = '1998']")).click();
+            dropdown.findElement(By.xpath("//option[. = '"+date[2]+"']")).click();
         }
     }
 
     @Et("^l'utilisateur a saisie comme mdp \"([^\"]*)\"$")
     public void lUtilisateurASaisieCommeMdp(String arg0) throws Throwable {
-        driver.findElementByName("pass2").sendKeys("Jean2012**");
+        driver.findElementByName("pass2").sendKeys(arg0);
 
     }
 
-    @Et("^l'utilisateur a saisie comme mail cddd@gmail\\.com$")
-    public void lUtilisateurASaisieCommeMailCdddGmailCom() {
-        driver.findElementByName("email").sendKeys("cddd@gmail.com!");
+    @Et("^l'utilisateur a saisie comme mail \"([^\"]*)\"$")
+    public void lUtilisateurASaisieCommeMailCdddGmailCom(String arg0) {
+        driver.findElementByName("email").sendKeys(arg0);
     }
 
     @Et("^l'utilisateur demande de valider l'inscription$")
