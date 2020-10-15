@@ -10,13 +10,13 @@ import java.sql.SQLException;
 public class StaticConnection {
 
     public static String distanteConnection = "http://m2gl.deptinfo-st.univ-fcomte.fr/~m2test3/preprod";
-    public static String localConnection = "http://localhost/Goodle/Goodle"; //a changer pour chacun
+    public static String localConnection = "http://localhost/goodle/Goodle"; //a changer pour chacun
 
     public static Connection getDatabaseConnector() throws SQLException {
 
         String dbUrl= "jdbc:mysql://localhost/m2test3?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-        String dbUsername= "root";
-        String dbPassword= "";
+        String dbUsername= "phpmyadmin";
+        String dbPassword= "mdp";
 
         return DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
     }
