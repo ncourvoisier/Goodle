@@ -1,6 +1,5 @@
 package acceptance;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.fr.Alors;
@@ -9,18 +8,19 @@ import cucumber.api.java.fr.Quand;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import java.sql.*;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static javax.swing.UIManager.getInt;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-public class ClotureAcceptance {
+public class ModificationNomEvent {
+
     private HtmlUnitDriver driver;
     private Connection con;
-
     private String urlPage = StaticConnection.localConnection;
 
+    private String nvNomEvent = "Soiree";
     private int pastEvent;
 
     @Before
@@ -46,7 +46,23 @@ public class ClotureAcceptance {
         driver.findElementByName("email").sendKeys("mailForTests@tests.fr");
         driver.findElementByName("password").sendKeys("Azerty1234!");
         driver.findElementByName("btnConnexion").click();
+    }
 
+    @Etantdonné("^l'utilisateur modifie le nom de l'événement$")
+    public void lutilisateurModifieLeNomDeLEvenement() {
+        driver.get(urlPage + "/src/PHP/voir_event.php?event="+pastEvent);
+        driver.findElementByName("btnModifier").click();
+        driver.findElementByName("NameEvent").sendKeys(nvNomEvent);
+    }
+
+    @Quand("^le nouveau nom contient au moins 3 caractères$")
+    public void leNouveauNomContientAuMoins3Caracteres() {
+        assertTrue(nvNomEvent.length() >= 3);
+    }
+
+    @Alors("^le nouveau nom est validé$")
+    public void leNouveauNomEstValide() {
+        assertEquals(driver.getCurrentUrl(), urlPage + "/src/PHP/evenement_ok.php");
     }
 
     @After
@@ -56,19 +72,5 @@ public class ClotureAcceptance {
         s.executeUpdate(sql);
         driver.quit();
         con.close();
-    }
-
-    @Etantdonné("^le participant se rend sur la page de l'événement$")
-    public void leParticipantSeRendSurLaPageDeLÉvénement() throws Throwable {
-        driver.get(urlPage + "/src/PHP/repondre_invite.php?IDEvent=" + pastEvent);
-    }
-
-    @Quand("^la date de l'évenement choisit est dépassé$")
-    public void laDateDeLÉvenementChoisitEstDépassé() throws Throwable {
-    }
-
-    @Alors("^le participant ne peut plus modifier les votes$")
-    public void leParticipantNePeutPlusModifierLesVotes() throws Throwable {
-        assert(driver.findElementById("error_message_too_late") != null);
     }
 }
