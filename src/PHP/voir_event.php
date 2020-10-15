@@ -37,7 +37,7 @@ function l_contenu_ve($errors){
     $event = $_GET['event'];
 
     if (!isset($_SESSION['ID'])) {
-    	echo '<p>Vous n\'êtes pas connecté, connectez vous : <a href="./login.php">Connexion</a>';
+    	echo '<p id="error_connexion_ve">Vous n\'êtes pas connecté, connectez vous : <a href="./login.php">Connexion</a>';
       return;
     }
 
