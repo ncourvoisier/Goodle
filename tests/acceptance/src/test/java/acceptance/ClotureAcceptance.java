@@ -95,9 +95,7 @@ public class ClotureAcceptance {
         s.executeUpdate(sql);
         sql = "DELETE FROM Date WHERE ID = '" + dateId + "';";
         s.executeUpdate(sql);
-
         driver.quit();
-
         con.close();
     }
 

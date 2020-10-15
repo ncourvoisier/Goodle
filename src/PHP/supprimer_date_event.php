@@ -87,7 +87,7 @@ function l_contenu_sde($errors, $deja_supp){
 
   $idDate = $tmpIdDate['IdDate'];
 
-  $sql = "SELECT Jour, Mois, Annee, Heure, Minute FROM Date WHERE ID=$idDate;";
+  $sql = "SELECT Jour, Mois, Annee, Heure, Minute FROM Date WHERE ID=$dateSupp;";
 
   $res = mysqli_query($bd, $sql);
 
@@ -108,20 +108,23 @@ function l_delete_date($errors){
     $bd = bd_connect();
 
     $dateSupp = $_GET['dateEvent'];
+	
+	echo $dateSupp . ' ';
+	
 
-    $sql = "SELECT IdDate FROM DateEvenement WHERE ID=$dateSupp;";
+    $sql = "SELECT ID FROM DateEvenement WHERE IDDate=$dateSupp;";
 
     $res = mysqli_query($bd, $sql);
 
     $tmpIdDate = mysqli_fetch_assoc($res);
 
-    $idDate = $tmpIdDate['IdDate'];
+    $idDate = $tmpIdDate['ID'];
 
-    $sql = "DELETE FROM DateEvenement WHERE ID=$dateSupp;";
+    $sql = "DELETE FROM DateEvenement WHERE ID=$idDate;";
 
     $res = mysqli_query($bd, $sql);
 
-    $sql = "DELETE FROM Date WHERE ID=$idDate;";
+    $sql = "DELETE FROM Date WHERE ID=$dateSupp;";
 
     $res = mysqli_query($bd, $sql);
   }
