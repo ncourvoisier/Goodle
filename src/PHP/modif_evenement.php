@@ -17,8 +17,11 @@ function l_contenu_me($err ){
 	} else {
 
 	  $idEvent=$_GET['event'];
+		$too_late = false;
 
 	  $sql='SELECT * FROM Evenement, DateEvenement, Date WHERE Evenement.ID = DateEvenement.IDEvent AND DateEvenement.IDDate = Date.ID AND Evenement.ID = '.$idEvent.' ;';
+
+
 
 	  $res = mysqli_query($bd, $sql);
 
@@ -32,6 +35,12 @@ function l_contenu_me($err ){
 	  $length = mysqli_num_rows($res);
 	  $t = mysqli_fetch_assoc($res);
 
+		$dateCloture=date_format(new DateTime($t['DateCloture']),'Y-m-d');
+		$timestamp1=strtotime($dateCloture);
+		$timestamp2= strtotime(date('Y-n-j')); // pour désactiver els boutons radio dans le cas d'un dépassement de la date cloture
+		if( $timestamp1 < $timestamp2) {
+			$too_late = true;
+		}
 
 	  $nameEvent = isset($_POST['NameEvent']) ? $_POST['NameEvent'] : $t['Nom'];
 	  $lieuEvent = isset($_POST['LieuEvent']) ? $_POST['LieuEvent'] : $t['Lieu'];
@@ -77,7 +86,9 @@ function l_contenu_me($err ){
 		echo '<p>Vous n\'êtes pas connecté<p>',
 		'<a id="lien_connect" href="./login.php" title="Se Connecter">Connexion</a>';
 
-	  } else {
+	} else if ($too_late) {
+		echo '<p class="alert alert-danger" id="error_message_too_late">Vous avez depassé la date de cloture. (date de cloture :' . $dateCloture . ').</p>';
+	} else {
 
 		echo '<div id="ajout_evenement">';
 		echo '<form method="POST" action="modif_evenement.php?event='.$idEvent.'">',
