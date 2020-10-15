@@ -8,9 +8,18 @@ html_debut('Goodle | Evènement', '../CSS/style.css');
 
 goodle_header();
 
-echo '<p>L\'évènement a bien été ajouté !</p>',
-'<p><a href="../../index.php">Retour à la page d\'accueil</a><p>',
-'<p>Visualiser l\'évènement';
+$id_event = isset($_GET['event'])?$_GET['event']:0;
+
+if ($id_event == 0){
+  echo '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
+} else {
+
+  echo '<p>L\'évènement a bien été ajouté !</p>',
+  '<p>Votre lien d\'invitation est : <a id="lien_invitation" href="./voir_event.php?event='.$id_event.'">Voir Evenement</a></p>',
+  '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
+}
+
+
 
 html_fin();
 

@@ -279,7 +279,7 @@ function l_verify_event(){
 
       $_POST = array();
 
-      redirige("evenement_ok.php");
+      redirige("evenement_ok.php?event=$id_event");
 
     }
 
