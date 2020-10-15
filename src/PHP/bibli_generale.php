@@ -537,7 +537,7 @@ function ecrireHeure($heure, $minute){
 
 function goodle_header($pathToRoot = '../../') {
     if (isset($_SESSION['ID'])) {
-        echo '<a href="', $pathToRoot,'/src/PHP/deconnexion.php"><button type="button" class="btn btn-danger">Déconnexion</button></a>';
+        echo '<a  id="btnDeconnection" href="', $pathToRoot,'/src/PHP/deconnexion.php"><button type="button" class="btn btn-danger">Déconnexion</button></a>';
     }
 }
 

@@ -26,13 +26,13 @@ function l_contenu() {
 			if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1 ){
 				echo '<p>Voir les événements : <a href="./src/PHP/evenement.php">event</a>. </p>';
 			}
-			
+
 		} else {
 
 	echo
 		'<h1>Bienvenue sur Goodle !</h1>',
 		'<p>Connectez-vous ou inscrivez-vous et gérez pleinement les dates de vos événements ! </p>',
-		'<p>Pas encore connecté ? C\'est par <a href="./src/PHP/login.php">ici</a>. </p>',
+		'<p>Pas encore connecté ? C\'est par <a href="./src/PHP/login.php" id="connectionLink">ici</a>. </p>',
 		'<p>Nouveau venu sur Goodle ? Consultez notre <a href="./src/PHP/inscription.php">page d\'inscription</a> !',
 		'<p><a href="./src/PHP/ajout_evenement.php">Ajouter un évènement</a></p>';
 

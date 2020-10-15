@@ -47,7 +47,7 @@ function l_contenu_ae($err){
   echo '<h1>Ajout d\'un évènement</h1>';
 
   if (count($err) > 0) {
-    echo '<p class="erreur">Erreurs : ';
+    echo '<p class="erreur" id="error_add_event">Erreurs : ';
     foreach ($err as $v) {
       echo '<br> - ', $v;
     }
