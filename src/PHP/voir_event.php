@@ -115,7 +115,7 @@ function l_contenu_ve($errors){
 			}
 
 			if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
-				echo '<a href="modif_evenement?event=' . $_GET['event'] . '"><button>Modifier</button></a>&emsp;';
+				echo '<a href="modif_evenement?event=' . $_GET['event'] . '"><button name="btnModifier">Modifier</button></a>&emsp;';
 				echo '<a href="evenement.php?remove_event=' . $_GET['event'] . '"><button>Supprimer</button></a>';
 			} else if ($createurConnecte){
 					echo '<form method=POST action="voir_event.php?event='.$_GET['event'].'">',
