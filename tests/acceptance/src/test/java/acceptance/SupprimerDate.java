@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import static org.junit.Assert.assertEquals;
 
 public class SupprimerDate {
-    /*private HtmlUnitDriver driver;
+    private HtmlUnitDriver driver;
     private Connection con;
     private String urlPage = StaticConnection.localConnection;
     private int pastEvent;
@@ -100,5 +100,5 @@ public class SupprimerDate {
 
         driver.quit();
         con.close();
-    }*/
+    }
 }

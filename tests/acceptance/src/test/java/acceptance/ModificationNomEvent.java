@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 public class ModificationNomEvent {
 
-    /*private HtmlUnitDriver driver;
+    private HtmlUnitDriver driver;
     private Connection con;
     private String urlPage = StaticConnection.localConnection;
 
@@ -72,5 +72,5 @@ public class ModificationNomEvent {
         s.executeUpdate(sql);
         driver.quit();
         con.close();
-    }*/
+    }
 }
