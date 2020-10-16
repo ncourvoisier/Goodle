@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import static org.junit.Assert.assertEquals;
 
 public class ModificationNomEventNonValide {
-    private HtmlUnitDriver driver;
+    /*private HtmlUnitDriver driver;
     private Connection con;
     private String urlPage = StaticConnection.localConnection;
 
@@ -71,5 +71,5 @@ public class ModificationNomEventNonValide {
         s.executeUpdate(sql);
         driver.quit();
         con.close();
-    }
+    }*/
 }

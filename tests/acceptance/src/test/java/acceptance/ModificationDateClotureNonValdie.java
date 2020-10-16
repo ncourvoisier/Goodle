@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import static org.junit.Assert.assertEquals;
 
 public class ModificationDateClotureNonValdie {
-
+/*
     private HtmlUnitDriver driver;
     private Connection con;
     private String urlPage = StaticConnection.localConnection;
@@ -82,7 +82,7 @@ public class ModificationDateClotureNonValdie {
         s.executeUpdate(sql);
         driver.quit();
         con.close();
-    }
+    }*/
 
 
 }

@@ -8,7 +8,7 @@ html_debut('Goodle | Reponse invitation', '../CSS/style.css');
 
 goodle_header();
 
-echo '<p>Votre réponse a bien été enregistrée !</p>',
+echo '<p id="message_okay" class="alert alert-success">Votre réponse a bien été enregistrée !</p>',
 '<p><a href="../../index.php">Retour à la page d\'accueil</a><p>';
 
 html_fin();
