@@ -18,7 +18,7 @@ public class ModificationNomEvent {
 
     private HtmlUnitDriver driver;
     private Connection con;
-    private String urlPage = StaticConnection.localConnection;
+    private String urlPage = StaticConnection.urlPage;
 
     private String nvNomEvent = "Soiree";
     private int pastEvent;

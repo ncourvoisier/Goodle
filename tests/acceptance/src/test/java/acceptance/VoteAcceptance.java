@@ -20,7 +20,7 @@ public class VoteAcceptance {
     private HtmlUnitDriver driver;
     private Connection con;
 
-    private String urlPage = StaticConnection.localConnection;
+    private String urlPage = StaticConnection.urlPage;
 
     private int event;
     private int dateId;

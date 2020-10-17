@@ -25,7 +25,7 @@ public class ClotureAcceptance {
     private HtmlUnitDriver driver;
     private Connection con;
 
-    private String urlPage = StaticConnection.localConnection;
+    private String urlPage = StaticConnection.urlPage;
 
     private int pastEvent;
 

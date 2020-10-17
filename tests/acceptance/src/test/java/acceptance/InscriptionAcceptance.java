@@ -25,7 +25,7 @@ public class InscriptionAcceptance {
     private HtmlUnitDriver driver;
     private Connection con;
 
-    private String urlPage = StaticConnection.localConnection;
+    private String urlPage = StaticConnection.urlPage;
 
     private String getMois(String moisNB){
         switch (moisNB){

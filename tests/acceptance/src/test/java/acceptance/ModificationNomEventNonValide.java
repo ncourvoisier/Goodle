@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 public class ModificationNomEventNonValide {
     private HtmlUnitDriver driver;
     private Connection con;
-    private String urlPage = StaticConnection.localConnection;
+    private String urlPage = StaticConnection.urlPage;
 
     private int pastEvent;
     private String nvNomEvent = "ee";

@@ -21,7 +21,7 @@ public class LienInvitationAcceptance {
     private HtmlUnitDriver driver;
     private Connection con;
 
-    private String urlPage = StaticConnection.localConnection;
+    private String urlPage = StaticConnection.urlPage;
 
     @Before
     public void setUp() throws SQLException {
