@@ -94,7 +94,7 @@ function l_contenu_ve($errors){
 			$sql3 = 'SELECT * FROM DateEvenement INNER JOIN Date ON DateEvenement.IDDate = Date.ID AND DateEvenement.IDEvent ='.$_GET['event'].' ' . $order . ';';
 			$res3 = mysqli_query($bd, $sql3);
 
-			echo '<ul>';
+			echo '<ul id="event_dates">';
 
 			$createurConnecte = ($idPersonne == $_SESSION['ID']);
 

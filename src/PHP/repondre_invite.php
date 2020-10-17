@@ -38,6 +38,12 @@ if (isset($_SESSION['ID'])) {
 				$alreadyAnswered[$t['Annee'] . $t['Mois'] . $t['Jour'] . $t['Heure'] . $t['Minute']] = $t['IDDate'];
 			}
 
+			if ($idInvite == 0) {
+				$sql = "SELECT ID FROM Invite WHERE IDPersonne = " . $_SESSION['ID'] . " AND IDEvent = " .  $_POST['IDevent'] .";";
+				$id = mysqli_fetch_assoc(mysqli_query($bd, $sql));
+				$idInvite = $id['ID'];
+			}
+
 			print_r($alreadyAnswered);
 
 			$listeDateEvent = unserialize($_POST["listeDateEvent"]);
@@ -45,7 +51,6 @@ if (isset($_SESSION['ID'])) {
 			foreach ($_POST as $key => $value) {
 				if (is_numeric($key)) {
 					if (array_key_exists($key, $alreadyAnswered)) {
-						echo 'blah';
 						update_db_set_reponse($bd, $value, $idInvite, $listeDateEvent[$key]);
 					} else {
 						insert_db_into_reponse($bd, $value, $idInvite, $listeDateEvent[$key]);
@@ -76,6 +81,14 @@ if (isset($_SESSION['ID'])) {
 
 			$sql = "SELECT * FROM Invite Where IDEvent=".$IDevent." AND IDPersonne=".$_SESSION["ID"].";";
 
+			$res = mysqli_query($bd, $sql);
+
+			if (mysqli_num_rows($res) == 0) {
+				$sql = 'INSERT INTO Invite (IDPersonne, IDEvent) VALUES (' . $_SESSION["ID"] . ', ' . $IDevent . ');';
+				$res = mysqli_query($bd, $sql);
+			} else {
+
+			}
 
 			$IDevent = $_GET["IDEvent"];
 
@@ -128,11 +141,11 @@ if (isset($_SESSION['ID'])) {
 					$heure = 'à ' . $t['Heure'] . 'h' . $minu ;
 					if($test == false)
 					{
-						echo '<tr><td>',$date,' ',$heure,'</td><td>',form_input(Z_RADIO, $ListeR,'Oui'),'Oui (' . $responses['Oui'] . ')</td><td>',form_input(Z_RADIO, $ListeR,'Non'),'Non (' . $responses['Non'] . ')</td><td>',form_input(Z_RADIO, $ListeR, 'Peutetre', 0, 1),'Peut-être (' . $responses['Peutetre'] . ')</td></tr>';
+						echo '<tr><td>',$date,' ',$heure,'</td><td>',form_input(Z_RADIO, $ListeR,'Oui'),'Oui (<span id="' . $t['Annee'] . $t['Mois'] . $t['Jour'] . $t['Heure'] . $minu . 'oui">' . $responses['Oui'] . '</span>)</td><td>',form_input(Z_RADIO, $ListeR,'Non'),'Non (<span id="' . $t['Annee'] . $t['Mois'] . $t['Jour'] . $t['Heure'] . $minu . 'non">' . $responses['Non'] . '</span>)</td><td>',form_input(Z_RADIO, $ListeR, 'Peutetre', 0, 1),'Peut-être (<span id="' . $t['Annee'] . $t['Mois'] . $t['Jour'] . $t['Heure'] . $minu . 'peutetre">' . $responses['Peutetre'] . '</span>)</td></tr>';
 					}
 					if($test)
 					{
-						echo '<tr><td>',$date,' ',$heure,'</td><td> Oui (' . $responses['Oui'] . ')</td><td>Non (' . $responses['Non'] . ')</td><td>Peut-être (' . $responses['Peutetre'] . ')</td></tr>';
+						echo '<tr><td>',$date,' ',$heure,'</td><td> Oui (<span id="' . $t['Annee'] . $t['Mois'] . $t['Jour'] . $t['Heure'] . $minu . 'oui">' . $responses['Oui'] . '</span>)</td><td>Non (<span id="' . $t['Annee'] . $t['Mois'] . $t['Jour'] . $t['Heure'] . $minu . 'non">' . $responses['Non'] . '</span>)</td><td>Peut-être (<span id="' . $t['Annee'] . $t['Mois'] . $t['Jour'] . $t['Heure'] . $minu . 'peutetre">' . $responses['Peutetre'] . '</span>)</td></tr>';
 					}
 					mysqli_free_result($response_result);
 					$i++;

@@ -4,6 +4,7 @@ import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.fr.Alors;
+import cucumber.api.java.fr.Et;
 import cucumber.api.java.fr.Etantdonné;
 import cucumber.api.java.fr.Quand;
 import org.junit.AfterClass;
@@ -127,5 +128,25 @@ public class ClotureAcceptance {
     public void leCréateurNePeutPlusModifierLÉvenement() throws Throwable {
         driver.get(urlPage + "/src/PHP/modif_evenement.php?event=" + pastEvent);
         assertNotNull(driver.findElementById("error_message_too_late"));
+    }
+
+    @Etantdonné("^l'utilisateur se rend sur la page de l'événement$")
+    public void lUtilisateurSeRendSurLaPageDeLÉvénement() throws Throwable {
+        driver.get(urlPage + "/src/PHP/voir_event.php?event=" + pastEvent);
+    }
+
+    @Quand("^la date de cloturation des votes est dépassé$")
+    public void laDateDeCloturationDesVotesEstDépassé() throws Throwable {
+
+    }
+
+    @Et("^au moins l'une des dates proposée n'est pas dépassée$")
+    public void auMoinsLUneDesDatesProposéeNEstPasDépassée() throws Throwable {
+
+    }
+
+    @Alors("^l'utilisateur peut consulter les informations de l'évenement$")
+    public void lUtilisateurPeutConsulterLesInformationsDeLÉvenement() throws Throwable {
+        driver.findElementById("event_dates");
     }
 }

@@ -26,10 +26,10 @@ public class VoteAcceptance {
     private int dateId;
     private int index;
     private int newIndex;
+    private int pastEventCreator;
 
     @Before
     public void setUp() throws SQLException {
-        int pastEventCreator;
         Logger logger = Logger.getLogger("");
         logger.setLevel(Level.OFF);
 
@@ -58,7 +58,7 @@ public class VoteAcceptance {
             throw new SQLException("Did not create event");
         }
 
-        String insertDateSql = "INSERT INTO Date(Jour, Mois, Annee, Heure, Minute) VALUES ('1', '1', '2030', '18', '0')";
+        String insertDateSql = "INSERT INTO Date(Jour, Mois, Annee, Heure, Minute) VALUES ('1', '1', '2050', '0', '0')";
         PreparedStatement dateSql = con.prepareStatement(insertDateSql, Statement.RETURN_GENERATED_KEYS);
 
         dateSql.executeUpdate();
@@ -98,7 +98,7 @@ public class VoteAcceptance {
 
     @Etantdonné("^j'ai déja voté \"([^\"]*)\"$")
     public void queJAiDéjaVoté(String arg0) throws Throwable {
-        driver.get(urlPage + "src/PHP/repondre_invite.php?IDEvent=" + event);
+        driver.get(urlPage + "/src/PHP/repondre_invite.php?IDEvent=" + event);
         index = 2;
         if (arg0.equals("oui")) {
             index = 0;
@@ -106,7 +106,7 @@ public class VoteAcceptance {
             index = 1;
         }
         driver.findElementsByName("20501100").get(index).click();
-        driver.findElementById("btnValiderRep").click();
+        driver.findElementByName("btnValiderRep").click();
     }
 
     @Quand("^la date de cloture des vote n'est pas dépassé$")
@@ -116,7 +116,7 @@ public class VoteAcceptance {
 
     @Et("^l'utilisateur change son vote en \"([^\"]*)\" sur une des proposition du sondage$")
     public void lUtilisateurChangeSonVoteEnSurUneDesPropositionDuSondage(String arg0) throws Throwable {
-        driver.get(urlPage + "src/PHP/repondre_invite.php?IDEvent=" + event);
+        driver.get(urlPage + "/src/PHP/repondre_invite.php?IDEvent=" + event);
         newIndex = 2;
         if (arg0.equals("oui")) {
             newIndex = 0;
@@ -124,7 +124,7 @@ public class VoteAcceptance {
             newIndex = 1;
         }
         driver.findElementsByName("20501100").get(newIndex).click();
-        driver.findElementById("btnValiderRep").click();
+        driver.findElementByName("btnValiderRep").click();
     }
 
     @Alors("^le site renvoie \"([^\"]*)\"$")
@@ -134,12 +134,13 @@ public class VoteAcceptance {
 
     @Et("^le vote est validé$")
     public void leVoteEstValidé() throws Throwable {
-        PreparedStatement s =  con.prepareStatement("SELECT Response FROM Reponse, Invite, DateEvenement, Date WHERE Invite.ID = Reponse.IDInvite AND DateEvenement.ID = Reponse.IDDateEvent AND DateEvenement.DateID = Date.ID AND Invite.IDPersonne = ? AND Date.ID = ?;");
-        s.setInt(1, event);
+        PreparedStatement s =  con.prepareStatement("SELECT Response FROM Reponse, Invite, DateEvenement, Date WHERE Invite.ID = Reponse.IDInvite AND DateEvenement.ID = Reponse.IDDateEvent AND DateEvenement.IDDate = Date.ID AND Invite.IDPersonne = ? AND Date.ID = ? AND DateEvenement.IDEvent = ?;");
+        s.setInt(1, pastEventCreator);
         s.setInt(2, dateId);
+        s.setInt(3, event);
         ResultSet res = s.executeQuery();
 
-        String value[] = {"oui", "non", "peut-être"};
+        String value[] = {"Oui", "Non", "Peutetre"};
 
         if (res.next()) {
             assertEquals(value[newIndex], res.getString("Response"));
@@ -147,5 +148,31 @@ public class VoteAcceptance {
             throw new Exception("Didn't add vote");
         }
         assertFalse(res.next());
+    }
+
+    @Etantdonné("^je suis sur connecté$")
+    public void jeSuisSurConnecte() throws Throwable {
+
+    }
+
+    @Quand("^l'utilisateur est sur la page évènement$")
+    public void lUtilisateurEstSurLaPageÉvènement() throws Throwable {
+        driver.get(urlPage + "/src/PHP/repondre_invite.php?IDEvent=" + event);
+    }
+
+    @Alors("^le site renvoie tout les votes sur l'évènement$")
+    public void leSiteRenvoieToutLesVotesSurLÉvènement() throws Throwable {
+        driver.findElementById("205011000oui");
+        driver.findElementById("205011000non");
+        driver.findElementById("205011000peutetre");
+    }
+
+    @Et("^l'utilisateur reçoit les bonnes informations$")
+    public void lUtilisateurReçoitLesBonnesInformations() throws Throwable {
+        String values[] = {"0", "0", "0"};
+        values[index] = "1";
+        assertEquals(values[0], driver.findElementById("205011000oui").getText());
+        assertEquals(values[1], driver.findElementById("205011000non").getText());
+        assertEquals(values[2], driver.findElementById("205011000peutetre").getText());
     }
 }

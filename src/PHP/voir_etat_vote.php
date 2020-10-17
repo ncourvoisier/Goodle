@@ -119,8 +119,8 @@ function l_affiche_vote( $heur, $min, $jour, $mois, $annee,  $voteP, $voteO, $vo
 	$heure = 'à ' . ecrireHeure($heur,$minu) ;
 	echo '<h3>',$date,' ',$heure,'</h3>',
 	 '<ul>';
-	echo '<li>Vote : Peut être (',$voteP,')</li>';
-	echo '<li>Vote : Oui (',$voteO,')</li>';
-	echo '<li>Vote : Non (',$voteN,')</li></ul>';
+	echo '<li>Vote : Peut être (<span id="' . $annee . $mois . $jour . $heur . $min . 'peutetre">',$voteP,'</span>)</li>';
+	echo '<li>Vote : Oui (<span id="' . $annee . $mois . $jour . $heur . $min . 'oui">',$voteO,'</span>)</li>';
+	echo '<li>Vote : Non (<span id="' . $annee . $mois . $jour . $heur . $min . 'peutetre">',$voteN,'</span>)</li></ul>';
 
 }
