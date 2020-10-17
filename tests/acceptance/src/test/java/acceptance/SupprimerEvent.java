@@ -44,10 +44,10 @@ public class SupprimerEvent {
         driver.findElementByName("btnConnexion").click();
     }
 
-    @Etantdonné("^l'utilisateur edite un evenement crée$")
+    /*@Etantdonné("^l'utilisateur edite un evenement crée$")
     public void lUtilisateurEditeUnEvenementCree() {
         driver.get(urlPage + "/src/PHP/voir_event.php?event="+pastEvent);
-    }
+    }*/
 
     @Quand("^l'utilisateur supprime l'événement$")
     public void lUtilisateurSupprimeLEvenement() {

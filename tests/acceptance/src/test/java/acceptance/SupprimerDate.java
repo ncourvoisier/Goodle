@@ -40,17 +40,6 @@ public class SupprimerDate {
             throw new SQLException("Did not create event");
         }
 
-        sql = "INSERT INTO DateEvenement(ID, IDEevent, IDDate) VALUES ('0', '0', '0');";
-        s = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-        s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-        generated = s.getGeneratedKeys();
-        if (generated.next()) {
-            pastDateEvent = generated.getInt(1);
-        } else {
-            throw new SQLException("Did not create event");
-        }
-
         sql = "INSERT INTO Date(ID, Jour, Mois, Annee, Heure, Minute) VALUES ('0', '1', '12', '2020', '14', '0');";
         s = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -58,6 +47,17 @@ public class SupprimerDate {
         generated = s.getGeneratedKeys();
         if (generated.next()) {
             pastDate = generated.getInt(1);
+        } else {
+            throw new SQLException("Did not create event");
+        }
+
+        sql = "INSERT INTO DateEvenement(ID, IDEvent, IDDate) VALUES ('0', " + pastEvent + ", " + pastDate + ");";
+        s = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+        s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+        generated = s.getGeneratedKeys();
+        if (generated.next()) {
+            pastDateEvent = generated.getInt(1);
         } else {
             throw new SQLException("Did not create event");
         }

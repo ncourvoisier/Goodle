@@ -43,16 +43,6 @@ public class AjoutNouvelleDateExistanteErreur {
             throw new SQLException("Did not create event");
         }
 
-        sql = "INSERT INTO DateEvenement(ID, IDEevent, IDDate) VALUES ('0', '0', '0');";
-        s = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-        s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-        generated = s.getGeneratedKeys();
-        if (generated.next()) {
-            pastDateEvent = generated.getInt(1);
-        } else {
-            throw new SQLException("Did not create event");
-        }
 
         sql = "INSERT INTO Date(ID, Jour, Mois, Annee, Heure, Minute) VALUES ('0', '1', '12', '2020', '14', '0');";
         s = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -65,16 +55,27 @@ public class AjoutNouvelleDateExistanteErreur {
             throw new SQLException("Did not create event");
         }
 
+        sql = "INSERT INTO DateEvenement(ID, IDEvent, IDDate) VALUES ('0', " + pastEvent + ", " + pastDate + ");";
+        s = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+        s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+        generated = s.getGeneratedKeys();
+        if (generated.next()) {
+            pastDateEvent = generated.getInt(1);
+        } else {
+            throw new SQLException("Did not create event");
+        }
+
         driver.get(urlPage + "/src/PHP/login.php");
         driver.findElementByName("email").sendKeys("mailForTests@tests.fr");
         driver.findElementByName("password").sendKeys("Azerty1234!");
         driver.findElementByName("btnConnexion").click();
     }
 
-    @Etantdonné("^l'utilisateur ajoute une proposition de date et heure$")
+    /*@Etantdonné("^l'utilisateur ajoute une proposition de date et heure$")
     public void lUtilisateurAjouteUnePropositionDeDateEtHeure() {
         driver.get(urlPage+"/src/PHP/ajouter_date_evenement.php?event="+pastEvent);
-    }
+    }*/
 
     @Quand("^la date et l'heure sont déjà renseignés$")
     public void laDateEtLHeureSontDejaRenseignes() {

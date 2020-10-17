@@ -96,7 +96,7 @@ public class VoteAcceptance {
     }
 
 
-    @Etantdonné("^que j'ai déja voté \"([^\"]*)\"$")
+    @Etantdonné("^j'ai déja voté \"([^\"]*)\"$")
     public void queJAiDéjaVoté(String arg0) throws Throwable {
         driver.get(urlPage + "src/PHP/repondre_invite.php?IDEvent=" + event);
         index = 2;

@@ -70,10 +70,10 @@ public class ModificationDateClotureNonValdie {
         driver.findElementById("erreur");
     }
 
-    @Alors("^un message d'erreur s'affiche$")
+    /*@Alors("^un message d'erreur s'affiche$")
     public void unMessageDErreurSAffiche() {
         assertEquals(driver.getCurrentUrl(), urlPage + "/src/PHP/modif_evenement.php?event=8");
-    }
+    }*/
 
     @After
     public void tearDown() throws SQLException {

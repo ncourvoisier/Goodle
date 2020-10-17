@@ -24,7 +24,7 @@ public class StaticConnection {
 
     public static HtmlUnitDriver getHtmlDriver() {
         HtmlUnitDriver driver = new HtmlUnitDriver(BrowserVersion.CHROME);
-        driver.get("http://m2gl.deptinfo-st.univ-fcomte.fr/~m2test3/preprod");
+        //driver.get("http://m2gl.deptinfo-st.univ-fcomte.fr/~m2test3/preprod");
         return driver;
     }
 }

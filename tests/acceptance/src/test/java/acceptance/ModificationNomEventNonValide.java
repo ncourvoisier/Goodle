@@ -47,22 +47,22 @@ public class ModificationNomEventNonValide {
         driver.findElementByName("btnConnexion").click();
     }
 
-    @Etantdonné("^l'utilisateur modifie le nom de l'événement$")
+    /*@Etantdonné("^l'utilisateur modifie le nom de l'événement$")
     public void lutilisateurModifieLeNomDeLEvenement() {
         driver.get(urlPage + "/src/PHP/voir_event.php?event="+pastEvent);
         driver.findElementByName("btnModifier").click();
         driver.findElementByName("NameEvent").sendKeys(nvNomEvent);
-    }
+    }*/
 
     @Quand("^le nouveau nom contient moins de 3 caractères$")
     public void leNouveauNomContientAuMoins3Caracteres() {
         driver.findElementByName("erreur");
     }
 
-    @Alors("^le nouveau nom est validé$")
+    /*@Alors("^le nouveau nom est validé$")
     public void leNouveauNomEstValide() {
         assertEquals(driver.getCurrentUrl(), urlPage + "/src/PHP/modif_evenement.php?event="+pastEvent);
-    }
+    }*/
 
     @After
     public void tearDown() throws SQLException {
