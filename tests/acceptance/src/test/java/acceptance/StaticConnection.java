@@ -11,7 +11,7 @@ public class StaticConnection {
 
     public static String distanteConnection = "http://m2gl.deptinfo-st.univ-fcomte.fr/~m2test3/preprod";
     public static String localConnection = "http://localhost/goodle/Goodle"; //a changer pour chacun
-    public static String urlPage = localConnection;
+    public static String urlPage = distanteConnection;
 
     public static Connection getDatabaseConnector() throws SQLException {
 
