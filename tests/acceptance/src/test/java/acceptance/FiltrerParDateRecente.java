@@ -1,6 +1,7 @@
 package acceptance;
 
 import acceptance.StaticConnection;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Etantdonné;
@@ -47,7 +48,6 @@ public class FiltrerParDateRecente {
 
     @Quand("^l'utilisateur choisie le filtre par date de la plus récente à la plus ancienne$")
     public void lUtilisateurChoisieLeFiltreParDateDeLaPlusRécenteÀLaPlusAncienne() {
-        //driver.findElementByLinkText("./voir_etat_vote.php?IDEvent=&order=date&dir=asc").click();
         driver.get(urlPage + "/src/PHP/voir_etat_vote.php?event="+pastEvent);
         driver.findElementByClassName("btn-group").findElement(By.className("btn btn-secondary")).click();
     }
@@ -56,6 +56,15 @@ public class FiltrerParDateRecente {
     public void lesRésultatsAffichéSontDansTriésParDateDeLaPlusRécenteÀLaPlusAncienne() {
         //driver.findElementByName("success");
         assertEquals(driver.getCurrentUrl(), urlPage + "/src/PHP/voir_etat_vote.php?IDEvent=&order=date&dir=asc");
+    }
+
+    @After
+    public void tearDown() throws SQLException {
+        String sql = "DELETE FROM Evenement WHERE ID = " + pastEvent + ";";
+        Statement s = con.createStatement();
+        s.executeUpdate(sql);
+        driver.quit();
+        con.close();
     }
 
 

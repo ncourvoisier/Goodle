@@ -5,6 +5,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Etantdonné;
 import cucumber.api.java.fr.Quand;
+import org.openqa.selenium.By;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import java.sql.*;
@@ -53,11 +54,12 @@ public class FiltrerParDateChronologiqueLesVotes {
     @Quand("^l'utilisateur choisie le filtre par date de la plus ancienne à la plus récente$")
     public void lUtilisateurSupprimeLEvenement() {
         //TODO: recup nom du bouton
+        driver.findElementByClassName("btn-group").findElement(By.cssSelector("a:nth-child(2) > button")).click();
     }
 
     @Alors("^les résultats affiché sont dans triés par date de la plus ancienne à la plus récente$")
     public void lEvenementNApparaitPlus() {
-        driver.findElementByName("success");
+        //driver.findElementByName("success");
         assertEquals(driver.getCurrentUrl(), urlPage + "/src/PHP/voir_etat_vote.php?IDEvent=&order=date&dir=desc");
     }
 
