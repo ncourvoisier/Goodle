@@ -32,7 +32,20 @@ public class AjoutNouvelleDateExistanteErreur {
         driver = StaticConnection.getHtmlDriver();
         con = StaticConnection.getDatabaseConnector();
 
-        String sql = "INSERT INTO Evenement(ID, Nom, Lieu, Referent, DateCloture) VALUES ('0', 'Evenement', 'Lieu', '1', '2020-01-01 00:00');";
+        String getEventCreatorSql = "SELECT ID FROM Personne WHERE Email = 'mailForTest@tests.fr';";
+        PreparedStatement creatorStatement = con.prepareStatement(getEventCreatorSql);
+
+        ResultSet creator = creatorStatement.executeQuery();
+
+        int pastEventCreator;
+        if (creator.next()) {
+            pastEventCreator = creator.getInt("ID");
+        } else {
+            throw new SQLException("No creator");
+        }
+
+
+        String sql = "INSERT INTO Evenement(ID, Nom, Lieu, Referent, DateCloture) VALUES ('0', 'Evenement', 'Lieu', '" + pastEventCreator + "', '2050-01-01 00:00');";
         PreparedStatement s = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
         s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
@@ -67,7 +80,7 @@ public class AjoutNouvelleDateExistanteErreur {
         }
 
         driver.get(urlPage + "/src/PHP/login.php");
-        driver.findElementByName("email").sendKeys("mailForTests@tests.fr");
+        driver.findElementByName("email").sendKeys("mailForTest@tests.fr");
         driver.findElementByName("password").sendKeys("Azerty1234!");
         driver.findElementByName("btnConnexion").click();
     }
@@ -77,36 +90,6 @@ public class AjoutNouvelleDateExistanteErreur {
         driver.get(urlPage+"/src/PHP/ajouter_date_evenement.php?event="+pastEvent);
     }*/
 
-    @Quand("^la date et l'heure sont déjà renseignés$")
-    public void laDateEtLHeureSontDejaRenseignes() {
-        {
-            WebElement dropdown = driver.findElement(By.name("DateEvent_j"));
-            dropdown.findElement(By.xpath("//option[. = '1']")).click();
-        }
-        {
-            WebElement dropdown = driver.findElement(By.name("DateEvent_m"));
-            dropdown.findElement(By.xpath("//option[. = 'Décembre']")).click();
-        }
-        {
-            WebElement dropdown = driver.findElement(By.name("DateEvent_a"));
-            dropdown.findElement(By.xpath("//option[. = '2020']")).click();
-        }
-        {
-            WebElement dropdown = driver.findElement(By.name("DateEvent_hr"));
-            dropdown.findElement(By.xpath("//option[. = '14']")).click();
-        }
-        {
-            WebElement dropdown = driver.findElement(By.name("DateEvent_min"));
-            dropdown.findElement(By.xpath("//option[. = '0']")).click();
-        }
-    }
-
-    @Alors("^une message d'erreur s'affiche$")
-    public void uneMessageDErreurSAffiche() {
-        assertEquals(driver.getCurrentUrl(),urlPage+"/src/PHP/voir_event.php?event="+pastEvent);
-        //Ajouter msg date ajoute ou erreur
-        //driver.findElementById("error_ajout_date");
-    }
 
     @After
     public void tearDown() throws SQLException {

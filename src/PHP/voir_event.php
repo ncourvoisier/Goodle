@@ -111,17 +111,15 @@ function l_contenu_ve($errors){
 			if ($createurConnecte){
 				echo '<p> Ajouter une date à cet évènement : <a href="./ajouter_date_evenement.php?event='.$event.'">Ajouter Date</a><br/>';
 				echo 'Voir l\'état des votes de cet événement : <a href="./voir_etat_vote.php?event='.$event.'">Les votes</a></p>';
-
+				echo '<a href="modif_evenement.php?event=' . $_GET['event'] . '"><button name="btnModifier">Modifier</button></a>';
+					echo '<form method="POST" action="voir_event.php?event='.$_GET['event'].'">',
+					form_input(Z_SUBMIT,'btnSupprimerEventUtilisateur','Supprimer l\'évènement'),
+					'</form>';
 			}
 
 			if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
 
 				echo '<a href="evenement.php?remove_event=' . $_GET['event'] . '" id="btnSupprimerEventUtilisateur"><button<button name="btnSupprimerEvent">Supprimer</button></a>';
-			} else if ($createurConnecte){
-				echo '<a href="modif_evenement.php?event=' . $_GET['event'] . '"><button>Modifier</button></a>';
-					echo '<form method="POST" action="voir_event.php?event='.$_GET['event'].'">',
-					form_input(Z_SUBMIT,'btnSupprimerEventUtilisateur','Supprimer l\'évènement'),
-					'</form>';
 			}
 		}
 	}
