@@ -53,7 +53,7 @@ public class DeconnexionAcceptance {
 
     @Quand("^l'utilisateur demande de se deconnecté$")
         public void lUtilisateurDemandeDeSeDeconnecte(){
-            driver.get(urlPage+"/index.php");
+            //driver.get(urlPage+"/index.php");
             //assertEquals(driver.getCurrentUrl(),"3");
             driver.findElement(By.id("btnDeconnection")).click();
         }
