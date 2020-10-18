@@ -1,7 +1,7 @@
 # language: fr
 Fonctionnalité: Je vote peut-être
   
-  Etant donné que je suis sur connecté
+  Etant donné je suis sur connecté
 Quand la date de cloture des vote n'est pas dépassé
 Et l'utilisateur vote "Peut-être" sur une des proposition du sondage
 Alors le site renvoie "Votre vote peut-être a bien ete prit en compte"
