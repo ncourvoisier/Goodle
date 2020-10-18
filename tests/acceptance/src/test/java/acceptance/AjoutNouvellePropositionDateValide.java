@@ -147,7 +147,7 @@ public class AjoutNouvellePropositionDateValide {
 
     @Alors("^une message d'erreur s'affiche$")
     public void uneMessageDErreurSAffiche() {
-        assertEquals(driver.getCurrentUrl(),urlPage+"/src/PHP/voir_event.php?event="+pastEvent);
+        assertEquals(driver.getCurrentUrl(),urlPage+"/src/PHP/ajouter_date_evenement.php?event="+pastEvent);
         //Ajouter msg date ajoute ou erreur
         //driver.findElementById("error_ajout_date");
     }
