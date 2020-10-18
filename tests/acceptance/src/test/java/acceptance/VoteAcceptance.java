@@ -175,4 +175,17 @@ public class VoteAcceptance {
         assertEquals(values[1], driver.findElementById("205011000non").getText());
         assertEquals(values[2], driver.findElementById("205011000peutetre").getText());
     }
+
+    @Et("^l'utilisateur vote \"([^\"]*)\" sur une des proposition du sondage$")
+    public void lUtilisateurVoteSurUneDesPropositionDuSondage(String arg0) throws Throwable {
+        driver.get(urlPage + "/src/PHP/repondre_invite.php?IDEvent=" + event);
+        newIndex = 2;
+        if (arg0.equals("Oui")) {
+            newIndex = 0;
+        } else if (arg0.equals("Non")) {
+            newIndex = 1;
+        }
+        driver.findElementsByName("20501100").get(newIndex).click();
+        driver.findElementByName("btnValiderRep").click();
+    }
 }

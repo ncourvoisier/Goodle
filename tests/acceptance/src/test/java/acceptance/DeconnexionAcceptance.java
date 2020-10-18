@@ -1,7 +1,11 @@
 package acceptance;
 
+import acceptance.LienInvitationAcceptance;
+
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.fr.Alors;
+import cucumber.api.java.fr.Etantdonné;
 import cucumber.api.java.fr.Quand;
 import org.openqa.selenium.By;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -17,21 +21,49 @@ public class DeconnexionAcceptance {
     private Connection con;
     private String urlPage = StaticConnection.urlPage;
 
+    @Before
+    public void setUp() throws SQLException {
+        Logger logger = Logger.getLogger("");
+        logger.setLevel(Level.OFF);
 
-    /*@Etantdonné("^Etant donné l'utilisateur est sur la page de login$")
-        public void lUtilisateurEstSurLaPageLogin() {
-            driver.get(urlPage+"/src/PHP/login.php");
-      }*/
+        driver = StaticConnection.getHtmlDriver();
+        con = StaticConnection.getDatabaseConnector();
+
+        driver.get(urlPage+"/src/PHP/login.php");
+        driver.findElementByName("email").sendKeys("mailForTest@tests.fr");
+        driver.findElementByName("password").sendKeys("Azerty1234!");
+        driver.findElementByName("btnConnexion").click();
+
+    }
+
+    @After
+    public void tearDown() throws SQLException {
+        driver.quit();
+
+        con.close();
+    }
+
+    /*@Etantdonné("^l'utilisateur est connecté$")
+    public void lUtilisateurEstConnecté() {
+        driver.get(urlPage+"/src/PHP/login.php");
+        driver.findElementByName("email").sendKeys("mailForTest@tests.fr");
+        driver.findElementByName("password").sendKeys("Azerty1234!");
+        driver.findElementByName("btnConnexion").click();
+    }*/
 
     @Quand("^l'utilisateur demande de se deconnecté$")
         public void lUtilisateurDemandeDeSeDeconnecte(){
-           driver.findElement(By.id("btnDeconnection")).click();
+            driver.get(urlPage+"/index.php");
+            //assertEquals(driver.getCurrentUrl(),"3");
+            driver.findElement(By.id("btnDeconnection")).click();
         }
 
-    /*@Alors("^la page renvoie sur l'index$")
+
+
+    @Alors("^la page renvoie sur l'index$")
     public void laPageRenvoieALIndex(){
-        assertEquals(urlPage+"index.php",driver.getCurrentUrl());
-    }*/
+        assertEquals(urlPage+"/index.php",driver.getCurrentUrl());
+    }
 
 
 

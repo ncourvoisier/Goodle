@@ -38,16 +38,22 @@ public class ConnexionAcceptance {
 
     }
 
+    @After
+    public void tearDown() throws SQLException {
+        driver.quit();
 
-    @Etantdonné("^Etant donné l'utilisateur est sur la page de login$")
-    public void lUtilisateurEstSurLaPageLogin() {
+        con.close();
+    }
+
+
+    @Etantdonné("^l'utilisateur est sur la page de login$")
+    public void lUtilisateurEstSurLaPageDeLogin() {
         driver.get(urlPage+"/src/PHP/login.php");
     }
 
-    @Quand("^Quand il saisie un nom d'utilisateur valide$")
-    public void lUtilisateurSaisieSonEmail(){
-        driver.findElementByName("email").sendKeys("mailForTest@tests.fr");
-
+    @Et("^l'utilisateur n'est pas connecté$")
+    public void lUtilisateurNEstPasConnecté() {
+        assertEquals(urlPage+"/src/PHP/login.php",driver.getCurrentUrl());
     }
 
     @Et("^il saisie le mot de passe valide$")
@@ -60,15 +66,14 @@ public class ConnexionAcceptance {
         driver.findElementByName("btnConnexion").click();
 
     }
-    @Alors("^la page renvoie sur l'index$")
+    /*@Alors("^la page renvoie sur l'index$")
     public void laPageRenvoieALIndex(){
-         assertEquals(urlPage+"index.php",driver.getCurrentUrl());
-    }
+         assertEquals(urlPage+"/index.php",driver.getCurrentUrl());
+    }*/
 
-    @Quand("^le mot de passe est \"\"$")
-    public void lUtilisateurSaisieLeMotDePasse(String arg0) throws Throwable {
+    @Quand("^le mot de passe est \"([^\"]*)\"$")
+    public void leMotDePasseEst(String arg0) throws Throwable {
         driver.findElementByName("password").sendKeys(arg0);
-
     }
 
     @Et("^l'utilisateur demande de valider le login$")
@@ -77,5 +82,14 @@ public class ConnexionAcceptance {
 
     }
 
+    @Quand("^il saisie un nom d'utilisateur valide$")
+    public void ilSaisieUnNomDUtilisateurValide() {
+        driver.findElementByName("email").sendKeys("mailForTest@tests.fr");
+    }
 
+
+    @Alors("^un message d'erreur s'affiche sur la page login$")
+    public void unMessageDErreurSAfficheSurLaPageLogin() {
+        driver.findElement(By.className("erreur"));
+    }
 }
