@@ -45,7 +45,7 @@ public class ModificationDateClotureNonValdie {
         }
 
 
-        String sql = "INSERT INTO Evenement(ID, Nom, Lieu, Referent, DateCloture) VALUES ('0', 'Evenement', 'Lieu', '" + pastEventCreator + "', '2050-01-01 00:00');";
+        String sql = "INSERT INTO Evenement(Nom, Lieu, Referent, DateCloture) VALUES ('Evenement', 'Lieu', '" + pastEventCreator + "', '2050-01-01 00:00');";
 
         PreparedStatement s = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -58,7 +58,7 @@ public class ModificationDateClotureNonValdie {
         }
 
 
-        sql = "INSERT INTO Date(ID, Jour, Mois, Annee, Heure, Minute) VALUES ('0', '1', '12', '2051', '14', '0');";
+        sql = "INSERT INTO Date(Jour, Mois, Annee, Heure, Minute) VALUES ('1', '12', '2051', '14', '0');";
         s = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
         s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
@@ -69,7 +69,7 @@ public class ModificationDateClotureNonValdie {
             throw new SQLException("Did not create event");
         }
 
-        sql = "INSERT INTO DateEvenement(ID, IDEvent, IDDate) VALUES ('0', " + pastEvent + ", " + pastDate + ");";
+        sql = "INSERT INTO DateEvenement(IDEvent, IDDate) VALUES (" + pastEvent + ", " + pastDate + ");";
         s = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
         s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
@@ -118,11 +118,11 @@ public class ModificationDateClotureNonValdie {
 
     @After
     public void tearDown() throws SQLException {
-        String sql = "DELETE FROM Date WHERE ID = " + pastDate + ";";
+        String sql = "DELETE FROM DateEvenement WHERE ID = " + pastDateEvent + ";";
         Statement s = con.createStatement();
         s.executeUpdate(sql);
 
-        sql = "DELETE FROM DateEvenement WHERE ID = " + pastDateEvent + ";";
+        sql = "DELETE FROM Date WHERE ID = " + pastDate + ";";
         s = con.createStatement();
         s.executeUpdate(sql);
 

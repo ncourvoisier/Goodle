@@ -87,11 +87,11 @@ public class SupprimerDate {
 
     @After
     public void tearDown() throws SQLException {
-        String sql = "DELETE FROM Date WHERE ID = " + pastDate + ";";
+        String sql = "DELETE FROM DateEvenement WHERE ID = " + pastDateEvent + ";";
         Statement s = con.createStatement();
         s.executeUpdate(sql);
 
-        sql = "DELETE FROM DateEvenement WHERE ID = " + pastDateEvent + ";";
+        sql = "DELETE FROM Date WHERE ID = " + pastDate + ";";
         s = con.createStatement();
         s.executeUpdate(sql);
 
