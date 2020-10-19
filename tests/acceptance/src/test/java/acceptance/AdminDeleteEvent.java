@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class AdminDeleteEvent {
     private HtmlUnitDriver driver;
@@ -28,7 +29,7 @@ public class AdminDeleteEvent {
         driver = StaticConnection.getHtmlDriver();
         con = StaticConnection.getDatabaseConnector();
 
-        String sql = "INSERT INTO Evenement(ID, Nom, Lieu, Referent, DateCloture) VALUES ('0', 'Evenement', 'Lieu', '1', '2020-01-01 00:00');";
+        String sql = "INSERT INTO Evenement( Nom, Lieu, Referent, DateCloture) VALUES ('Evenement', 'Lieu', '1', '2020-01-01 00:00');";
         PreparedStatement s = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
         s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
@@ -52,7 +53,18 @@ public class AdminDeleteEvent {
     }
 
     @Et("^l'événement est supprimé$")
-    public void lÉvénementEstSupprimé() {
+    public void lÉvénementEstSupprimé() throws SQLException {
+        String sql = "SELECT * FROM Evenement WHERE ID =" + pastEvent + ";";
+        PreparedStatement s = con.prepareStatement(sql);
+        ResultSet evenement = s.executeQuery();
+        if(evenement.next())
+        {
+            assertTrue(false);
+        }
+        else
+        {
+            assertTrue(true);
+        }
     }
 
     @After
@@ -68,7 +80,13 @@ public class AdminDeleteEvent {
     @Et("^l'adiministrateur clique sur le bouton \"([^\"]*)\"$")
     public void lAdiministrateurCliqueSurLeBouton(String arg0) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        driver.findElementById("btnSupprimerEventUtilisateur").click();
+        driver.findElementByName("btnSupprimerEventUtilisateur").click();
         //throw new PendingException();
+    }
+
+    @Alors("^le message apparait \"([^\"]*)\"$")
+    public void leMessageApparait(String arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        driver.findElementByName("suppEvent").toString().equals("L'évènement a bien été supprimé");
     }
 }

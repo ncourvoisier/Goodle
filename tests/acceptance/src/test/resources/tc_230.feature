@@ -6,4 +6,4 @@ Scénario: Test de la suppréssion d'un événement invalide
   Quand l'administrateur est sur la page d'un événement
   Et l'adiministrateur clique sur le bouton "Supprimer"
   Et l'événement est supprimé
-  Alors un message apparait "L'événement a été supprimé"
+  Alors le message apparait "L'événement a été supprimé"
