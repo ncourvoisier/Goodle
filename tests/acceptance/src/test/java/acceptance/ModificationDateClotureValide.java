@@ -96,11 +96,11 @@ public class ModificationDateClotureValide {
         }
         {
             WebElement dropdown = driver.findElement(By.name("DateCloture_m"));
-            dropdown.findElement(By.xpath("//option[. = 'Janvier']")).click();
+            dropdown.findElement(By.xpath("//option[. = 'Novembre']")).click();
         }
         {
             WebElement dropdown = driver.findElement(By.name("DateCloture_a"));
-            dropdown.findElement(By.xpath("//option[. = '2022']")).click();
+            dropdown.findElement(By.xpath("//option[. = '2020']")).click();
         }
     }
 
@@ -112,6 +112,7 @@ public class ModificationDateClotureValide {
     @Alors("^la nouvelle date cloture est validé$")
     public void laNouvelleDateClotureEstValide() {
         System.out.println(driver.findElementByClassName("erreur").getText());
+        System.out.println("ICI"+driver.getCurrentUrl());
         assertEquals(driver.getCurrentUrl(),urlPage+"/src/PHP/evenement_ok.php");
     }
 
