@@ -166,7 +166,7 @@ function l_supprimer_event(){
 	$sql = 'DELETE FROM Evenement WHERE ID = '.$_GET['event'].';';
 	$res = mysqli_query($bd, $sql);
 
-	echo '<p> L\'évènement a bien été supprimé</p>';
+	echo '<p name ="suppEvent"> L\'évènement a bien été supprimé</p>';
 
 	echo '<p><a href="../../index.php">Retour accueil</a></p>';
 

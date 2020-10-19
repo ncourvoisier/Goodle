@@ -213,7 +213,7 @@ public class AdminDeleteUser {
     public void unMessageApparait(String arg0) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         assertEquals(driver.getCurrentUrl(), urlPage + "/src/PHP/admin_user_view.php?remove_user="+user);
-        //driver.findElementByClassName("alert-success");
+        driver.findElementByClassName("alert-success");
         //throw new PendingException();
     }
 }
