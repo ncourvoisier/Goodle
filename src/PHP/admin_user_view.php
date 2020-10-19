@@ -87,7 +87,8 @@ function l_contenu_auv() {
   $res = mysqli_query($bd, $sql);
 
   while ($t = mysqli_fetch_assoc($res)) {
-    echo '<li><a href="admin_one_user_view.php?user=' . $t['ID'] . '"">' . $t['Username'] . '</a></li>';
+    //echo '<li><a href="admin_one_user_view.php?user=' . $t['ID'] . '"">' . $t['Username'] . '</a></li>';
+    echo '<li><a href="admin_one_user_view.php?user=' . $t['ID'] . '" name ="'. $t['Username'] .'">' . $t['Username'] . '</a></li>';
   }
 }
 
