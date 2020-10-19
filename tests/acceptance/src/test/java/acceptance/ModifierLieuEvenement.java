@@ -27,7 +27,19 @@ public class ModifierLieuEvenement {
         driver = StaticConnection.getHtmlDriver();
         con = StaticConnection.getDatabaseConnector();
 
-        String sql = "INSERT INTO Evenement(ID, Nom, Lieu, Referent, DateCloture) VALUES ('0', 'Evenement', 'Lieu', '1', '2020-01-01 00:00');";
+        String getEventCreatorSql = "SELECT ID FROM Personne WHERE Email = 'mailForTest@tests.fr';";
+        PreparedStatement creatorStatement = con.prepareStatement(getEventCreatorSql);
+
+        ResultSet creator = creatorStatement.executeQuery();
+
+        int pastEventCreator;
+        if (creator.next()) {
+            pastEventCreator = creator.getInt("ID");
+        } else {
+            throw new SQLException("No creator");
+        }
+
+        String sql = "INSERT INTO Evenement(ID, Nom, Lieu, Referent, DateCloture) VALUES ('0', 'Evenement', 'Lieu', '" + pastEventCreator + "', '2020-01-01 00:00');";
         PreparedStatement s = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
         s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
@@ -53,6 +65,7 @@ public class ModifierLieuEvenement {
 
     @Alors("^le lieu est validé$")
     public void leLieuEstValide() {
+        System.out.println("ICIvalide");
         assertEquals(driver.getCurrentUrl(), urlPage + "/src/PHP/evenement_ok.php");
     }
 
