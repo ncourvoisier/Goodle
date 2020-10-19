@@ -5,11 +5,11 @@ import cucumber.api.java.Before;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Etantdonné;
 import cucumber.api.java.fr.Quand;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -69,5 +69,62 @@ public class LienInvitationAcceptance {
     @Alors("^l'utilisateur est redirigé sur la page de l'evenement correspondant au lien$")
     public void lUtilisateurEstRedirigéSurLaPageDeLEvenementCorrespondantAuLien() {
         assertEquals(urlPage+"/src/PHP/voir_event.php?event=1", driver.getCurrentUrl());
+    }
+
+    @Quand("^l'utilistateur crée un évènement pour lien$")
+    public void lUtilistateurCréeUnÉvènement() {
+       /* driver.get(urlPage+"/src/PHP/ajout_evenement.php");
+        driver.findElementByName("NameEvent").sendKeys("AcceptanceTestEvenement");
+        driver.findElementByName("LieuEvent").sendKeys("AcceptanceTestEvenement");
+        {
+            WebElement dropdown = driver.findElement(By.name("DateEvent1_j"));
+            dropdown.findElement(By.xpath("//option[. = '1']")).click();
+        }
+
+        {
+            WebElement dropdown = driver.findElement(By.name("DateEvent1_m"));
+            dropdown.findElement(By.xpath("//option[. = 'Mars']")).click();
+        }
+
+        {
+            WebElement dropdown = driver.findElement(By.name("DateEvent1_a"));
+            dropdown.findElement(By.xpath("//option[. = '2022']")).click();
+        }
+
+        {
+            WebElement dropdown = driver.findElement(By.name("DateCloture_j"));
+            dropdown.findElement(By.xpath("//option[. = '25']")).click();
+        }
+
+        {
+            WebElement dropdown = driver.findElement(By.name("DateCloture_m"));
+            dropdown.findElement(By.xpath("//option[. = 'Novembre']")).click();
+        }
+
+        {
+            WebElement dropdown = driver.findElement(By.name("DateCloture_a"));
+            dropdown.findElement(By.xpath("//option[. = '2021']")).click();
+        }
+
+        driver.findElementByName("btnValiderEvent").click();*/
+    }
+
+    @Alors("^l'utilisateur obtient un lien qui redirige vers cette evenement$")
+    public void lUtilisateurObtientUnLienQuiRedirigeVersCetteEvenement() throws SQLException {
+       /* String getEventCreatorSql = "SELECT ID FROM Evenement WHERE Nom = 'AcceptanceTestEvenement';";
+        PreparedStatement creatorStatement = con.prepareStatement(getEventCreatorSql);
+
+        ResultSet creator = creatorStatement.executeQuery();
+
+        long id = 0;
+        if (creator.next()) {
+            id = creator.getInt("ID");
+        } else {
+            throw new SQLException("No ID");
+        }
+        assertEquals(urlPage+"src/PHP/evenement_ok.php?event="+id, driver.getCurrentUrl());*/
+        //driver.findElementById("lien_invitation");
+        //System.out.println(driver.findElementById("error_add_event").getText());
+
     }
 }

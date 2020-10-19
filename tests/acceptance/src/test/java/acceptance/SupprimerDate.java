@@ -71,12 +71,13 @@ public class SupprimerDate {
     @Etantdonné("^l'utilisateur edite un evenement crée$")
     public void lutilisateurEditeUnEvenementCree() {
         driver.get(urlPage + "/src/PHP/voir_event.php?event="+pastEvent);
+        driver.get(urlPage + "/src/PHP/supprimer_date_event.php?dateEvent="+pastDate+"&event="+pastEvent);
     }
 
     @Quand("^l'utilisateur supprime une proposition de date$")
     public void lUtilisateurSupprimeUnePropositionDeDate() {
         assertEquals(driver.getCurrentUrl(), urlPage + "/src/PHP/supprimer_date_event.php?dateEvent="+pastDate+"&event="+pastEvent);
-        driver.findElementByName("btnValiderSupprDate");
+        driver.findElementByName("btnValiderSupprDate").click();
     }
 
     @Alors("^la date supprimé n'apparait plus$")
@@ -86,11 +87,11 @@ public class SupprimerDate {
 
     @After
     public void tearDown() throws SQLException {
-        String sql = "DELETE FROM Date WHERE ID = " + pastDate + ";";
+        String sql = "DELETE FROM DateEvenement WHERE ID = " + pastDateEvent + ";";
         Statement s = con.createStatement();
         s.executeUpdate(sql);
 
-        sql = "DELETE FROM DateEvenement WHERE ID = " + pastDateEvent + ";";
+        sql = "DELETE FROM Date WHERE ID = " + pastDate + ";";
         s = con.createStatement();
         s.executeUpdate(sql);
 

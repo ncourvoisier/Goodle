@@ -152,6 +152,10 @@ public class AjoutNouvellePropositionDateValide {
         //driver.findElementById("error_ajout_date");
     }
 
+    @Alors("^la date et l'heure sont ajoutés à l'événement$")
+    public void laDateEtLHeureSontAjoutésÀLÉvénement() {
+        assertEquals(driver.getCurrentUrl(),urlPage+"/src/PHP/voir_event.php?event="+pastEvent);
+    }
 
     @After
     public void tearDown() throws SQLException {

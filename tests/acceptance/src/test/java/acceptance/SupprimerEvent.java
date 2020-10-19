@@ -27,7 +27,19 @@ public class SupprimerEvent {
         driver = StaticConnection.getHtmlDriver();
         con = StaticConnection.getDatabaseConnector();
 
-        String sql = "INSERT INTO Evenement(ID, Nom, Lieu, Referent, DateCloture) VALUES ('0', 'Evenement', 'Lieu', '1', '2020-01-01 00:00');";
+        String getEventCreatorSql = "SELECT ID FROM Personne WHERE Email = 'mailForTest@tests.fr';";
+        PreparedStatement creatorStatement = con.prepareStatement(getEventCreatorSql);
+
+        ResultSet creator = creatorStatement.executeQuery();
+
+        int pastEventCreator;
+        if (creator.next()) {
+            pastEventCreator = creator.getInt("ID");
+        } else {
+            throw new SQLException("No creator");
+        }
+
+        String sql = "INSERT INTO Evenement(ID, Nom, Lieu, Referent, DateCloture) VALUES ('0', 'Evenement', 'Lieu', '" + pastEventCreator + "', '2020-01-01 00:00');";
         PreparedStatement s = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
         s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
@@ -44,14 +56,14 @@ public class SupprimerEvent {
         driver.findElementByName("btnConnexion").click();
     }
 
-    /*@Etantdonné("^l'utilisateur edite un evenement crée$")
-    public void lUtilisateurEditeUnEvenementCree() {
+    @Etantdonné("^l'utilisateur edite un evenement existant$")
+    public void lUtilisateurEditeUnEvenementExistant() {
         driver.get(urlPage + "/src/PHP/voir_event.php?event="+pastEvent);
-    }*/
+    }
 
     @Quand("^l'utilisateur supprime l'événement$")
     public void lUtilisateurSupprimeLEvenement() {
-        driver.findElementByName("btnSupprimerEvent").click();
+        driver.findElementByName("btnSupprimerEventUtilisateur").click();
     }
 
     @Alors("^l'événement n'apparait plus$")
