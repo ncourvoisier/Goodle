@@ -23,7 +23,8 @@ $bd = bd_connect();
     }
 } else {*/
 
-    $sql = 'SELECT * FROM Evenement WHERE ID = ' . $_GET['event'] . ';';
+    
+    $sql = 'SELECT * FROM Evenement WHERE ID = \'' . $_GET['event'] . '\';';
     $res = mysqli_query($bd, $sql);
 
     $t = mysqli_fetch_assoc($res);
