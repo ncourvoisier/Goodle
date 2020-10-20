@@ -3,6 +3,7 @@ package acceptance;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.fr.Alors;
+import cucumber.api.java.fr.Et;
 import cucumber.api.java.fr.Etantdonné;
 import cucumber.api.java.fr.Quand;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -11,9 +12,7 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.junit.Assert.assertEquals;
-
-public class SupprimerDate {
+public class AdminAddEvent {
     private HtmlUnitDriver driver;
     private Connection con;
     private String urlPage = StaticConnection.urlPage;
@@ -62,27 +61,7 @@ public class SupprimerDate {
             throw new SQLException("Did not create event");
         }
 
-        driver.get(urlPage + "/src/PHP/login.php");
-        driver.findElementByName("email").sendKeys("mailForTest@tests.fr");
-        driver.findElementByName("password").sendKeys("Azerty1234!");
-        driver.findElementByName("btnConnexion").click();
-    }
 
-    @Etantdonné("^l'utilisateur edite un evenement crée$")
-    public void lutilisateurEditeUnEvenementCree() {
-        driver.get(urlPage + "/src/PHP/voir_event.php?event="+pastEvent);
-        driver.get(urlPage + "/src/PHP/supprimer_date_event.php?dateEvent="+pastDate+"&event="+pastEvent);
-    }
-
-    @Quand("^l'utilisateur supprime une proposition de date$")
-    public void lUtilisateurSupprimeUnePropositionDeDate() {
-        assertEquals(driver.getCurrentUrl(), urlPage + "/src/PHP/supprimer_date_event.php?dateEvent="+pastDate+"&event="+pastEvent);
-        driver.findElementByName("btnValiderSupprDate").click();
-    }
-
-    @Alors("^la date supprimé n'apparait plus$")
-    public void laDateSupprimeNApparaitPlus() {
-        assertEquals(driver.getCurrentUrl(), urlPage + "/src/PHP/supprimer_date_event.php?dateEvent="+pastDate+"&event="+pastEvent);
     }
 
     @After
@@ -101,5 +80,29 @@ public class SupprimerDate {
 
         driver.quit();
         con.close();
+    }
+
+    @Quand("^l'administrateur est sur la page de gestion des evenements$")
+    public void lAdministrateurEstSurLaPageDeGestionDesEvenements() {
+        driver.get(urlPage+"/src/PHP/evenement.php");
+    }
+
+    @Et("^le tableau de la liste des événement est complet ou que les informations sont valides$")
+    public void leTableauDeLaListeDesÉvénementEstCompletOuQueLesInformationsSontValides() {
+
+    }
+
+
+    @Alors("^l'administrateur peut gérer les événements$")
+    public void lAdministrateurPeutGérerLesÉvénements() {
+        driver.findElementByLinkText("voir event");
+    }
+
+    @Etantdonné("^la session courante est celle d'un administrateur$")
+    public void laSessionCouranteEstCelleDUnAdministrateur() {
+        driver.get(urlPage + "/src/PHP/login.php");
+        driver.findElementByName("email").sendKeys("testadmin@test.com");
+        driver.findElementByName("password").sendKeys("12345678");
+        driver.findElementByName("btnConnexion").click();
     }
 }

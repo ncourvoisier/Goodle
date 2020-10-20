@@ -150,8 +150,8 @@ public class AdminDeleteUser {
     @Quand("^l'administrateur est sur le profil d'un utilisateur$")
     public void lAdministrateurEstSurLeProfilDUnUtilisateur() {
         driver.get(urlPage + "/src/PHP/login.php");
-        driver.findElementByName("email").sendKeys("mailForTests@tests.fr");
-        driver.findElementByName("password").sendKeys("Azerty1234!");
+        driver.findElementByName("email").sendKeys("testadmin@test.com");
+        driver.findElementByName("password").sendKeys("12345678");
         driver.findElementByName("btnConnexion").click();
         driver.get(urlPage + "/src/PHP/admin_user_view.php");
         driver.findElementByName("userTest").click();
