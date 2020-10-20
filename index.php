@@ -29,7 +29,7 @@ function l_contenu() {
 
 			// recherche des notifications : jusqu'a 10 après la date de cloture on affiche la date choisi si elle est défini pour chaque événement où on est invité
 			$bd = bd_connect();
-			$sql = 'SELECT IDEvenet FROM Invite WHERE IDPersonne = '.$_SESSION['ID'].';';
+			$sql = 'SELECT IDEvent FROM Invite WHERE IDPersonne = '.$_SESSION['ID'].';';
 			$res = mysqli_query($bd, $sql);
 
 			if(mysqli_num_rows($res) >0)
