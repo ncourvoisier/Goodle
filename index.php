@@ -27,6 +27,36 @@ function l_contenu() {
 				echo '<p>Voir les événements : <a href="./src/PHP/evenement.php">event</a>. </p>';
 			}
 
+			// recherche des notifications : jusqu'a 10 après la date de cloture on affiche la date choisi si elle est défini pour chaque événement où on est invité
+			$bd = bd_connect();
+			$sql = 'SELECT IDEvenet FROM Invite WHERE IDPersonne = '.$_SESSION['ID'].';';
+			$res = mysqli_query($bd, $sql);
+
+			if(mysqli_num_rows($res) >0)
+			{
+				echo '<h2> Vos notifications </h2>';
+			}
+			while($t = mysqli_fetch_assoc($res))
+			{
+				$sql2 = 'SELECT * FROM Evenement WHERE ID = '.$t['IDEvent'].';';
+				$res2 = mysqli_query($bd, $sql2);
+				$t2 = mysqli_fetch_assoc($res2);
+
+				if($t2['DateChoisie'] != null)
+				{
+					$dateCloture=new DateTime($t2['DateCloture']);
+					$today = new DateTime(); // voir pour la timeZone mais comme c'est arbitraire les 10 jours c'est pas urgent
+					$diff = $today->diff($dateChoisie)->format("%a");
+
+					if($diff >=0 && $dif <10)
+					{
+						echo 'L\'événement '.$t2['Nom'].' à '.$t2['Lieu'].' à pour date choisi '.$t2['DateChoisie'];
+					}
+					
+				}
+			}
+			
+
 		} else {
 
 	echo
