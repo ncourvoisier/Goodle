@@ -121,7 +121,7 @@ function l_contenu_ve($errors){
 				$timestamp2 = strtotime(date('Y-n-j'));
 				if($timestamp1 < $timestamp2)
 				{
-					echo '<a href="choisir_date_event?event ='. $_GET['event'] .'"><button name="btnChoisirDate">Choisir la date</button></a>';
+					echo '<a href="choisir_date_event.php?event ='. $_GET['event'] .'"><button name="btnChoisirDate">Choisir la date</button></a>';
 				}
 			}
 
