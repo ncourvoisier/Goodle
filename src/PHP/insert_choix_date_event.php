@@ -24,7 +24,13 @@ $bd = bd_connect();
 } else {*/
 
     //$sql = "UPDATE Evenement SET DateChoisie =  '$nom', Lieu= '$lieu', DateCloture = $aaaammjj WHERE ID = $idEvent ;";
-    $sql = 'UPDATE Evenement SET DateChoisie = '.$_GET['dateEvent'].' WHERE ID = '.$_GET['event'].';';
+    $sql = 'SELECT * FROM Date WHERE ID = '.$_GET['dateEvent'].';';
+    $res = mysqli_query($bd, $sql);
+    $t = mysqli_fetch_assoc($res);
+
+    $date = $t['Annee'].'-'.$t['Mois'].'-'.$t['jour'].' '.$t['Heure'].':'.$t['Minute'].':00' ;
+
+    $sql = 'UPDATE Evenement SET DateChoisie = '.$date.' WHERE ID = '.$_GET['event'].';';
     $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
     echo '<p> la date a bien été choisi </p>';
 
