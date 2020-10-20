@@ -23,7 +23,7 @@ $bd = bd_connect();
     }
 } else {*/
 
-    
+
     $sql = 'SELECT * FROM Evenement WHERE ID = \'' . $_GET['event'] . '\';';
     $res = mysqli_query($bd, $sql);
 
@@ -34,7 +34,7 @@ $bd = bd_connect();
     } else {
         $idPersonne = $t['Referent'];
 
-        $sql3 = 'SELECT * FROM DateEvenement INNER JOIN Date ON DateEvenement.IDDate = Date.ID AND DateEvenement.IDEvent ='.$_GET['event'].' ' . $order . ';';
+        $sql3 = 'SELECT * FROM DateEvenement INNER JOIN Date ON DateEvenement.IDDate = Date.ID AND DateEvenement.IDEvent ='.$_GET['event'].';';
         $res3 = mysqli_query($bd, $sql3);
 
         echo '<ul id="event_dates">';
