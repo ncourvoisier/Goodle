@@ -45,9 +45,13 @@ function l_contenu() {
 				if($t2['DateChoisie'] != null)
 				{
 					echo' la date choisie : '.$t2['DateChoisie'];
-					$dateCloture=new DateTime($t2['DateCloture']);
+					/*$dateCloture=new DateTime($t2['DateCloture']);
 					$today = new DateTime(); // voir pour la timeZone mais comme c'est arbitraire les 10 jours c'est pas urgent
-					$diff = $today->diff($dateChoisie)->format("%a");
+					$diff = $today->diff($dateChoisie)->format("%a");*/
+					$dateCloture=date_format(new DateTime($t2['DateCloture']),'Y-m-d');
+					$timestamp1=strtotime($dateCloture);
+					$timestamp2 = strtotime(date('Y-n-j'));
+					$dif = ceil(abs($fin - $debut) / 86400);
 					echo '................';
 					echo '--------------- '.$diff;
 					if($diff >=0 && $dif <10)
