@@ -58,7 +58,7 @@ function l_contenu_sde($errors, $deja_supp){
 
   if($deja_supp){
     echo '<p>Cette date a bien été supprimée</p>';
-    echo '<p><a href="./voir_event?event='.$eventID.'">Retour</a>';
+    echo '<p><a href="./voir_event.php?event='.$eventID.'">Retour</a>';
     return;
   }
 
