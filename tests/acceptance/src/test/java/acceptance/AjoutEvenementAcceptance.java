@@ -6,12 +6,10 @@ import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Etantdonné;
 import cucumber.api.java.fr.Quand;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import java.sql.*;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +23,7 @@ public class AjoutEvenementAcceptance {
     private String urlPage = StaticConnection.urlPage;
 
     private String nvNomEvent = "Soiree";
-    private int pastEvent;
+    private int newEvent;
 
     @Before
     public void setUp() throws SQLException {
@@ -45,7 +43,6 @@ public class AjoutEvenementAcceptance {
         {
             Select dropdown = new Select(driver.findElement(By.name("DateEvent1_j")));
             dropdown.selectByVisibleText("3");
-            //System.out.println(dropdown.findElement(By.xpath("//option[. = '3']")));
         }
         {
             Select dropdown = new Select(driver.findElement(By.name("DateEvent1_m")));
@@ -120,12 +117,12 @@ public class AjoutEvenementAcceptance {
         PreparedStatement creatorStatement = con.prepareStatement(sql);
 
         ResultSet creator = creatorStatement.executeQuery();
-        int pastEventCreator=0;
+        int newEventCreator=0;
         if (creator.next()) {
-            pastEventCreator = creator.getInt("Max(ID)");
+            newEventCreator = creator.getInt("Max(ID)");
         }
-        pastEvent=pastEventCreator;
-        assertEquals(driver.getCurrentUrl(), urlPage + "/src/PHP/evenement_ok.php?event="+pastEvent);
+        newEvent =newEventCreator;
+        assertEquals(driver.getCurrentUrl(), urlPage + "/src/PHP/evenement_ok.php?event="+ newEvent);
     }
 
 
@@ -138,13 +135,13 @@ public class AjoutEvenementAcceptance {
         PreparedStatement creatorStatement = con.prepareStatement(sql);
 
         ResultSet creator = creatorStatement.executeQuery();
-        int pastEventCreator=0;
+        int newIdEventCreate=0;
         if (creator.next()) {
-            pastEventCreator = creator.getInt("Max(ID)");
+            newIdEventCreate = creator.getInt("Max(ID)");
         }
-        pastEvent=pastEventCreator;
+        newEvent =newIdEventCreate;
 
-        assertEquals(driver.getCurrentUrl(), urlPage + "/src/PHP/evenement_ok.php?event="+pastEvent);
+        assertEquals(driver.getCurrentUrl(), urlPage + "/src/PHP/evenement_ok.php?event="+ newEvent);
     }
 }
 
