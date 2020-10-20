@@ -48,7 +48,7 @@ function l_contenu() {
 					$dateCloture=new DateTime($t2['DateCloture']);
 					$today = new DateTime(); // voir pour la timeZone mais comme c'est arbitraire les 10 jours c'est pas urgent
 					$diff = $today->diff($dateChoisie)->format("%a");
-
+					echo '--------------- '.$diff;
 					if($diff >=0 && $dif <10)
 					{
 						echo 'L\'événement '.$t2['Nom'].' à '.$t2['Lieu'].' à pour date choisi '.$t2['DateChoisie'];
