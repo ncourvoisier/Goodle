@@ -53,8 +53,8 @@ public class AdminGestionUser {
     @Etantdonné("^la session courante est celle de l'administrateur$")
     public void laSessionCouranteEstCelleDeLAdministrateur() {
         driver.get(urlPage + "/src/PHP/login.php");
-        driver.findElementByName("email").sendKeys("mailForTests@tests.fr");
-        driver.findElementByName("password").sendKeys("Azerty1234!");
+        driver.findElementByName("email").sendKeys("testadmin@test.com");
+        driver.findElementByName("password").sendKeys("12345678");
         driver.findElementByName("btnConnexion").click();
     }
 

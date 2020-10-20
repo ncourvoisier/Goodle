@@ -46,8 +46,8 @@ public class AdminDeleteEvent {
     @Quand("^l'administrateur est sur la page d'un événement$")
     public void lAdministrateurEstSurLaPageDUnÉvénement() {
         driver.get(urlPage + "/src/PHP/login.php");
-        driver.findElementByName("email").sendKeys("mailForTests@tests.fr");
-        driver.findElementByName("password").sendKeys("Azerty1234!");
+        driver.findElementByName("email").sendKeys("testadmin@test.com");
+        driver.findElementByName("password").sendKeys("12345678");
         driver.findElementByName("btnConnexion").click();
         driver.get(urlPage + "/src/PHP/voir_event.php?event="+pastEvent);
     }

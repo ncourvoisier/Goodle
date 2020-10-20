@@ -41,7 +41,7 @@ public class FiltrerParDateRecente {
         }
 
         driver.get(urlPage + "/src/PHP/login.php");
-        driver.findElementByName("email").sendKeys("mailForTests@tests.fr");
+        driver.findElementByName("email").sendKeys("mailForTest@tests.fr");
         driver.findElementByName("password").sendKeys("Azerty1234!");
         driver.findElementByName("btnConnexion").click();
     }
