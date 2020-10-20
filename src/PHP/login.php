@@ -19,7 +19,7 @@ if (isset($_SESSION['ID'])){
         $nom_page = url_get_nom_fichier($page);
         // suppression des éventuelles boucles de redirection
         if (($nom_page == 'login.php') || ($nom_page == 'inscription.php')){
-            $page = '../../index.php'; 
+            $page = '../../index.php';
         } // si la page appelante n'appartient pas à notre site
         else if (! in_array($nom_page, get_pages_goodle())){
             $page = '../../index.php';
@@ -47,7 +47,7 @@ ob_end_flush();
  *	@param 	int		$err 	erreur de connexion (0 pas d'erreur, -1 erreur)
  */
 function l_contenu($err) {
-	
+
 	if (isset($_POST['source'])){
         $source = $_POST['source'];
     }
@@ -62,28 +62,28 @@ function l_contenu($err) {
     else{
         $source = '../../index.php';
     }
-    
+
 	echo
-		'<h1>Connexion à BookShop</h1>', 
+		'<h1>Connexion à Goodle</h1>', 
 		($err != 0) ? '<p class="erreur">Echec de l\'authentification</p>' : '',
-        '<div id="bcInscription">', 
-            '<form action="login.php" method="post" class="bcFormulaireBoite">',			
+        '<div id="bcInscription">',
+            '<form action="login.php" method="post" class="bcFormulaireBoite">',
                 '<p class="enteteBloc">Déjà inscrit ?</p>',
                 form_input(Z_HIDDEN,'source', $source),
-                '<table>', 
+                '<table>',
                     form_ligne('Email :', form_input(Z_TEXT,'email','',20)),
                     form_ligne('Mot de passe :', form_input(Z_PASSWORD,'password','',20)),
                 '</table>',
                 form_input(Z_SUBMIT,'btnConnexion', 'Se connecter'),
             '</form>',
 
-            '<form action="inscription.php" method="post" class="bcFormulaireBoite">',			
+            '<form action="inscription.php" method="post" class="bcFormulaireBoite">',
                 '<p class="enteteBloc">Pas encore inscrit ?</p>',
-                '<input type="hidden" name="source" value="', $source,'">', 
+                '<input type="hidden" name="source" value="', $source,'">',
                 '<p>L\'inscription est gratuite et ne prend que quelques secondes.</p>',
                 form_input(Z_SUBMIT,'btnInscription', 'S\'inscrire'),
-            '</form>', 
-        '</div>'; 
+            '</form>',
+        '</div>';
 }
 
 
@@ -107,10 +107,10 @@ function l_control_piratage(){
 
 
 
-/** 
- *	Traitement de la connexion : 
+/**
+ *	Traitement de la connexion :
  *		identification du couple email/password dans la base. Redirection vers la page
- *		d'origine si les identifiants de connexion sont corrects. 
+ *		d'origine si les identifiants de connexion sont corrects.
  *
  * @global  array     $_POST
  *
@@ -118,7 +118,7 @@ function l_control_piratage(){
  */
 function l_traitement_connexion() {
 
-	// connexion à la base de données	
+	// connexion à la base de données
 	$bd = bd_connect();
 
 	// sanitization des données postées
@@ -127,7 +127,7 @@ function l_traitement_connexion() {
 
 	// requête SQL
 	$sql = "SELECT ID FROM Personne WHERE Email = '$email' AND motDePasse = '$password'";
-	
+
 	// execution de la requête
 	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
@@ -137,16 +137,16 @@ function l_traitement_connexion() {
 		mysqli_close($bd);
 		return -1;	            // => ECHEC DE L'AUTHENTIFICATION
 	}
-	
-	// récupération du numero client 
+
+	// récupération du numero client
 	$t = mysqli_fetch_assoc($res);
 	$id = $t['ID'];
-	
+
 	// mémorisation de l'ID du client dans une variable de session
     // cette variable de session permet de savoir si le client est authentifié
 	$_SESSION['ID'] = $id;
-	
-	
+
+
 	$sql = "SELECT admin FROM Personne WHERE ID ='$id'";
 	// execution de la requête
 	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
@@ -156,8 +156,8 @@ function l_traitement_connexion() {
 		mysqli_close($bd);
 		return -1;	            // => ECHEC DE L'AUTHENTIFICATION
 	}
-	
-	// récupération du numero client 
+
+	// récupération du numero client
 	$t = mysqli_fetch_assoc($res);
 	$admin = $t['admin'];
 	// mémorisation de l'ID du client dans une variable de session
@@ -170,7 +170,7 @@ function l_traitement_connexion() {
 
 	// et redirection vers la page d'origine
 	redirige($_POST['source']);
-	
+
 	// ne devrait pas arriver
 	return 0;
 }
