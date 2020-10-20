@@ -101,7 +101,7 @@ function l_contenu_ve($errors){
 			while ($t3 = mysqli_fetch_assoc($res3)) {
 				echo '<li>Date : Le ' . $t3['Jour'] . ' ' . get_mois($t3['Mois']) . ' ' . $t3['Annee'] . ' à ' . ecrireHeure($t3['Heure'],$t3['Minute']);
 				if ($createurConnecte){
-					echo ' <a href="./supprimer_date_event?dateEvent='.$t3['ID'].'&event='.$_GET['event'].'">Supprimer</a>';
+					echo ' <a href="./supprimer_date_event.php?dateEvent='.$t3['ID'].'&event='.$_GET['event'].'">Supprimer</a>';
 				}
 				echo '</li>';
 			}
