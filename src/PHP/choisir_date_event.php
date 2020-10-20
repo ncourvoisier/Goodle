@@ -56,4 +56,14 @@ if (count($errors) != 0) {
 html_fin();
 ob_end_flush();
 
+function l_controle_piratage_ve() {
+	$err = array();
+	if (!isset($_GET['event'])) {
+		$err['no_event'] = "L'evenement doit être renseigné.";
+	} else if (!preg_match('/^[0-9]*$/', $_GET['event'])) {
+		$err['event_format'] = "L'identifiant de l'evenement doit être un nombre.";
+	}
+	return $err;
+}
+
 ?>
