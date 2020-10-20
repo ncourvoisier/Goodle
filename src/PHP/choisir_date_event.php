@@ -7,7 +7,7 @@ require_once 'bibli_generale.php';
 error_reporting(E_ALL); // toutes les erreurs sont capturées (utile lors de la phase de développement)
 
 
-$errors = l_controle_piratage_ve();
+//$errors = l_controle_piratage_ve();
 html_debut('Goodle | Voir event', '../src/CSS/styles.css');
 
 goodle_header();
@@ -17,11 +17,11 @@ if (isset($_SESSION['ID'])) {
 
 $bd = bd_connect();
 
-if (count($errors) != 0) {
+/*if (count($errors) != 0) {
     foreach ($errors as $code => $e) {
     echo '<p class="erreur">' . $e . '</p>';
     }
-} else {
+} else {*/
 
     $sql = 'SELECT * FROM Evenement WHERE ID = ' . $_GET['event'] . ';';
     $res = mysqli_query($bd, $sql);
@@ -51,12 +51,12 @@ if (count($errors) != 0) {
     }
     mysqli_close($bd);
 
-}
+//}
 
 html_fin();
 ob_end_flush();
 
-function l_controle_piratage_ve() {
+/*function l_controle_piratage_ve() {
 	$err = array();
 	if (!isset($_GET['event'])) {
 		$err['no_event'] = "L'evenement doit être renseigné.";
@@ -64,6 +64,6 @@ function l_controle_piratage_ve() {
 		$err['event_format'] = "L'identifiant de l'evenement doit être un nombre.";
 	}
 	return $err;
-}
+}*/
 
 ?>
