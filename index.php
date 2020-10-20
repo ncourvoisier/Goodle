@@ -48,6 +48,7 @@ function l_contenu() {
 					$dateCloture=new DateTime($t2['DateCloture']);
 					$today = new DateTime(); // voir pour la timeZone mais comme c'est arbitraire les 10 jours c'est pas urgent
 					$diff = $today->diff($dateChoisie)->format("%a");
+					echo '................';
 					echo '--------------- '.$diff;
 					if($diff >=0 && $dif <10)
 					{
