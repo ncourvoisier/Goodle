@@ -115,6 +115,14 @@ function l_contenu_ve($errors){
 					echo '<form method="POST" action="voir_event.php?event='.$_GET['event'].'">',
 					form_input(Z_SUBMIT,'btnSupprimerEventUtilisateur','Supprimer l\'évènement'),
 					'</form>';
+				
+				$dateCloture=date_format(new DateTime($t['DateCloture']),'Y-m-d');
+				$timestamp1=strtotime($dateCloture);
+				$timestamp2 = strtotime(date('Y-n-j'));
+				if($timestamp1 < $timestamp2)
+				{
+					echo '<a href="choisir_date_event?event ='. $_GET['event'] .'"><button name="btnChoisirDate">Choisir la date</button></a>';
+				}
 			}
 
 			if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
