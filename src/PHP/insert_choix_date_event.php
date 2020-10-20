@@ -30,7 +30,7 @@ $bd = bd_connect();
 
     $date = $t['Annee'].'-'.$t['Mois'].'-'.$t['jour'].' '.$t['Heure'].':'.$t['Minute'].':00' ;
 
-    $sql = 'UPDATE Evenement SET DateChoisie = '.$date.' WHERE ID = '.$_GET['event'].';';
+    $sql = 'UPDATE Evenement SET DateChoisie = \''.$date.'\' WHERE ID = '.$_GET['event'].';';
     $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
     echo '<p> la date a bien été choisi </p>';
 
