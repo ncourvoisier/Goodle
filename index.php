@@ -44,7 +44,7 @@ function l_contenu() {
 
 				if($t2['DateChoisie'] != null)
 				{
-					echo' la date choisie : '.$t2['DateChoisie'];
+					//echo' la date choisie : '.$t2['DateChoisie'];
 					/*$dateCloture=new DateTime($t2['DateCloture']);
 					$today = new DateTime(); // voir pour la timeZone mais comme c'est arbitraire les 10 jours c'est pas urgent
 					$diff = $today->diff($dateChoisie)->format("%a");*/
@@ -52,9 +52,7 @@ function l_contenu() {
 					$timestamp1=strtotime($dateCloture);
 					$timestamp2 = strtotime(date('Y-n-j'));
 					$dif = ceil(abs($fin - $debut) / 86400);
-					echo '................';
-					echo '--------------- '.$diff;
-					if($diff >=0 && $dif <10)
+					if($dif >=0 && $dif <10)
 					{
 						echo 'L\'événement '.$t2['Nom'].' à '.$t2['Lieu'].' à pour date choisi '.$t2['DateChoisie'];
 					}
