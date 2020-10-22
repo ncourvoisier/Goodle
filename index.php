@@ -34,7 +34,7 @@ function l_contenu() {
 
 			if(mysqli_num_rows($res) >0)
 			{
-				echo '<h2> Vos notifications : '.mysqli_num_rows($res).' </h2>';
+				//echo '<h2> Vos notifications : '.mysqli_num_rows($res).' </h2>';
 			}
 			while($t = mysqli_fetch_assoc($res))
 			{
@@ -44,6 +44,7 @@ function l_contenu() {
 
 				if($t2['DateChoisie'] != null)
 				{
+					echo '<h2> Vos notifications : '.mysqli_num_rows($res).' </h2>';
 					//echo' la date choisie : '.$t2['DateChoisie'];
 					/*$dateCloture=new DateTime($t2['DateCloture']);
 					$today = new DateTime(); // voir pour la timeZone mais comme c'est arbitraire les 10 jours c'est pas urgent

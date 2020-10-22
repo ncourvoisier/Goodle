@@ -109,7 +109,7 @@ function l_delete_date($errors){
 
     $dateSupp = $_GET['dateEvent'];
 	
-	echo $dateSupp . ' ';
+	//echo $dateSupp . ' ';
 	
 
     $sql = "SELECT ID FROM DateEvenement WHERE IDDate=$dateSupp;";

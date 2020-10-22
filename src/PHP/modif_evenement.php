@@ -114,6 +114,8 @@ function l_contenu_me($err ){
 function l_verify_event(){
   $err = array();
 
+  $nameEvent='';
+  $lieuEvent='';
   $date_j = array();
   $date_m = array();
   $date_a = array();
@@ -219,7 +221,7 @@ function l_verify_event(){
 
 			$_POST = array();
 
-		redirige("evenement_ok.php");
+		redirige("evenement_ok.php?event=$idEvent");
 
     }
 
